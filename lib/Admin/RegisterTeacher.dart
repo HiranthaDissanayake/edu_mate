@@ -1,32 +1,32 @@
-import 'package:edu_mate/Admin/AdminHomePage.dart';
+import 'package:edu_mate/Admin/SetSchedule.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class Registerstudent extends StatefulWidget {
-  const Registerstudent({super.key});
+class Registerteacher extends StatefulWidget {
+  const Registerteacher({super.key});
 
   @override
-  State<Registerstudent> createState() => _RegisterstudentState();
+  State<Registerteacher> createState() => _RegisterteacherState();
 }
 
-class _RegisterstudentState extends State<Registerstudent> {
-  final TextEditingController _dateController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _genderController = TextEditingController();
-  final TextEditingController _gradeController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _patentNoController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+class _RegisterteacherState extends State<Registerteacher> {
+  final _nameController = TextEditingController();
+  final _dateController = TextEditingController();
+  final _genderController = TextEditingController();
+  final _gradeController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _qualificationController = TextEditingController();
+  final _phoneController = TextEditingController();
 
-  bool _maths = false;
-  bool _science = false;
-  bool _english = false;
-  bool _history = false;
-  bool _sinhala = false;
-  bool _commerce = false;
+  bool _grade6 = false;
+  bool _grade7 = false;
+  bool _grade8 = false;
+  bool _grade9 = false;
+  bool _grade10 = false;
+  bool _grade11 = false;
 
-  final _formKey = GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +66,14 @@ class _RegisterstudentState extends State<Registerstudent> {
                     width: 100,
                   ),
                   Text(
-                    "REGISTER STUDENT",
+                    "REGISTER TEACHER",
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
                   Form(
-                    key: _formKey,
+                    key: _formkey,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Column(
@@ -82,25 +82,23 @@ class _RegisterstudentState extends State<Registerstudent> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             child: TextFormField(
+                              controller: _nameController,
+                              style: TextStyle(color: Colors.white),
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Please Enter Your Name";
                                 }
                                 return null;
                               },
-                              controller: _nameController,
-                              style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide(
-                                    color:
-                                        const Color.fromARGB(255, 13, 0, 253),
-                                  ),
+                                      color: const Color.fromARGB(
+                                          255, 13, 0, 253)),
                                 ),
                                 filled: true,
                                 fillColor:
@@ -114,25 +112,23 @@ class _RegisterstudentState extends State<Registerstudent> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             child: TextFormField(
+                              style: TextStyle(color: Colors.white),
+                              controller: _dateController,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Please Enter Your Date of Birth";
                                 }
                                 return null;
                               },
-                              style: TextStyle(color: Colors.white),
-                              controller: _dateController,
                               decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide(
-                                    color:
-                                        const Color.fromARGB(255, 13, 0, 253),
-                                  ),
+                                      color: const Color.fromARGB(
+                                          255, 13, 0, 253)),
                                 ),
                                 filled: true,
                                 fillColor:
@@ -163,12 +159,6 @@ class _RegisterstudentState extends State<Registerstudent> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             child: DropdownButtonFormField<String>(
-                              validator: (value) {
-                                if (value == null) {
-                                  return "Please Enter Your Gender";
-                                }
-                                return null;
-                              },
                               value: null,
                               items: ['Male', 'Female']
                                   .map((String value) =>
@@ -185,17 +175,21 @@ class _RegisterstudentState extends State<Registerstudent> {
                                   _genderController.text = value!;
                                 });
                               },
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Please Select Your Gender";
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide(
-                                    color:
-                                        const Color.fromARGB(255, 13, 0, 253),
-                                  ),
+                                      color: const Color.fromARGB(
+                                          255, 13, 0, 253)),
                                 ),
                                 filled: true,
                                 fillColor:
@@ -216,20 +210,14 @@ class _RegisterstudentState extends State<Registerstudent> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             child: DropdownButtonFormField<String>(
-                              validator: (value) {
-                                if (value == null) {
-                                  return "Please Enter Your Grade";
-                                }
-                                return null;
-                              },
                               value: null,
                               items: [
-                                'Grade6',
-                                'Grade7',
-                                'Grade8',
-                                'Grade9',
-                                'Grade10',
-                                'Grade11'
+                                'Mathematics',
+                                'Science',
+                                'English',
+                                'History',
+                                'Sinhala',
+                                'Commerce'
                               ]
                                   .map((String value) =>
                                       DropdownMenuItem<String>(
@@ -245,22 +233,26 @@ class _RegisterstudentState extends State<Registerstudent> {
                                   _gradeController.text = value!;
                                 });
                               },
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Please Select Your subject";
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide(
-                                    color:
-                                        const Color.fromARGB(255, 13, 0, 253),
-                                  ),
+                                      color: const Color.fromARGB(
+                                          255, 13, 0, 253)),
                                 ),
                                 filled: true,
                                 fillColor:
                                     const Color.fromARGB(255, 36, 36, 63),
-                                labelText: "Grades",
+                                labelText: "Subject",
                                 labelStyle: TextStyle(color: Colors.white),
                               ),
                               dropdownColor:
@@ -280,7 +272,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                 padding:
                                     const EdgeInsets.only(left: 30, top: 15),
                                 child: Text(
-                                  "Subjects",
+                                  "Grades",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18),
                                 ),
@@ -293,121 +285,94 @@ class _RegisterstudentState extends State<Registerstudent> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     CheckboxListTile(
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      tileColor: const Color.fromARGB(
-                                          255, 255, 255, 255),
+                                      controlAffinity: ListTileControlAffinity.leading,
                                       title: Text(
-                                        "Maths",
+                                        "Grade 6",
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      value: _maths,
+                                      value: _grade6,
                                       activeColor:
                                           Color.fromARGB(255, 13, 0, 253),
-                                      shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                              color: Color.fromARGB(255, 0, 0, 0))),
                                       onChanged: (value) {
                                         setState(() {
-                                          _maths = value!;
+                                          _grade6 = value!;
                                         });
                                       },
                                     ),
                                     CheckboxListTile(
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
+                                      controlAffinity: ListTileControlAffinity.leading,
                                       title: Text(
-                                        "Science",
+                                        "Grade 7",
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      value: _science,
+                                      value: _grade7,
                                       onChanged: (value) {
                                         setState(() {
-                                          _science = value!;
+                                          _grade7 = value!;
                                         });
                                       },
                                       activeColor:
                                           Color.fromARGB(255, 13, 0, 253),
-                                      shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 255, 255, 255))),
                                     ),
                                     CheckboxListTile(
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
+                                      controlAffinity: ListTileControlAffinity.leading,
                                       title: Text(
-                                        "English",
+                                        "Grade 8",
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      value: _english,
+                                      value: _grade8,
                                       onChanged: (value) {
                                         setState(() {
-                                          _english = value!;
+                                          _grade8 = value!;
                                         });
                                       },
                                       activeColor:
                                           Color.fromARGB(255, 13, 0, 253),
-                                      shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                              color: Color.fromARGB(255, 0, 0, 0))),
                                     ),
                                     CheckboxListTile(
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
+                                      controlAffinity: ListTileControlAffinity.leading,
                                       title: Text(
-                                        "History",
+                                        "Grade 9",
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      value: _history,
+                                      value: _grade9,
                                       onChanged: (value) {
                                         setState(() {
-                                          _history = value!;
+                                          _grade9 = value!;
                                         });
                                       },
                                       activeColor:
                                           Color.fromARGB(255, 13, 0, 253),
-                                      shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                              color: Color.fromARGB(255, 0, 0, 0))),
                                     ),
                                     CheckboxListTile(
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
+                                      controlAffinity: ListTileControlAffinity.leading,
                                       title: Text(
-                                        "Sinhala",
+                                        "Grade 10",
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      value: _sinhala,
+                                      value: _grade10,
                                       onChanged: (value) {
                                         setState(() {
-                                          _sinhala = value!;
+                                          _grade10 = value!;
                                         });
                                       },
                                       activeColor:
                                           Color.fromARGB(255, 13, 0, 253),
-                                      shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                              color: Color.fromARGB(255, 0, 0, 0))),
                                     ),
                                     CheckboxListTile(
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
+                                      controlAffinity: ListTileControlAffinity.leading,
                                       title: Text(
-                                        "Commerce",
+                                        "Grade 11",
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      value: _commerce,
+                                      value: _grade11,
                                       onChanged: (value) {
                                         setState(() {
-                                          _commerce = value!;
+                                          _grade11 = value!;
                                         });
                                       },
                                       activeColor:
                                           Color.fromARGB(255, 13, 0, 253),
-                                      shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                              color: Color.fromARGB(255, 0, 0, 0))),
                                     ),
                                   ],
                                 ),
@@ -418,26 +383,54 @@ class _RegisterstudentState extends State<Registerstudent> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             child: TextFormField(
+                              controller: _qualificationController,
+                              style: TextStyle(color: Colors.white),
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Please Enter Contact Number";
+                                  return "Please Enter Your Qualifications";
                                 }
                                 return null;
                               },
-                              keyboardType: TextInputType.phone,
-                              controller: _phoneController,
-                              style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide(
-                                    color:
-                                        const Color.fromARGB(255, 13, 0, 253),
-                                  ),
+                                      color: const Color.fromARGB(
+                                          255, 13, 0, 253)),
+                                ),
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(255, 36, 36, 63),
+                                labelText: "Education Qualifications",
+                                labelStyle: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            child: TextFormField(
+                              keyboardType: TextInputType.phone,
+                              controller: _phoneController,
+                              style: TextStyle(color: Colors.white),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter Your Contact Number";
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide(
+                                      color: const Color.fromARGB(
+                                          255, 13, 0, 253)),
                                 ),
                                 filled: true,
                                 fillColor:
@@ -451,61 +444,26 @@ class _RegisterstudentState extends State<Registerstudent> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             child: TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Please Enter Parent's Contact Number";
-                                }
-                                return null;
-                              },
-                              keyboardType: TextInputType.phone,
-                              controller: _patentNoController,
-                              style: TextStyle(color: Colors.white),
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color:
-                                        const Color.fromARGB(255, 13, 0, 253),
-                                  ),
-                                ),
-                                filled: true,
-                                fillColor:
-                                    const Color.fromARGB(255, 36, 36, 63),
-                                labelText: "Parent's Contact No.",
-                                labelStyle: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Please Enter Email";
-                                }
-                                if (!value.contains("@gmail.com")) {
-                                  return "Please Enter Valid Email";
-                                }
-                                return null;
-                              },
                               controller: _emailController,
                               style: TextStyle(color: Colors.white),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter Your Email";
+                                }
+                                if (!value.contains("@gmail.com")) {
+                                  return "Please Enter a Valid Email";
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide(
-                                    color:
-                                        const Color.fromARGB(255, 13, 0, 253),
-                                  ),
+                                      color: const Color.fromARGB(
+                                          255, 13, 0, 253)),
                                 ),
                                 filled: true,
                                 fillColor:
@@ -520,42 +478,46 @@ class _RegisterstudentState extends State<Registerstudent> {
                             padding: const EdgeInsets.all(30),
                             child: GestureDetector(
                               onTap: () {
-                                _formKey.currentState!.save();
+                                if (_formkey.currentState!.validate()) {
+                                  _formkey.currentState!.save();
 
-                                List<String> Subjects = [];
-                                if (_formKey.currentState!.validate()) {
-                                  if (_maths) {
-                                    Subjects.add("Maths");
+                                  List<String> Grades = [];
+                                  if (_grade6) {
+                                    Grades.add("Grade 6");
                                   }
-                                  if (_science) {
-                                    Subjects.add("Science");
+                                  if (_grade7) {
+                                    Grades.add("Grade 7");
                                   }
-                                  if (_english) {
-                                    Subjects.add('English');
+                                  if (_grade8) {
+                                    Grades.add('Grade 8');
                                   }
-                                  if (_history) {
-                                    Subjects.add("History");
+                                  if (_grade9) {
+                                    Grades.add("Grade 9");
                                   }
-                                  if (_sinhala) {
-                                    Subjects.add("Sinhala");
+                                  if (_grade10) {
+                                    Grades.add("Grade 10");
                                   }
-                                  if (_commerce) {
-                                    Subjects.add("Commerce");
+                                  if (_grade11) {
+                                    Grades.add("Grade 11");
                                   }
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Adminhomepage()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Setschedule(Grade: Grades)));
                                 }
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: const Color.fromARGB(255, 68, 51, 180),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: BorderSide.strokeAlignCenter,
-                                      color: const Color.fromARGB(255, 0, 0, 0),
-                                    )
-                                  ],
-                                ),
+                                    borderRadius: BorderRadius.circular(10),
+                                    color:
+                                        const Color.fromARGB(255, 68, 51, 180),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          blurRadius:
+                                              BorderSide.strokeAlignCenter,
+                                          color: Colors.white)
+                                    ]),
                                 height: 50,
                                 width: double.infinity,
                                 child: Center(
@@ -563,10 +525,9 @@ class _RegisterstudentState extends State<Registerstudent> {
                                     "Submit",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
                                   ),
                                 ),
                               ),
