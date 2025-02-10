@@ -61,7 +61,7 @@ class _RegisterteacherState extends State<Registerteacher> {
               child: Column(
                 children: [
                   Image(
-                    image: AssetImage("asssets/images/AppLogo.png"),
+                    image: AssetImage("assets/images/AppLogo.png"),
                     height: 100,
                     width: 100,
                   ),
