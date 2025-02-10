@@ -65,7 +65,7 @@ class _SetscheduleState extends State<Setschedule> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Image(
-                    image: AssetImage("asssets/images/AppLogo.png"),
+                    image: AssetImage("assets/images/AppLogo.png"),
                     height: 100,
                     width: 100,
                   ),
