@@ -1,12 +1,16 @@
+import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:random_string/random_string.dart';
 
 class Setschedule extends StatefulWidget {
   // ignore: non_constant_identifier_names
   final List<String> Grade;
   // ignore: non_constant_identifier_names
+  final Map<String,dynamic>teacherInfoMap;
   const Setschedule({
     required this.Grade,
+    required this.teacherInfoMap,
     super.key,
   });
 
@@ -159,7 +163,7 @@ class _SetscheduleState extends State<Setschedule> {
                     contentTextStyle: GoogleFonts.poppins(color: Colors.white),
                     title: Text("Set Time"),
                     content: SizedBox(
-                      height: 230,
+                      height: 265,
                       child: Form(
                         key: _formKey,
                         child: Column(
@@ -390,14 +394,18 @@ class _SetscheduleState extends State<Setschedule> {
                     ),
                     actions: [
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async{
+                            String GradeId = randomAlphaNumeric(5);
                             setState(() {
-                              // _endTimeController.clear();
-                              // _startTimeController.clear();
-                              // _dayController.clear();
-                              // Grade;
+                              widget.teacherInfoMap["ClassDay"] = _dayController.text;
+                              widget.teacherInfoMap["StartTime"] = _startTimeController.text;
+                              widget.teacherInfoMap["EndTime"] = _endTimeController.text;
+                              widget.teacherInfoMap["Grade"] = Grade;
                             });
-                            if (_formKey.currentState!.validate()) {
+                            if (_formKey.currentState!.validate()){
+
+                            await  DatabaseMethods().addTeacherDetails(widget.teacherInfoMap,GradeId);
+
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(

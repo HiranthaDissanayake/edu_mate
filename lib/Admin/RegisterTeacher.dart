@@ -1,7 +1,9 @@
 import 'package:edu_mate/Admin/SetSchedule.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:random_string/random_string.dart';
 
 class Registerteacher extends StatefulWidget {
   const Registerteacher({super.key});
@@ -14,6 +16,7 @@ class _RegisterteacherState extends State<Registerteacher> {
   final _nameController = TextEditingController();
   final _dateController = TextEditingController();
   final _genderController = TextEditingController();
+  final _subjectController = TextEditingController();
   final _gradeController = TextEditingController();
   final _emailController = TextEditingController();
   final _qualificationController = TextEditingController();
@@ -260,7 +263,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                         .toList(),
                                     onChanged: (value) {
                                       setState(() {
-                                        _gradeController.text = value!;
+                                        _subjectController.text = value!;
                                       });
                                     },
                                     validator: (value) {
@@ -509,8 +512,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                   child: GestureDetector(
                                     onTap: () {
                                       if (_formkey.currentState!.validate()) {
-                                        _formkey.currentState!.save();
-              
+                                        String id = randomAlphaNumeric(10);
                                         List<String> Grades = [];
                                         if (_grade6) {
                                           Grades.add("Grade 6");
@@ -530,11 +532,24 @@ class _RegisterteacherState extends State<Registerteacher> {
                                         if (_grade11) {
                                           Grades.add("Grade 11");
                                         }
+
+
+                                        Map<String,dynamic>teacherInfoMap = {
+                                          "Id": id,
+                                          "Name":_nameController.text,
+                                          "DateOfBirth": _dateController.text,
+                                          "Gender":_genderController.text,
+                                          "Subject":_subjectController.text,
+                                          "Quelification":_qualificationController.text,
+                                          "ContactNo":_phoneController.text,
+                                          "Email":_emailController.text
+                                        };
+
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    Setschedule(Grade: Grades)));
+                                                    Setschedule(Grade: Grades, teacherInfoMap: teacherInfoMap)));
                                       }
                                     },
                                     child: Container(

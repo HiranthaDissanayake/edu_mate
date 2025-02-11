@@ -1,7 +1,10 @@
 import 'package:edu_mate/Admin/AdminHomePage.dart';
+import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:random_string/random_string.dart';
 
 class Registerstudent extends StatefulWidget {
   const Registerstudent({super.key});
@@ -138,7 +141,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Full Name",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -172,7 +176,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Date Of Birth",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                       suffixIcon: IconButton(
                                         onPressed: () {
                                           showDatePicker(
@@ -238,7 +243,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Gender",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                     dropdownColor:
                                         const Color.fromARGB(255, 36, 36, 63),
@@ -301,7 +307,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Grades",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                     dropdownColor:
                                         const Color.fromARGB(255, 36, 36, 63),
@@ -340,8 +347,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                                 255, 255, 255, 255),
                                             title: Text(
                                               "Maths",
-                                              style:
-                                                  TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _maths,
                                             activeColor:
@@ -361,8 +368,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                                 ListTileControlAffinity.leading,
                                             title: Text(
                                               "Science",
-                                              style:
-                                                  TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _science,
                                             onChanged: (value) {
@@ -382,8 +389,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                                 ListTileControlAffinity.leading,
                                             title: Text(
                                               "English",
-                                              style:
-                                                  TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _english,
                                             onChanged: (value) {
@@ -403,8 +410,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                                 ListTileControlAffinity.leading,
                                             title: Text(
                                               "History",
-                                              style:
-                                                  TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _history,
                                             onChanged: (value) {
@@ -424,8 +431,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                                 ListTileControlAffinity.leading,
                                             title: Text(
                                               "Sinhala",
-                                              style:
-                                                  TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _sinhala,
                                             onChanged: (value) {
@@ -445,8 +452,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                                 ListTileControlAffinity.leading,
                                             title: Text(
                                               "Commerce",
-                                              style:
-                                                  TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _commerce,
                                             onChanged: (value) {
@@ -497,7 +504,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Contact No.",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -532,7 +540,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Parent's Contact No.",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -569,7 +578,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Email",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -577,9 +587,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                 Padding(
                                   padding: const EdgeInsets.all(30),
                                   child: GestureDetector(
-                                    onTap: () {
-                                      _formKey.currentState!.save();
-          
+                                    onTap: () async {
+                                      String id = randomAlphaNumeric(10);
                                       List<String> Subjects = [];
                                       if (_formKey.currentState!.validate()) {
                                         if (_maths) {
@@ -600,11 +609,31 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         if (_commerce) {
                                           Subjects.add("Commerce");
                                         }
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Adminhomepage()));
+                                        Map<String, dynamic> studentInfoMap = {
+                                          "id": id,
+                                          "Name": _nameController.text,
+                                          "DateOfBirth": _dateController.text,
+                                          "Gender": _genderController.text,
+                                          "Grade": _gradeController.text,
+                                          "Subject": Subjects,
+                                          "ContactNo": _phoneController.text,
+                                          "ParentNo": _patentNoController.text,
+                                          "Email": _emailController.text,
+                                        };
+
+                                        await DatabaseMethods()
+                                            .addStudentDetails(
+                                                studentInfoMap, id);
+
+                                        Fluttertoast.showToast(
+                                          msg:
+                                              "Student Registered Successfully",
+                                          gravity: ToastGravity.CENTER,
+                                          textColor: const Color.fromARGB(
+                                              255, 0, 0, 0),
+                                          backgroundColor: Colors.green,
+                                          fontSize: 20,
+                                        );
                                       }
                                     },
                                     child: Container(
