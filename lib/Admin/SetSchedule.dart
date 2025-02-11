@@ -32,14 +32,6 @@ class _SetscheduleState extends State<Setschedule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back),
-        ),
-      ),
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
@@ -52,46 +44,95 @@ class _SetscheduleState extends State<Setschedule> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 2, 1, 95),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Image(
-                    image: AssetImage("assets/images/AppLogo.png"),
-                    height: 100,
-                    width: 100,
-                  ),
-                  Text(
-                    "SET SCHEDULE TIME",
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 20,
+        child: Column(
+          children: [
+            Container(
+              height: 120,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    const Color.fromARGB(255, 1, 2, 23),
+                    const Color.fromARGB(255, 2, 36, 109)
+                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(70),
+                      topRight: Radius.circular(150))),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back),
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        iconSize: 30,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: widget.Grade.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return buildGrades(
-                        widget.Grade[index],
-                      );
-                    },
-                  )
-                ],
+                    Expanded(
+                      child: Text(
+                        "Set Schedule Time",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 100,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Container(
+                height: 700,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 2, 1, 95),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image(
+                        image: AssetImage("assets/images/AppLogo.png"),
+                        height: 100,
+                        width: 100,
+                      ),
+                      Text(
+                        "SET SCHEDULE TIME",
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: widget.Grade.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return buildGrades(
+                                  widget.Grade[index],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -118,7 +159,7 @@ class _SetscheduleState extends State<Setschedule> {
                     contentTextStyle: GoogleFonts.poppins(color: Colors.white),
                     title: Text("Set Time"),
                     content: SizedBox(
-                      height: 270,
+                      height: 230,
                       child: Form(
                         key: _formKey,
                         child: Column(
@@ -159,6 +200,8 @@ class _SetscheduleState extends State<Setschedule> {
                                       items: Day.map((e) => DropdownMenuItem(
                                           value: e, child: Text(e))).toList(),
                                       decoration: InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.symmetric(vertical: 10),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -202,15 +245,17 @@ class _SetscheduleState extends State<Setschedule> {
                                   flex: 2,
                                   child: Center(
                                     child: TextFormField(
+                                      readOnly: true,
                                       validator: (value) {
-                                        if (_startTimeController
-                                            .text.isEmpty) {
+                                        if (_startTimeController.text.isEmpty) {
                                           return "Please select start time";
                                         }
                                         return null;
                                       },
                                       controller: _startTimeController,
                                       decoration: InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.symmetric(vertical: 10),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -240,15 +285,14 @@ class _SetscheduleState extends State<Setschedule> {
                                                 MaterialLocalizations.of(
                                                     // ignore: use_build_context_synchronously
                                                     context);
-                                            String formattedTime =
-                                                localizations.formatTimeOfDay(
-                                                    pickedTime!,
+                                            String formattedTime = localizations
+                                                .formatTimeOfDay(pickedTime!,
                                                     alwaysUse24HourFormat:
                                                         false);
-                                  
+
                                             setState(() {
                                               _startTimeController.text =
-                                                  formattedTime;
+                                                  "    $formattedTime";
                                             });
                                           },
                                         ),
@@ -280,6 +324,7 @@ class _SetscheduleState extends State<Setschedule> {
                                   flex: 2,
                                   child: Center(
                                     child: TextFormField(
+                                      readOnly: true,
                                       validator: (value) {
                                         if (_endTimeController.text.isEmpty) {
                                           return "Please select end time";
@@ -288,6 +333,8 @@ class _SetscheduleState extends State<Setschedule> {
                                       },
                                       controller: _endTimeController,
                                       decoration: InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.symmetric(vertical: 10),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -317,15 +364,14 @@ class _SetscheduleState extends State<Setschedule> {
                                                 MaterialLocalizations.of(
                                                     // ignore: use_build_context_synchronously
                                                     context);
-                                            String formattedTime =
-                                                localizations.formatTimeOfDay(
-                                                    pickedTime!,
+                                            String formattedTime = localizations
+                                                .formatTimeOfDay(pickedTime!,
                                                     alwaysUse24HourFormat:
                                                         false);
-                                  
+
                                             setState(() {
                                               _endTimeController.text =
-                                                  formattedTime;
+                                                  "    $formattedTime";
                                             });
                                           },
                                         ),
