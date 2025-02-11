@@ -1,6 +1,4 @@
 
-import 'package:edu_mate/Admin/RegisterStudent.dart';
-import 'package:edu_mate/Admin/RegisterTeacher.dart';
 import 'package:edu_mate/Student/Student_main_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Registerteacher(),
+      home: StudentMainPage(),
     );
   }
 }
