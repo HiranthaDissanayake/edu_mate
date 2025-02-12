@@ -1,4 +1,5 @@
 import 'package:edu_mate/Admin/SetSchedule.dart';
+import 'package:edu_mate/service/database.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -137,7 +138,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Full Name",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -167,12 +169,13 @@ class _RegisterteacherState extends State<Registerteacher> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Date Of Birth",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                       suffixIcon: IconButton(
                                         onPressed: () {
                                           showDatePicker(
                                                   context: context,
-                                                  firstDate: DateTime(2004),
+                                                  firstDate: DateTime(1950),
                                                   lastDate: DateTime.now())
                                               .then((value) {
                                             setState(() {
@@ -199,7 +202,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                                               value: value,
                                               child: Text(
                                                 value,
-                                                style: TextStyle(color: Colors.white),
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
                                             ))
                                         .toList(),
@@ -228,7 +232,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Gender",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                     dropdownColor:
                                         const Color.fromARGB(255, 36, 36, 63),
@@ -257,7 +262,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                                               value: value,
                                               child: Text(
                                                 value,
-                                                style: TextStyle(color: Colors.white),
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
                                             ))
                                         .toList(),
@@ -286,7 +292,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Subject",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                     dropdownColor:
                                         const Color.fromARGB(255, 36, 36, 63),
@@ -302,8 +309,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                                   children: [
                                     Expanded(
                                         child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 30, top: 15),
+                                      padding: const EdgeInsets.only(
+                                          left: 30, top: 15),
                                       child: Text(
                                         "Grades",
                                         style: TextStyle(
@@ -315,13 +322,16 @@ class _RegisterteacherState extends State<Registerteacher> {
                                     ),
                                     Expanded(
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           CheckboxListTile(
-                                            controlAffinity: ListTileControlAffinity.leading,
+                                            controlAffinity:
+                                                ListTileControlAffinity.leading,
                                             title: Text(
                                               "Grade 6",
-                                              style: TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _grade6,
                                             activeColor:
@@ -333,10 +343,12 @@ class _RegisterteacherState extends State<Registerteacher> {
                                             },
                                           ),
                                           CheckboxListTile(
-                                            controlAffinity: ListTileControlAffinity.leading,
+                                            controlAffinity:
+                                                ListTileControlAffinity.leading,
                                             title: Text(
                                               "Grade 7",
-                                              style: TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _grade7,
                                             onChanged: (value) {
@@ -348,10 +360,12 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 Color.fromARGB(255, 13, 0, 253),
                                           ),
                                           CheckboxListTile(
-                                            controlAffinity: ListTileControlAffinity.leading,
+                                            controlAffinity:
+                                                ListTileControlAffinity.leading,
                                             title: Text(
                                               "Grade 8",
-                                              style: TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _grade8,
                                             onChanged: (value) {
@@ -363,10 +377,12 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 Color.fromARGB(255, 13, 0, 253),
                                           ),
                                           CheckboxListTile(
-                                            controlAffinity: ListTileControlAffinity.leading,
+                                            controlAffinity:
+                                                ListTileControlAffinity.leading,
                                             title: Text(
                                               "Grade 9",
-                                              style: TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _grade9,
                                             onChanged: (value) {
@@ -378,10 +394,12 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 Color.fromARGB(255, 13, 0, 253),
                                           ),
                                           CheckboxListTile(
-                                            controlAffinity: ListTileControlAffinity.leading,
+                                            controlAffinity:
+                                                ListTileControlAffinity.leading,
                                             title: Text(
                                               "Grade 10",
-                                              style: TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _grade10,
                                             onChanged: (value) {
@@ -393,10 +411,12 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 Color.fromARGB(255, 13, 0, 253),
                                           ),
                                           CheckboxListTile(
-                                            controlAffinity: ListTileControlAffinity.leading,
+                                            controlAffinity:
+                                                ListTileControlAffinity.leading,
                                             title: Text(
                                               "Grade 11",
-                                              style: TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             value: _grade11,
                                             onChanged: (value) {
@@ -438,7 +458,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Education Qualifications",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -469,7 +490,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Contact No.",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -502,7 +524,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                                       fillColor:
                                           const Color.fromARGB(255, 36, 36, 63),
                                       labelText: "Email",
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -510,7 +533,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                 Padding(
                                   padding: const EdgeInsets.all(30),
                                   child: GestureDetector(
-                                    onTap: () {
+                                    onTap: () async {
                                       if (_formkey.currentState!.validate()) {
                                         String id = randomAlphaNumeric(10);
                                         List<String> Grades = [];
@@ -532,35 +555,50 @@ class _RegisterteacherState extends State<Registerteacher> {
                                         if (_grade11) {
                                           Grades.add("Grade 11");
                                         }
-
-
-                                        Map<String,dynamic>teacherInfoMap = {
-                                          "Id": id,
-                                          "Name":_nameController.text,
+                                        Map<String, dynamic> teacherInfoMap = {
+                                          "TeacherId": id,
+                                          "Name": _nameController.text,
                                           "DateOfBirth": _dateController.text,
-                                          "Gender":_genderController.text,
-                                          "Subject":_subjectController.text,
-                                          "Quelification":_qualificationController.text,
-                                          "ContactNo":_phoneController.text,
-                                          "Email":_emailController.text
+                                          "Gender": _genderController.text,
+                                          "Subject": _subjectController.text,
+                                          "Grade": Grades,
+                                          "Quelification":
+                                              _qualificationController.text,
+                                          "ContactNo": _phoneController.text,
+                                          "Email": _emailController.text
                                         };
+                                        Map<String, dynamic> scheduleInfoMap = {
+                                          "TeacherId": id,
+                                          "Subject": _subjectController.text
+                                        };
+                                        await DatabaseMethods()
+                                            .addTeacherDetails(
+                                                teacherInfoMap, id);
 
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    "Teacher Registered Succesfully")));
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    Setschedule(Grade: Grades, teacherInfoMap: teacherInfoMap)));
+                                                    Setschedule(
+                                                        Grade: Grades,
+                                                        scheduleInfoMap:
+                                                            scheduleInfoMap)));
                                       }
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          color:
-                                              const Color.fromARGB(255, 68, 51, 180),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: const Color.fromARGB(
+                                              255, 68, 51, 180),
                                           boxShadow: [
                                             BoxShadow(
-                                                blurRadius:
-                                                    BorderSide.strokeAlignCenter,
+                                                blurRadius: BorderSide
+                                                    .strokeAlignCenter,
                                                 color: Colors.white)
                                           ]),
                                       height: 50,

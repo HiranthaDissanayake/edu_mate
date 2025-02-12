@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,10 +11,67 @@ class Adminhomepage extends StatefulWidget {
 }
 
 class _AdminhomepageState extends State<Adminhomepage> {
+  Stream<QuerySnapshot>? StudentStream;
+  Stream<QuerySnapshot>? TeacherStream;
+
+  getonetheload() async {
+    StudentStream = await DatabaseMethods().getStudents();
+    TeacherStream = await DatabaseMethods().getTeachers();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getonetheload();
+  }
+
   // ignore: non_constant_identifier_names
-  int NumberOfStudents = 320;
+  Widget NumberOfStudents() {
+    return StreamBuilder<QuerySnapshot>(
+        stream: StudentStream,
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+          if (snapshot.hasError) {
+            return Text("Error: ${snapshot.error}"); 
+          }
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return Text("No students found"); 
+          }
+
+          int studentCount = snapshot.data!.docs.length; // Get total count
+          return Text(
+            "$studentCount",
+            style: TextStyle(
+                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+          );
+        });
+  }
   // ignore: non_constant_identifier_names
-  int NumberOfTeachers = 20;
+  Widget NumberOfTeachers() {
+    return StreamBuilder<QuerySnapshot>(
+        stream: TeacherStream,
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+          if (snapshot.hasError) {
+            return Text("Error: ${snapshot.error}"); 
+          }
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return Text("No Teachers found"); 
+          }
+
+          int teacherCount = snapshot.data!.docs.length; // Get total count
+          return Text(
+            "$teacherCount",
+            style: TextStyle(
+                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,11 +207,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
                                 color: const Color.fromARGB(255, 30, 27, 94),
                                 borderRadius: BorderRadius.circular(100)),
                             child: Center(
-                              child: Text("$NumberOfStudents",
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  )),
+                              child: NumberOfStudents(),
                             ),
                           )
                         ],
@@ -164,7 +219,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
                         children: [
                           Expanded(
                             child: Text(
-                              "Total Number Of Students",
+                              "Total Number Of Teachers",
                               style: GoogleFonts.poppins(
                                   color: Colors.white, fontSize: 18),
                             ),
@@ -176,11 +231,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
                                 color: const Color.fromARGB(255, 30, 27, 94),
                                 borderRadius: BorderRadius.circular(100)),
                             child: Center(
-                              child: Text("$NumberOfTeachers",
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  )),
+                              child: NumberOfTeachers(),
                             ),
                           )
                         ],

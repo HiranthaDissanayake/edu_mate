@@ -7,10 +7,10 @@ class Setschedule extends StatefulWidget {
   // ignore: non_constant_identifier_names
   final List<String> Grade;
   // ignore: non_constant_identifier_names
-  final Map<String,dynamic>teacherInfoMap;
+  final Map<String,dynamic>scheduleInfoMap;
   const Setschedule({
     required this.Grade,
-    required this.teacherInfoMap,
+    required this.scheduleInfoMap,
     super.key,
   });
 
@@ -397,14 +397,14 @@ class _SetscheduleState extends State<Setschedule> {
                           onPressed: () async{
                             String GradeId = randomAlphaNumeric(5);
                             setState(() {
-                              widget.teacherInfoMap["ClassDay"] = _dayController.text;
-                              widget.teacherInfoMap["StartTime"] = _startTimeController.text;
-                              widget.teacherInfoMap["EndTime"] = _endTimeController.text;
-                              widget.teacherInfoMap["Grade"] = Grade;
+                              widget.scheduleInfoMap["ClassDay"] = _dayController.text;
+                              widget.scheduleInfoMap["StartTime"] = _startTimeController.text;
+                              widget.scheduleInfoMap["EndTime"] = _endTimeController.text;
+                              widget.scheduleInfoMap["Grade"] = Grade;
                             });
                             if (_formKey.currentState!.validate()){
 
-                            await  DatabaseMethods().addTeacherDetails(widget.teacherInfoMap,GradeId);
+                            await  DatabaseMethods().setClassSchedule(widget.scheduleInfoMap,GradeId);
 
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context)
