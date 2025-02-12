@@ -14,6 +14,8 @@ class StudentMainPage extends StatefulWidget {
 
 class _StudentMainPageState extends State<StudentMainPage> {
 
+  String stId = "YUx66xe851";
+
   int _selectedMethod = 0;
 
   late PageController _pageController;
@@ -85,7 +87,7 @@ class _StudentMainPageState extends State<StudentMainPage> {
                                   borderRadius: BorderRadius.circular(100),
                                   color: Colors.white
                               ),
-                              child: Center(child: Image.asset("asssets/images/student_logo.png",fit: BoxFit.contain,)),
+                              child: Center(child: Image.asset("assets/images/student_logo.png",fit: BoxFit.contain,)),
                           ),
                       ),
                     ],
@@ -109,7 +111,7 @@ class _StudentMainPageState extends State<StudentMainPage> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                         Text("Student ID : ",style: GoogleFonts.poppins(color: Colors.white,fontSize: 17, fontWeight: FontWeight.bold),),
-                                        Text("M200005782",style: GoogleFonts.poppins(color: Colors.white,fontSize: 17, fontWeight: FontWeight.bold),)
+                                        Text(stId,style: GoogleFonts.poppins(color: Colors.white,fontSize: 17, fontWeight: FontWeight.bold),)
                                     ],
                                 ),
                               ),
@@ -212,7 +214,7 @@ class _StudentMainPageState extends State<StudentMainPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: _selectedMethod == 0 ? Classescontainer() : _selectedMethod == 1 ?  Reportcontainer() : Attendencecontainer(),
+                            child: _selectedMethod == 0 ? Classescontainer(stId: stId) : _selectedMethod == 1 ?  Reportcontainer() : Attendencecontainer(),
                           ),
               
                         ],

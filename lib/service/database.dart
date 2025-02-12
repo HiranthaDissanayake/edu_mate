@@ -17,4 +17,16 @@ class DatabaseMethods {
         .doc(id)
         .set(teacherInfoMap);
   }
+
+
+  // Fetch all Student details
+  Future<Stream<QuerySnapshot>> getStudents() async{
+    return await FirebaseFirestore.instance.collection("Students").snapshots();
+  }
+
+  // Fetch all Teachers details
+  Future<Stream<QuerySnapshot>> getTeachers() async{
+    return await FirebaseFirestore.instance.collection("Teachers").snapshots();
+  }
+  
 }
