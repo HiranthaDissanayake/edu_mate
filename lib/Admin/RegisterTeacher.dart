@@ -1,6 +1,6 @@
 import 'package:edu_mate/Admin/SetSchedule.dart';
+import 'package:edu_mate/service/auth_service.dart';
 import 'package:edu_mate/service/database.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -14,11 +14,13 @@ class Registerteacher extends StatefulWidget {
 }
 
 class _RegisterteacherState extends State<Registerteacher> {
+
+  final _auth = AuthService();
+
   final _nameController = TextEditingController();
   final _dateController = TextEditingController();
   final _genderController = TextEditingController();
   final _subjectController = TextEditingController();
-  final _gradeController = TextEditingController();
   final _emailController = TextEditingController();
   final _qualificationController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -40,8 +42,8 @@ class _RegisterteacherState extends State<Registerteacher> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              const Color.fromARGB(255, 2, 3, 87),
-              const Color.fromARGB(255, 18, 52, 126)
+              Color(0xFF13134C),
+              Color(0xFF2D2DB2),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -55,8 +57,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(colors: [
-                      const Color.fromARGB(255, 1, 2, 23),
-                      const Color.fromARGB(255, 2, 36, 109)
+                      Color(0xFF010127),
+                      Color(0xFF0B0C61),
                     ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(70),
@@ -88,7 +90,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                   width: double.infinity,
                   height: 700,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 2, 1, 95),
+                    color: const Color(0xFF181A47),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: SingleChildScrollView(
@@ -135,8 +137,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor:Color(0xFF28313F),
                                       labelText: "Full Name",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -166,8 +167,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor:Color(0xFF181A47),
                                       labelText: "Date Of Birth",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -229,8 +229,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor:Color(0xFF181A47),
                                       labelText: "Gender",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -289,8 +288,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor:Color(0xFF181A47),
                                       labelText: "Subject",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -455,8 +453,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor:Color(0xFF181A47),
                                       labelText: "Education Qualifications",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -487,8 +484,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor:Color(0xFF181A47),
                                       labelText: "Contact No.",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -521,8 +517,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor:Color(0xFF181A47),
                                       labelText: "Email",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -574,7 +569,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                         await DatabaseMethods()
                                             .addTeacherDetails(
                                                 teacherInfoMap, id);
-
+                                        _auth.crateEmailAndPasswordForStudent(_emailController.text, id);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
                                                 content: Text(
@@ -593,8 +588,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          color: const Color.fromARGB(
-                                              255, 68, 51, 180),
+                                          color:Color(0xFF3A2AE0),
                                           boxShadow: [
                                             BoxShadow(
                                                 blurRadius: BorderSide
