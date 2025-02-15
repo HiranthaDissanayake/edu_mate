@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_mate/Admin/DrawerMenu.dart';
+import 'package:edu_mate/Admin/ManageStudents.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -82,10 +83,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
           height: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                const Color(0xFF13134C),
-                const Color(0XFF2D2DB2)
-              ],
+              colors: [const Color(0xFF13134C), const Color(0XFF2D2DB2)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -212,8 +210,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
                                 height: 60,
                                 width: 60,
                                 decoration: BoxDecoration(
-                                    color:
-                                        const Color(0xFF282845),
+                                    color: const Color(0xFF282845),
                                     borderRadius: BorderRadius.circular(100)),
                                 child: Center(
                                   child: NumberOfStudents(),
@@ -237,8 +234,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
                                 height: 60,
                                 width: 60,
                                 decoration: BoxDecoration(
-                                    color:
-                                        const Color(0xFF282845),
+                                    color: const Color(0xFF282845),
                                     borderRadius: BorderRadius.circular(100)),
                                 child: Center(
                                   child: NumberOfTeachers(),
@@ -291,7 +287,10 @@ class _AdminhomepageState extends State<Adminhomepage> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              //type the code
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Managestudents()));
                             },
                             child: Container(
                               height: 60,
