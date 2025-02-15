@@ -606,10 +606,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         if (_commerce) {
                                           Subjects.add("Commerce");
                                         }
-                                         _auth
-                                            .crateEmailAndPasswordForStudent(
-                                                _emailController.text,
-                                                id);
+                                        _auth.crateEmailAndPasswordForStudent(
+                                            _emailController.text, id);
 
                                         Map<String, dynamic> studentInfoMap = {
                                           "id": id,
@@ -636,6 +634,22 @@ class _RegisterstudentState extends State<Registerstudent> {
                                           backgroundColor: Colors.green,
                                           fontSize: 20,
                                         );
+
+                                        setState(() {
+                                          _nameController.clear();
+                                          _dateController.clear();
+                                          _genderController.clear();
+                                          _gradeController.clear();
+                                          _phoneController.clear();
+                                          _patentNoController.clear();
+                                          _emailController.clear();
+                                          _maths = false;
+                                          _science = false;
+                                          _english = false;
+                                          _history = false;
+                                          _sinhala = false;
+                                          _commerce = false;
+                                        });
                                       }
                                     },
                                     child: Container(
