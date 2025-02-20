@@ -5,15 +5,15 @@ import 'package:edu_mate/service/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Managestudents extends StatefulWidget {
-  const Managestudents({super.key});
+class Manageteachers extends StatefulWidget {
+  const Manageteachers({super.key});
 
   @override
-  State<Managestudents> createState() => _ManagestudentsState();
+  State<Manageteachers> createState() => _ManagestudentsState();
 }
 
-class _ManagestudentsState extends State<Managestudents> {
-  List<Map<dynamic, dynamic>> students = [];
+class _ManagestudentsState extends State<Manageteachers> {
+  List<Map<dynamic, dynamic>> teachers = [];
   List<Map<dynamic, dynamic>> filteredStudents = [];
   DatabaseMethods databaseMethods = DatabaseMethods();
   TextEditingController searchController = TextEditingController();
@@ -27,12 +27,12 @@ class _ManagestudentsState extends State<Managestudents> {
   // Function to fetch students from Firestore
   void _fetchStudents() async {
     try {
-      Stream<QuerySnapshot> studentStream = await databaseMethods.getStudents();
+      Stream<QuerySnapshot> studentStream = await databaseMethods.getTeachers();
 
       studentStream.listen((QuerySnapshot snapshot) {
         if (snapshot.docs.isNotEmpty) {
           setState(() {
-            students = snapshot.docs.map((doc) {
+            teachers = snapshot.docs.map((doc) {
               return {
                 'id': doc.id,
                 'name': doc['Name'], // Use 'Name' instead of 'name'
@@ -40,7 +40,7 @@ class _ManagestudentsState extends State<Managestudents> {
                     doc['Subject'], // Use 'Subject' instead of 'subjects'
               };
             }).toList();
-            filteredStudents = List.from(students);
+            filteredStudents = List.from(teachers);
           });
         } else {
           print("No students found in Firestore.");
@@ -53,7 +53,7 @@ class _ManagestudentsState extends State<Managestudents> {
 
   void _filterStudents(String query) {
     setState(() {
-      filteredStudents = students
+      filteredStudents = teachers
           .where((student) =>
               student['name'].toLowerCase().contains(query.toLowerCase()))
           .toList();
@@ -115,7 +115,7 @@ class _ManagestudentsState extends State<Managestudents> {
                           ),
                           Spacer(),
                           Text(
-                            "Manage Students",
+                            "Manage Teachers",
                             style: TextStyle(
                               color: Color(0xFFFFFFFF),
                               fontSize: 20,
@@ -133,7 +133,7 @@ class _ManagestudentsState extends State<Managestudents> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Searchbar(
-                    hintText: "Search for a student",
+                    hintText: "Search for a teacher",
                     controller: searchController,
                     onChange: _filterStudents,
                   ),
@@ -221,7 +221,7 @@ class _ManagestudentsState extends State<Managestudents> {
                                         onTap: () {
                                           PopupMore(
                                                   id: student['id'],
-                                                  collection: 'students')
+                                                  collection: 'Teachers')
                                               .showPopup(context);
                                         },
                                         child: Icon(

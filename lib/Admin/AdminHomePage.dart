@@ -16,9 +16,17 @@ class _AdminhomepageState extends State<Adminhomepage> {
   Stream<QuerySnapshot>? StudentStream;
   Stream<QuerySnapshot>? TeacherStream;
 
-  getonetheload() async {
-    StudentStream = await DatabaseMethods().getStudents();
-    TeacherStream = await DatabaseMethods().getTeachers();
+  Future<void> getonetheload() async {
+    try {
+      StudentStream = await DatabaseMethods().getStudents();
+      TeacherStream = await DatabaseMethods().getTeachers();
+      setState(() {
+        StudentStream;
+        TeacherStream;
+      });
+    } catch (e) {
+      print("Error fetching data: $e");
+    }
   }
 
   @override

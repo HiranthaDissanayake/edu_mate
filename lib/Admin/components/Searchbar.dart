@@ -2,31 +2,39 @@ import 'package:flutter/material.dart';
 
 class Searchbar extends StatefulWidget {
   final String hintText;
-  const Searchbar({super.key, required this.hintText});
+  final TextEditingController controller;
+  final ValueChanged<String>? onChange;
+  const Searchbar(
+      {super.key,
+      required this.hintText,
+      required this.controller,
+      this.onChange});
 
   @override
   State<Searchbar> createState() => _SearchbarState();
 }
 
 class _SearchbarState extends State<Searchbar> {
-  // Use SearchController instead of TextEditingController
-  final SearchController controller = SearchController();
-
   @override
   Widget build(BuildContext context) {
-    return SearchBar(
-      controller: controller,
-      padding: const MaterialStatePropertyAll<EdgeInsets>(
-        EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: TextField(
+        controller: widget.controller,
+        onChanged: widget.onChange,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          prefixIcon: const Icon(Icons.search, color: Colors.grey),
+          hintText: widget.hintText,
+          hintStyle: const TextStyle(color: Colors.grey),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: const EdgeInsets.symmetric(vertical: 10),
+        ),
       ),
-      onTap: () {
-        controller.openView();
-      },
-      onChanged: (_) {
-        controller.openView();
-      },
-      leading: const Icon(Icons.search),
-      hintText: widget.hintText,
     );
   }
 }
