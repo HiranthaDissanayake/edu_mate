@@ -1,6 +1,5 @@
 # EduMate - Tuition Class Management App
 
-![EduMate Logo](https://via.placeholder.com/150)
 
 ## Overview
 **EduMate** is a comprehensive **tuition class management app** designed to streamline the process of managing students, schedules. It provides an efficient platform for tutors and students to interact seamlessly.
