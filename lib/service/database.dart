@@ -82,6 +82,10 @@ class DatabaseMethods {
     return termsList.map((e) => e.trim()).toList(); // Trim whitespace
   }
   // Fetch privacy policy
+
+
+  
+  // Fetch terms and conditions
   Future<List<String>> fetchPrivacyPolicy() async {
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
         .collection("privacy_policy")
