@@ -7,10 +7,10 @@ class Setschedule extends StatefulWidget {
   // ignore: non_constant_identifier_names
   final List<String> Grade;
   // ignore: non_constant_identifier_names
-  final Map<String,dynamic>teacherInfoMap;
+  final Map<String,dynamic>scheduleInfoMap;
   const Setschedule({
     required this.Grade,
-    required this.teacherInfoMap,
+    required this.scheduleInfoMap,
     super.key,
   });
 
@@ -41,8 +41,8 @@ class _SetscheduleState extends State<Setschedule> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              const Color.fromARGB(255, 2, 3, 87),
-              const Color.fromARGB(255, 18, 52, 126)
+              const Color(0xFF13134C),
+              Color(0xFF2D2DB2),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -55,8 +55,8 @@ class _SetscheduleState extends State<Setschedule> {
               width: double.infinity,
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
-                    const Color.fromARGB(255, 1, 2, 23),
-                    const Color.fromARGB(255, 2, 36, 109)
+                    Color(0xFF010127),
+                    Color(0xFF0B0C61),
                   ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(70),
@@ -155,7 +155,7 @@ class _SetscheduleState extends State<Setschedule> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     contentPadding: EdgeInsets.all(20),
-                    backgroundColor: Color.fromARGB(255, 2, 1, 95),
+                    backgroundColor:Color(0xFF080B2E),
                     titleTextStyle: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -397,14 +397,14 @@ class _SetscheduleState extends State<Setschedule> {
                           onPressed: () async{
                             String GradeId = randomAlphaNumeric(5);
                             setState(() {
-                              widget.teacherInfoMap["ClassDay"] = _dayController.text;
-                              widget.teacherInfoMap["StartTime"] = _startTimeController.text;
-                              widget.teacherInfoMap["EndTime"] = _endTimeController.text;
-                              widget.teacherInfoMap["Grade"] = Grade;
+                              widget.scheduleInfoMap["ClassDay"] = _dayController.text;
+                              widget.scheduleInfoMap["StartTime"] = _startTimeController.text;
+                              widget.scheduleInfoMap["EndTime"] = _endTimeController.text;
+                              widget.scheduleInfoMap["Grade"] = Grade;
                             });
                             if (_formKey.currentState!.validate()){
 
-                            await  DatabaseMethods().addTeacherDetails(widget.teacherInfoMap,GradeId);
+                            await  DatabaseMethods().setClassSchedule(widget.scheduleInfoMap,GradeId);
 
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context)
