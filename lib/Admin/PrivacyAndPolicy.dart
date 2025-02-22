@@ -14,7 +14,9 @@ class _PrivacyandpolicyState extends State<Privacyandpolicy> {
   Future<void> getonetheload() async {
     try {
       privacyStream = await DatabaseMethods().fetchPrivacyPolicy();
-      setState(() {});
+      setState(() {
+        privacyStream = privacyStream;
+      });
     } catch (e) {
       print("Error fetching data: $e");
     }

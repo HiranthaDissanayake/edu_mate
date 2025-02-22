@@ -61,27 +61,26 @@ class DatabaseMethods {
 
      String termsText = snapshot["content"];
 
-    // Splitting the terms at each numbered item (e.g., "01.", "02.", etc.)
+
     List<String> termsList = termsText.split(RegExp(r'(?=\d{2}\.)'));
 
-    return termsList.map((e) => e.trim()).toList(); // Trim whitespace
+    return termsList.map((e) => e.trim()).toList(); 
   }
 
 
   
-  // Fetch terms and conditions
+  // Fetch privacy policy
   Future<List<String>> fetchPrivacyPolicy() async {
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
         .collection("privacy_policy")
         .doc("latest_privacy_policy")
         .get();
 
-     String termsText = snapshot["content"];
+     String privacyText = snapshot["content"];
 
-    // Splitting the terms at each numbered item (e.g., "01.", "02.", etc.)
-    List<String> privacyList = termsText.split(RegExp(r'(?=\d{2}\.)'));
+    List<String> privacyList = privacyText.split(RegExp(r'(?=\d{2}\.)'));
 
-    return privacyList.map((e) => e.trim()).toList(); // Trim whitespace
+    return privacyList.map((e) => e.trim()).toList(); 
   }
   
 }
