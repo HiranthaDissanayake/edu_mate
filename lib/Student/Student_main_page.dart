@@ -1,6 +1,6 @@
-import 'package:edu_mate/Student/components/Categories/AttendenceContainer.dart';
-import 'package:edu_mate/Student/components/Categories/ClassesContainer.dart';
-import 'package:edu_mate/Student/components/Categories/ReportContainer.dart';
+import 'package:edu_mate/Student/components/AttendenceContainer.dart';
+import 'package:edu_mate/Student/components/ClassesContainer.dart';
+import 'package:edu_mate/Student/components/ReportContainer.dart';
 import 'package:edu_mate/Student/components/Studet_Drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,8 +14,7 @@ class StudentMainPage extends StatefulWidget {
 
 class _StudentMainPageState extends State<StudentMainPage> {
 
-  String stId = "u7bK138034";
-  String grade = "Grade 9";
+  String stId = "YUx66xe851";
 
   int _selectedMethod = 0;
 
@@ -46,7 +45,7 @@ class _StudentMainPageState extends State<StudentMainPage> {
                 children: [
                   Container(
                     margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height/5.5),
-                    height: MediaQuery.of(context).size.height/1.5,
+                    height: MediaQuery.of(context).size.height/2,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50),bottomRight: Radius.circular(50)),
                       gradient: LinearGradient(
@@ -72,8 +71,7 @@ class _StudentMainPageState extends State<StudentMainPage> {
                         icon: Padding(
                           padding: const EdgeInsets.only(top: 50,left: 20),
                           child: Icon(Icons.menu, color: Colors.white,size: 30,),
-                        )
-                      );
+                        ));
                     },
                   ),
               
@@ -214,7 +212,10 @@ class _StudentMainPageState extends State<StudentMainPage> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          _selectedMethod == 0 ? Classescontainer(stId: stId, grade: grade) : _selectedMethod == 1 ?  Reportcontainer() : Attendencecontainer(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: _selectedMethod == 0 ? Classescontainer(stId: stId) : _selectedMethod == 1 ?  Reportcontainer() : Attendencecontainer(),
+                          ),
               
                         ],
                       ),

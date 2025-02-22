@@ -21,7 +21,7 @@ class _StudetDrawerState extends State<StudetDrawer> {
             ),
             child: Column(
               children: [
-                Image.asset("assets/images/AppLogo.png", width: 80, height: 80,),
+                Image.asset("asssets/images/AppLogo.png", width: 80, height: 80,),
                 Text("EduMate", style: TextStyle(color: Colors.white, fontSize: 15),),
               ],
             ),
