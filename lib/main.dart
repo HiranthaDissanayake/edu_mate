@@ -9,9 +9,11 @@ import 'package:edu_mate/Teacher/Attendance.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
-}
 
+  runApp(
+    MyApp(), // Wrap your app here
+  );
+}
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

@@ -1,16 +1,46 @@
-# edu_mate
+# EduMate - Tuition Class Management App
 
-A new Flutter project.
 
-## Getting Started
+## Overview
+**EduMate** is a comprehensive **tuition class management app** designed to streamline the process of managing students, schedules. It provides an efficient platform for tutors and students to interact seamlessly.
 
-This project is a starting point for a Flutter application.
+## Features
+✅ **Student Registration & Management** - Enroll and manage student profiles.
+✅ **Class Scheduling** - Easily create and update class schedules.
+✅ **Attendance Tracking** - Monitor student attendance.
+✅ **Assignments & Notes** - Upload and share study materials.
+✅ **Notifications & Reminders** - Automated reminders for classes and payments.
+✅ **Performance Tracking** - Analyze student progress and reports.
+✅ **Admin Dashboard** - Manage all operations from a single interface.
 
-A few resources to get you started if this is your first Flutter project:
+## Tech Stack
+- **Frontend:** Flutter (Dart)
+- **Backend:** Firebase 
+- **Database:** Firebase 
+- **State Management:** Provider
+- **Authentication:** Firebase Auth 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Installation
+### Prerequisites
+- Flutter SDK installed ([Install Flutter](https://flutter.dev/docs/get-started/install))
+- Firebase setup 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Steps
+1. **Clone the repository**
+
+2. **Install dependencies:**
+   ```sh
+   flutter pub get
+   ```
+3. **Run the app:**
+   ```sh
+   flutter run
+   ```
+
+
+## Contact
+📧 Email: hiranthamalindu46@example.com  
+
+---
+⭐ **If you like this project, don't forget to give it a star on GitHub!** ⭐
+
