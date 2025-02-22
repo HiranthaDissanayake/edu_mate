@@ -51,7 +51,37 @@ class DatabaseMethods {
         .doc(id)
         .delete();
   }
+ // Fetch terms and conditions
+  Future<List<String>> fetchTermsAndConditions() async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection("terms_conditions")
+        .doc("latest_terms")
+        .get();
 
+     String termsText = snapshot["content"];
+
+
+    List<String> termsList = termsText.split(RegExp(r'(?=\d{2}\.)'));
+
+    return termsList.map((e) => e.trim()).toList(); 
+  }
+
+
+  
+  // Fetch privacy policy
+  Future<List<String>> fetchPrivacyPolicy() async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection("privacy_policy")
+        .doc("latest_privacy_policy")
+        .get();
+
+     String privacyText = snapshot["content"];
+
+    List<String> privacyList = privacyText.split(RegExp(r'(?=\d{2}\.)'));
+
+    return privacyList.map((e) => e.trim()).toList(); 
+  }
+  
  
 }
 
