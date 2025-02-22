@@ -14,7 +14,7 @@ class StudentMainPage extends StatefulWidget {
 
 class _StudentMainPageState extends State<StudentMainPage> {
 
-  String stId = "u7bK138034";
+  String stId = "MtfWlUjDtj";
   String grade = "Grade 9";
 
   int _selectedMethod = 0;
