@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_mate/Admin/DrawerMenu.dart';
 import 'package:edu_mate/Admin/ManageStudents.dart';
+import 'package:edu_mate/Admin/ManageTeachers.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -91,7 +92,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
           height: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [const Color(0xFF13134C), const Color(0XFF2D2DB2)],
+              colors: [const Color(0xFF13134C),const Color(0xFF13134C), const Color(0XFF2D2DB2)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -115,6 +116,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                               colors: [
+                                const Color(0xFF010127),
                                 const Color(0xFF010127),
                                 const Color(0xFF0B0C61)
                               ],
@@ -326,7 +328,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              //type the code
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Manageteachers()));
                             },
                             child: Container(
                               height: 60,
