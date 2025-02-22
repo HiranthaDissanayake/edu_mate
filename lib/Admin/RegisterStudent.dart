@@ -1,4 +1,6 @@
-import 'package:edu_mate/Admin/AdminHomePage.dart';
+import 'dart:math';
+
+import 'package:edu_mate/service/auth_service.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,6 +16,8 @@ class Registerstudent extends StatefulWidget {
 }
 
 class _RegisterstudentState extends State<Registerstudent> {
+  final _auth = AuthService();
+
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
@@ -39,8 +43,8 @@ class _RegisterstudentState extends State<Registerstudent> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              const Color.fromARGB(255, 2, 3, 87),
-              const Color.fromARGB(255, 18, 52, 126)
+              Color(0xFF13134C),
+              Color(0xFF2D2DB2),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -54,8 +58,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(colors: [
-                      const Color.fromARGB(255, 1, 2, 23),
-                      const Color.fromARGB(255, 2, 36, 109)
+                      Color(0xFF010127),
+                      Color(0xFF0B0C61),
                     ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(70),
@@ -87,7 +91,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                   width: double.infinity,
                   height: 700,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 2, 1, 95),
+                    color: Color(0xFF181A47),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: SingleChildScrollView(
@@ -138,8 +142,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor: Color(0xFF181A47),
                                       labelText: "Full Name",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -173,8 +176,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor: Color(0xFF181A47),
                                       labelText: "Date Of Birth",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -240,8 +242,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor: Color(0xFF181A47),
                                       labelText: "Gender",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -304,8 +305,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor: Color(0xFF181A47),
                                       labelText: "Grades",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -501,8 +501,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor: Color(0xFF181A47),
                                       labelText: "Contact No.",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -537,8 +536,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor: Color(0xFF181A47),
                                       labelText: "Parent's Contact No.",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -575,8 +573,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          const Color.fromARGB(255, 36, 36, 63),
+                                      fillColor: Color(0xFF181A47),
                                       labelText: "Email",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -609,6 +606,9 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         if (_commerce) {
                                           Subjects.add("Commerce");
                                         }
+                                        _auth.crateEmailAndPasswordForStudent(
+                                            _emailController.text, id);
+
                                         Map<String, dynamic> studentInfoMap = {
                                           "id": id,
                                           "Name": _nameController.text,
@@ -634,6 +634,22 @@ class _RegisterstudentState extends State<Registerstudent> {
                                           backgroundColor: Colors.green,
                                           fontSize: 20,
                                         );
+
+                                        setState(() {
+                                          _nameController.clear();
+                                          _dateController.clear();
+                                          _genderController.clear();
+                                          _gradeController.clear();
+                                          _phoneController.clear();
+                                          _patentNoController.clear();
+                                          _emailController.clear();
+                                          _maths = false;
+                                          _science = false;
+                                          _english = false;
+                                          _history = false;
+                                          _sinhala = false;
+                                          _commerce = false;
+                                        });
                                       }
                                     },
                                     child: Container(
@@ -645,8 +661,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                           BoxShadow(
                                             blurRadius:
                                                 BorderSide.strokeAlignCenter,
-                                            color: const Color.fromARGB(
-                                                255, 0, 0, 0),
+                                            color: Color(0xFF3A2AE0),
                                           )
                                         ],
                                       ),
