@@ -619,6 +619,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                           "ContactNo": _phoneController.text,
                                           "ParentNo": _patentNoController.text,
                                           "Email": _emailController.text,
+                                          
                                         };
 
                                         await DatabaseMethods()

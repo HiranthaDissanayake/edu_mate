@@ -51,4 +51,22 @@ class DatabaseMethods {
         .doc(id)
         .delete();
   }
+  
+  //Add the attendance column
+  Future<void> addAttendanceFieldToAllStudents() async {
+  CollectionReference students = FirebaseFirestore.instance.collection('Students');
+
+  QuerySnapshot snapshot = await students.get();
+
+  for (var doc in snapshot.docs) {
+    await students.doc(doc.id).update({
+      'attendance': {} // Adding an empty map
+    }).then((_) {
+      print("Updated student ${doc.id}");
+    }).catchError((error) {
+      print("Failed to update student ${doc.id}: $error");
+    });
+  }
 }
+}
+
