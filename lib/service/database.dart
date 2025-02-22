@@ -51,8 +51,7 @@ class DatabaseMethods {
         .doc(id)
         .delete();
   }
-  
-  //Add the attendance column
+ //Add the attendance column
   Future<void> addAttendanceFieldToAllStudents() async {
   CollectionReference students = FirebaseFirestore.instance.collection('Students');
 
@@ -68,5 +67,40 @@ class DatabaseMethods {
     });
   }
 }
+ // Fetch terms and conditions
+  Future<List<String>> fetchTermsAndConditions() async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection("terms_conditions")
+        .doc("latest_terms")
+        .get();
+
+     String termsText = snapshot["content"];
+
+    // Splitting the terms at each numbered item (e.g., "01.", "02.", etc.)
+    List<String> termsList = termsText.split(RegExp(r'(?=\d{2}\.)'));
+
+    return termsList.map((e) => e.trim()).toList(); // Trim whitespace
+  }
+  // Fetch privacy policy
+
+
+  
+  // Fetch terms and conditions
+  Future<List<String>> fetchPrivacyPolicy() async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection("privacy_policy")
+        .doc("latest_privacy_policy")
+        .get();
+
+     String termsText = snapshot["content"];
+
+    // Splitting the terms at each numbered item (e.g., "01.", "02.", etc.)
+    List<String> privacyList = termsText.split(RegExp(r'(?=\d{2}\.)'));
+
+    return privacyList.map((e) => e.trim()).toList(); // Trim whitespace
+  }
+  
+ 
 }
+
 

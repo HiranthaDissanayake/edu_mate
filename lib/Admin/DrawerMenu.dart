@@ -1,3 +1,6 @@
+import 'package:edu_mate/Admin/AdminHomePage.dart';
+import 'package:edu_mate/Admin/PrivacyAndPolicy.dart';
+import 'package:edu_mate/Admin/TermsAndConditions.dart';
 import 'package:flutter/material.dart';
 
 class Drawermenu extends StatefulWidget {
@@ -32,6 +35,21 @@ class _DrawermenuState extends State<Drawermenu> {
             ),
           )),
           ListTile(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Adminhomepage()));
+            },
+            leading: SizedBox(
+              height: 25,
+              width: 25,
+              child: Image.asset("assets/images/dashboard.png"),
+            ),
+            title: Text("Dashboard", style: TextStyle(color: Colors.white))
+
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Privacyandpolicy()));
+            },
             leading: SizedBox(
               height: 25,
               width: 25,
@@ -41,6 +59,9 @@ class _DrawermenuState extends State<Drawermenu> {
                 Text("Privacy & Policy", style: TextStyle(color: Colors.white)),
           ),
           ListTile(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Termsandconditions()));
+            },
             leading: SizedBox(
               //terms_and_conditions.png
               height: 25,
