@@ -57,54 +57,57 @@ class _ClassescontainerState extends State<Classescontainer> {
     getonload();
   }
 
-  Widget studentDetails() {
-    return StreamBuilder(
-      stream: studentStream,
-      builder: (context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        DocumentSnapshot ds = snapshot.data.docs[0];
-        List subjects = ds['Subject'];
-
-        return Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Color(0xFF26284A),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Subjects:",
-                style: GoogleFonts.poppins(
-                  color: Colors.deepOrange,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10),
-              ...subjects.map((subject) => Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Text(
-                      "$subject",
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 17,
-                      ),
-                    ),
-                  )),
-            ],
+Widget studentDetails() {
+  return StreamBuilder(
+    stream: studentStream,
+    builder: (context, AsyncSnapshot snapshot) {
+      if (!snapshot.hasData || snapshot.data.docs.isEmpty) {
+        return Center(
+          child: Text(
+            "No student data available",
+            style: GoogleFonts.poppins(color: Colors.white, fontSize: 17),
           ),
         );
-      },
-    );
-  }
+      }
+
+      DocumentSnapshot ds = snapshot.data.docs[0]; // Now safe
+      List subjects = ds['Subject'];
+
+      return Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Color(0xFF26284A),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "Subjects:",
+              style: GoogleFonts.poppins(
+                color: Colors.deepOrange,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            ...subjects.map((subject) => Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(
+                    "$subject",
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 17,
+                    ),
+                  ),
+                )),
+          ],
+        ),
+      );
+    },
+  );
+}
 
   Widget scheduleDetails() {
     return StreamBuilder(
