@@ -2,6 +2,9 @@ import 'package:edu_mate/Admin/AdminHomePage.dart';
 import 'package:edu_mate/Student/Student_main_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_mate/Teacher/LoginScreen.dart';
+import 'package:edu_mate/Admin/ManageStudents.dart';
+import 'package:edu_mate/Teacher/Attendance.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Adminhomepage(),
+      home: StudentMainPage(),
     );
   }
 }
