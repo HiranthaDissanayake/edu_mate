@@ -1,0 +1,2 @@
+C:/Users/User/Documents/GitHub/edu_mate/android/app/.cxx/Debug/422r4u2b/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/User/Documents/GitHub/edu_mate/android/app/.cxx/Debug/422r4u2b/armeabi-v7a/CMakeFiles/rebuild_cache.dir
