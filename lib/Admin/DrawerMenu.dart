@@ -1,9 +1,10 @@
 import 'package:edu_mate/Admin/AdminHomePage.dart';
-import 'package:edu_mate/Screens/LoginScreen.dart';
 import 'package:edu_mate/Admin/PrivacyAndPolicy.dart';
 import 'package:edu_mate/Admin/RegisterAdmin.dart';
 import 'package:edu_mate/Admin/TermsAndConditions.dart';
+import 'package:edu_mate/Screens/splashScreen1.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Drawermenu extends StatefulWidget {
   const Drawermenu({super.key});
@@ -46,15 +47,12 @@ class _DrawermenuState extends State<Drawermenu> {
               child: Image.asset("assets/images/dashboard.png"),
             ),
             title: Text("Dashboard", style: TextStyle(color: Colors.white))
-
-        ),
-        
+          ),
           ListTile(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>Registeradmin()));
             },
             leading: SizedBox(
-              //terms_and_conditions.png
               height: 25,
               width: 25,
               child: Image.asset("assets/images/registerAdmin.png"),
@@ -62,8 +60,6 @@ class _DrawermenuState extends State<Drawermenu> {
             title: Text("Register Admin",
                 style: TextStyle(color: Colors.white)),
           ),
-
-
           ListTile(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>Privacyandpolicy()));
@@ -81,7 +77,6 @@ class _DrawermenuState extends State<Drawermenu> {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>Termsandconditions()));
             },
             leading: SizedBox(
-              //terms_and_conditions.png
               height: 25,
               width: 25,
               child: Image.asset("assets/images/terms_and_conditions.png"),
@@ -95,8 +90,10 @@ class _DrawermenuState extends State<Drawermenu> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>Loginscreen(role: "admin",)));
+              onTap: () async {
+                final SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.clear();
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Splashscreen1()));
               },
               child: Container(
                 height: 40,
