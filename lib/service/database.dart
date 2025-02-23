@@ -104,5 +104,66 @@ class DatabaseMethods {
     }
   }
 
+  //Add student marks
+  Future<void> addStudentMarks(String studentId, String testNo, String marks) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('Students')  // Main collection
+          .doc(studentId)          // Locate the student by ID
+          .collection('Marks')     // Subcollection for storing marks
+          .doc(testNo)             // Each test has its own document
+          .set({
+        'testNo': testNo,
+        'marks': marks,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      print("Marks added successfully!");
+    } catch (e) {
+      print("Error adding marks: $e");
+    }
+  }
+
+  //Edit student marks
+   Future<void> editStudentMarks(String studentId, String testNo, String newMarks) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('Students')   // Locate the main collection
+          .doc(studentId)           // Find the specific student
+          .collection('Marks')      // Navigate to Marks subcollection
+          .doc(testNo)              // Find the test document
+          .update({
+        'marks': newMarks,          // Update the marks field
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      print("Marks updated successfully!");
+    } catch (e) {
+      print("Error updating marks: $e");
+    }
+  }
+
+   Future<void> sendAlert(String message) async {
+    try {
+      // Get the number of current alerts in the 'Alerts' collection
+      QuerySnapshot alertsSnapshot = await _firestore.collection('Alerts').get();
+      int alertCount = alertsSnapshot.size;
+
+      // Generate the next alert ID
+      String alertId = 'Alert_ID_${(alertCount + 1).toString().padLeft(3, '0')}';
+
+      // Save the alert to Firestore
+      await _firestore.collection('Alerts').doc(alertId).set({
+        'message': message,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      print("Alert sent successfully!");
+    } catch (e) {
+      print("Error sending alert: $e");
+    }
+  }
+
+
 }
 
