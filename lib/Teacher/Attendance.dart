@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:edu_mate/Teacher/TeacherDashboard.dart';
-import 'package:edu_mate/service/database.dart';
 
 class Attendance extends StatefulWidget {
   const Attendance({super.key});
@@ -18,8 +17,8 @@ class _AttendanceState extends State<Attendance> {
   @override
   void initState() {
     super.initState();
-    DatabaseMethods()
-        .addAttendanceFieldToAllStudents(); // Call once to update all students
+    // DatabaseMethods()
+    //     .addAttendanceFieldToAllStudents(); // Call once to update all students
   }
 
   // Function to mark attendance
@@ -31,6 +30,7 @@ class _AttendanceState extends State<Attendance> {
         .collection('Students')
         .doc(studentId)
         .update({'attendance.$monthYear.$today': status});
+        
   }
 
   @override
@@ -72,7 +72,9 @@ class _AttendanceState extends State<Attendance> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Teacherdashboard()),
+                              builder: (context) => Teacherdashboard(
+                                Grade: '',
+                              )),
                         );
                       },
                       icon: Icon(Icons.arrow_back),
@@ -118,7 +120,8 @@ class _AttendanceState extends State<Attendance> {
                       String studentId = doc.id;
                       String studentName = doc['Name'];
                       
-                      String imageURL = doc['imageURL'] ?? '';
+                      // String imageURL = doc['imageURL'];
+                      
 
                       // Get attendance status for the student if exists
                       int currentAttendanceStatus = attendanceStatus[studentId] ?? 0;
@@ -131,10 +134,22 @@ class _AttendanceState extends State<Attendance> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: ListTile(
-                          leading: CircleAvatar(
-                            child: Image.network('https://drive.google.com/uc?export=view&id=1GYrvrGb9OijZNuc5dUur5MKHvG79qH5m',
-                            fit: BoxFit.cover,
-                            ),
+                          leading: ClipOval(
+                            child: Image.network(
+                            (doc.data() as Map<String, dynamic>).containsKey('imageURL')
+                                ? (doc.data() as Map<String, dynamic>)['imageURL']
+                                : 'https://drive.google.com/uc?export=view&id=1cogzIZVFFQMgVfr8emlld-PclxPUzqpv', // Fallback URL
+                                height: 40,
+                                width: 40,
+                            errorBuilder: (context, error, stackTrace) {
+                              // Fallback image in case of error
+                              return Image.network(
+                                'https://drive.google.com/uc?export=view&id=1cogzIZVFFQMgVfr8emlld-PclxPUzqpv', // Fallback image
+                                height: 40,
+                                width: 40,
+                              );
+                            },
+                          ),
                           ),
                           title: Text(
                             studentName,
@@ -232,6 +247,7 @@ class _AttendanceState extends State<Attendance> {
                                           ),
                                         ),
                                       ),
+
                               ],
                             ),
                           ),

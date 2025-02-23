@@ -1,6 +1,3 @@
-
-
-import 'package:edu_mate/service/auth_service.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,7 +13,6 @@ class Registerstudent extends StatefulWidget {
 }
 
 class _RegisterstudentState extends State<Registerstudent> {
-  final _auth = AuthService();
 
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -144,7 +140,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF28313F),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Full Name",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -178,7 +174,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF28313F),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Date Of Birth",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -244,7 +240,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF28313F),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Gender",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -307,7 +303,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF28313F),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Grades",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -503,7 +499,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF28313F),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Contact No.",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -538,7 +534,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF28313F),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Parent's Contact No.",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -575,7 +571,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         ),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF28313F),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Email",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -608,12 +604,12 @@ class _RegisterstudentState extends State<Registerstudent> {
                                         if (_commerce) {
                                           Subjects.add("Commerce");
                                         }
-                                        _auth.crateEmailAndPasswordForStudent(
-                                            _emailController.text, id);
-
+                                        await DatabaseMethods().setStudentRole(
+                                            id, _emailController.text);
                                         Map<String, dynamic> studentInfoMap = {
                                           "id": id,
                                           "Name": _nameController.text,
+                                          "role": "Student",
                                           "DateOfBirth": _dateController.text,
                                           "Gender": _genderController.text,
                                           "Grade": _gradeController.text,
@@ -621,7 +617,6 @@ class _RegisterstudentState extends State<Registerstudent> {
                                           "ContactNo": _phoneController.text,
                                           "ParentNo": _patentNoController.text,
                                           "Email": _emailController.text,
-                                          
                                         };
 
                                         await DatabaseMethods()

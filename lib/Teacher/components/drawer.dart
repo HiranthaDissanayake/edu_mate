@@ -1,3 +1,4 @@
+import 'package:edu_mate/Screens/LoginScreen.dart';
 import 'package:edu_mate/Teacher/LoginScreen.dart';
 import 'package:edu_mate/Teacher/TeacherDashboard.dart';
 import 'package:flutter/material.dart';
@@ -64,8 +65,7 @@ class NavBar extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                     ),
                   onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Teacherdashboard()),
-                        );
+                        Navigator.pop(context);
                   },
                 ),
                 ListTile(
@@ -105,7 +105,7 @@ class NavBar extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 150,left: 40, right: 40),
               child: ElevatedButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()),
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Loginscreen(role: 'Teacher')),
                 );
               }, 
               child:
