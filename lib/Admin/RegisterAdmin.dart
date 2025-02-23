@@ -1,11 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_mate/service/auth_service.dart';
 import 'package:edu_mate/service/database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:random_string/random_string.dart';
 class Registeradmin extends StatefulWidget {
   const Registeradmin({super.key});
@@ -15,7 +11,6 @@ class Registeradmin extends StatefulWidget {
 }
 
 class _RegisteradminState extends State<Registeradmin> {
-  final _auth = AuthService();
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -169,7 +164,7 @@ class _RegisteradminState extends State<Registeradmin> {
                                       ),
                                       filled: true,
                                       fillColor: Color(0xFF28313F),
-                                      labelText: "Contact No.",
+                                      labelText: "Designation",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
                                     ),
@@ -181,7 +176,7 @@ class _RegisteradminState extends State<Registeradmin> {
                                   child: TextFormField(
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return "Please password";
+                                        return "Please enter Kspassword";
                                       }
                                       return null;
                                     },

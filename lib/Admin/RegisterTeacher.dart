@@ -1,5 +1,4 @@
 import 'package:edu_mate/Admin/SetSchedule.dart';
-import 'package:edu_mate/service/auth_service.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +13,6 @@ class Registerteacher extends StatefulWidget {
 }
 
 class _RegisterteacherState extends State<Registerteacher> {
-  final _auth = AuthService();
 
   final _nameController = TextEditingController();
   final _dateController = TextEditingController();
