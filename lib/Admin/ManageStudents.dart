@@ -1,5 +1,5 @@
 import 'package:edu_mate/Admin/RegisterStudent.dart';
-import 'package:edu_mate/Admin/components/PopupMore.dart';
+import 'package:edu_mate/Admin/components/PopupMoreStudent.dart';
 import 'package:edu_mate/Admin/components/Searchbar.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -219,9 +219,9 @@ class _ManagestudentsState extends State<Managestudents> {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          PopupMore(
+                                          PopupMoreStudent(
                                                   id: student['id'],
-                                                  collection: 'students')
+                                                  collection: 'Students')
                                               .showPopup(context);
                                         },
                                         child: Icon(
