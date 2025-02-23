@@ -204,7 +204,9 @@ class _LoginscreenState extends State<Loginscreen> {
           context, MaterialPageRoute(builder: (context) => StudentMainPage()));
     } else if (userData == widget.role && widget.role == "teacher") {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Teacherdashboard()));
+          context, MaterialPageRoute(builder: (context) => Teacherdashboard(
+            Grade: '',
+          )));
     } else if (userData == widget.role && widget.role == "admin") {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Adminhomepage()));
