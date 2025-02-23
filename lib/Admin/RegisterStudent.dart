@@ -1,7 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_mate/service/auth_service.dart';
 import 'package:edu_mate/service/database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +13,6 @@ class Registerstudent extends StatefulWidget {
 }
 
 class _RegisterstudentState extends State<Registerstudent> {
-  final _auth = AuthService();
 
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();

@@ -83,6 +83,7 @@ class _LoginscreenState extends State<Loginscreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter email ';
                             }
+                            return null;
                           },
                           decoration: InputDecoration(
                             filled: true,
@@ -105,6 +106,7 @@ class _LoginscreenState extends State<Loginscreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter password';
                             }
+                            return null;
                           },
                           obscureText: isObscure,
                           decoration: InputDecoration(
