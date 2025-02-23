@@ -17,41 +17,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String email = '';
   String birthday = '';
   String grade = '';
+  List<String> grades = [];
+  String gender = '';
+  String subject = '';
   List<String> subjects = [];
+  String qualification = '';
   String contactNo = '';
   String parentContactNo = '';
 
   @override
   void initState() {
     super.initState();
-    _fetchStudent();
+    _fetchData();
     print(widget.id);
   }
 
   // Function to fetch a single student from Firestore
-  void _fetchStudent() async {
+  void _fetchData() async {
     try {
-      Stream<DocumentSnapshot> studentStream =
-          await DatabaseMethods().getStudent(widget.id);
+      Stream<DocumentSnapshot> dataStream =
+          await DatabaseMethods().getDocument(widget.collection, widget.id);
 
-      studentStream.listen((document) {
+      dataStream.listen((document) {
         if (document.exists) {
           setState(() {
-            name = document['Name'];
-            email = document['Email'];
-            birthday = document['DateOfBirth'];
-            grade = document['Grade'];
-            subjects =
-                List<String>.from(document['Subject']); // Ensure list type
-            contactNo = document['ContactNo'];
-            parentContactNo = document['ParentNo'];
+            if (widget.collection == 'Students') {
+              name = document['Name'];
+              email = document['Email'];
+              birthday = document['DateOfBirth'];
+              grade = document['Grade'];
+              subjects = List<String>.from(document['Subject']);
+              contactNo = document['ContactNo'];
+              parentContactNo = document['ParentNo'];
+            } else if (widget.collection == 'Teachers') {
+              name = document['Name'];
+              email = document['Email'];
+              birthday = document['DateOfBirth'];
+              gender = document['Gender'];
+              grades = List<String>.from(document['Grade']);
+              qualification = document['Quelification'];
+              subject = document['Subject'];
+              contactNo = document['ContactNo'];
+            }
           });
         } else {
-          print("Student not found.");
+          print("Document not found.");
         }
       });
     } catch (error) {
-      print("Error fetching student: $error");
+      print("Error fetching document: $error");
     }
   }
 
@@ -143,12 +157,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 SizedBox(height: 40),
 
-                _buildProfileDetail("Email", email),
-                _buildProfileDetail("Birthday", birthday),
-                _buildProfileDetail("Grade", grade),
-                _buildProfileDetail("Subjects", subjects.join(", ")),
-                _buildProfileDetail("Contact No", contactNo),
-                _buildProfileDetail("Parent Contact No", parentContactNo),
+                _buildProfileDetailTable("Email", email),
+                if (widget.collection == 'Students') ...[
+                  _buildProfileDetailTable("Birthday", birthday),
+                  _buildProfileDetailTable("Grade", grade),
+                  _buildProfileDetailTable("Subjects", subjects.join(", ")),
+                  _buildProfileDetailTable("Contact No", contactNo),
+                  _buildProfileDetailTable(
+                      "Parent Contact No", parentContactNo),
+                ] else if (widget.collection == 'Teachers') ...[
+                  _buildProfileDetailTable("Birthday", birthday),
+                  _buildProfileDetailTable("Grade", grades.join(",\n ")),
+                  _buildProfileDetailTable("Gender", gender),
+                  _buildProfileDetailTable("Subject", subject),
+                  _buildProfileDetailTable("Contact No", contactNo),
+                  _buildProfileDetailTable("Qualification", qualification),
+                ],
 
                 SizedBox(height: 50),
 
@@ -177,18 +201,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // Widget to display profile details in a row
-  Widget _buildProfileDetail(String label, String value) {
+  Widget _buildProfileDetailTable(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Table(
+        defaultColumnWidth: const FlexColumnWidth(1.0),
+        border: TableBorder.all(color: Colors.transparent),
         children: [
-          Text(label,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500)),
-          Text(value, style: TextStyle(color: Colors.white, fontSize: 18)),
+          TableRow(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

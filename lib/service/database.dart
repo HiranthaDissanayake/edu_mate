@@ -12,9 +12,9 @@ class DatabaseMethods {
         .doc(id)
         .set(studentInfoMap);
   }
-   //Set Admin Details
-  Future addAdminDetails(
-      Map<String, dynamic> adminInfoMap, String id) async {
+
+  //Set Admin Details
+  Future addAdminDetails(Map<String, dynamic> adminInfoMap, String id) async {
     return await FirebaseFirestore.instance
         .collection("Admin")
         .doc(id)
@@ -157,8 +157,6 @@ class DatabaseMethods {
     }
   }
 
-
-  
   //set user role for student
   Future<void> setAdminRole(String id, String email) async {
     try {
@@ -219,46 +217,46 @@ class DatabaseMethods {
     await prefs.setString('role', role);
   }
 
-  
-     /// *Fetch Grades for a Given Teacher*
+  /// *Fetch Grades for a Given Teacher*
   Future<List<String>> fetchGrades(String teacherID) async {
-  try {
-    DocumentSnapshot teacherDoc = await FirebaseFirestore.instance
-        .collection('Teachers')
-        .doc(teacherID)
-        .get();
+    try {
+      DocumentSnapshot teacherDoc = await FirebaseFirestore.instance
+          .collection('Teachers')
+          .doc(teacherID)
+          .get();
 
-    if (!teacherDoc.exists) {
-      print("No document found for teacher: $teacherID");
+      if (!teacherDoc.exists) {
+        print("No document found for teacher: $teacherID");
+        return [];
+      }
+
+      if (!teacherDoc.data().toString().contains('Grade')) {
+        print("Error: 'Grade' field is missing in Firestore document");
+        return [];
+      }
+
+      var gradesData = teacherDoc.get('Grade');
+      if (gradesData is List) {
+        return List<String>.from(gradesData);
+      } else {
+        print("Error: 'Grade' is not a valid list");
+        return [];
+      }
+    } catch (e) {
+      print("Error fetching grades: $e");
       return [];
     }
-
-    if (!teacherDoc.data().toString().contains('Grade')) {
-      print("Error: 'Grade' field is missing in Firestore document");
-      return [];
-    }
-
-    var gradesData = teacherDoc.get('Grade');
-    if (gradesData is List) {
-      return List<String>.from(gradesData);
-    } else {
-      print("Error: 'Grade' is not a valid list");
-      return [];
-    }
-  } catch (e) {
-    print("Error fetching grades: $e");
-    return [];
   }
-}
 
   //Add student marks
-  Future<void> addStudentMarks(String studentId, String testNo, String marks) async {
+  Future<void> addStudentMarks(
+      String studentId, String testNo, String marks) async {
     try {
       await FirebaseFirestore.instance
-          .collection('Students')  // Main collection
-          .doc(studentId)          // Locate the student by ID
-          .collection('Marks')     // Subcollection for storing marks
-          .doc(testNo)             // Each test has its own document
+          .collection('Students') // Main collection
+          .doc(studentId) // Locate the student by ID
+          .collection('Marks') // Subcollection for storing marks
+          .doc(testNo) // Each test has its own document
           .set({
         'testNo': testNo,
         'marks': marks,
@@ -271,16 +269,17 @@ class DatabaseMethods {
     }
   }
 
-    //Edit student marks
-   Future<void> editStudentMarks(String studentId, String testNo, String newMarks) async {
+  //Edit student marks
+  Future<void> editStudentMarks(
+      String studentId, String testNo, String newMarks) async {
     try {
       await FirebaseFirestore.instance
-          .collection('Students')   // Locate the main collection
-          .doc(studentId)           // Find the specific student
-          .collection('Marks')      // Navigate to Marks subcollection
-          .doc(testNo)              // Find the test document
+          .collection('Students') // Locate the main collection
+          .doc(studentId) // Find the specific student
+          .collection('Marks') // Navigate to Marks subcollection
+          .doc(testNo) // Find the test document
           .update({
-        'marks': newMarks,          // Update the marks field
+        'marks': newMarks, // Update the marks field
         'timestamp': FieldValue.serverTimestamp(),
       });
 
@@ -290,4 +289,11 @@ class DatabaseMethods {
     }
   }
 
+  Future<Stream<DocumentSnapshot>> getDocument(
+      String collection, String id) async {
+    return FirebaseFirestore.instance
+        .collection(collection)
+        .doc(id)
+        .snapshots();
+  }
 }
