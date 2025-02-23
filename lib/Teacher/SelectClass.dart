@@ -13,7 +13,6 @@ class _SelectclassState extends State<Selectclass> {
   // String? selectedSubject;
   String? selectedGrade;
 
-  // final List<String> subjects = ['Mathematics', 'Science', 'English', 'History', 'Sinhala', 'Commerce'];
   final List<String> grades = ['Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'];
   
   @override
@@ -89,7 +88,9 @@ class _SelectclassState extends State<Selectclass> {
                         padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => Teacherdashboard()),
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Teacherdashboard(
+                              Grade: selectedGrade.toString(),
+                            )),
                             );
                           },
                           child: Container(

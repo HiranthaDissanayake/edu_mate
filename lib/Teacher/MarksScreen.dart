@@ -46,7 +46,9 @@ class _MarksscreenState extends State<Marksscreen> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Teacherdashboard()),
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Teacherdashboard(
+                            Grade: '',
+                          )),
                           );
                         },
                         icon: Icon(
