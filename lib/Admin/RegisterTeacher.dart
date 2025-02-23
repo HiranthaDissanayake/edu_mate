@@ -570,8 +570,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                                         await DatabaseMethods()
                                             .addTeacherDetails(
                                                 teacherInfoMap, id);
-                                        _auth.crateEmailAndPasswordForStudent(
-                                            _emailController.text, id);
+                                        await DatabaseMethods().setTeacherRole(
+                                            id, _emailController.text);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
                                                 content: Text(

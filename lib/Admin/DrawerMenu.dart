@@ -1,5 +1,7 @@
 import 'package:edu_mate/Admin/AdminHomePage.dart';
+import 'package:edu_mate/Screens/LoginScreen.dart';
 import 'package:edu_mate/Admin/PrivacyAndPolicy.dart';
+import 'package:edu_mate/Admin/RegisterAdmin.dart';
 import 'package:edu_mate/Admin/TermsAndConditions.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +47,23 @@ class _DrawermenuState extends State<Drawermenu> {
             ),
             title: Text("Dashboard", style: TextStyle(color: Colors.white))
 
+        ),
+        
+          ListTile(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Registeradmin()));
+            },
+            leading: SizedBox(
+              //terms_and_conditions.png
+              height: 25,
+              width: 25,
+              child: Image.asset("assets/images/registerAdmin.png"),
+            ),
+            title: Text("Register Admin",
+                style: TextStyle(color: Colors.white)),
           ),
+
+
           ListTile(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>Privacyandpolicy()));
@@ -78,7 +96,7 @@ class _DrawermenuState extends State<Drawermenu> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: GestureDetector(
               onTap: () {
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Loginscreen(role: "admin",)));
               },
               child: Container(
                 height: 40,
