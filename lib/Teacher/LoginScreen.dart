@@ -1,27 +1,44 @@
-import 'package:edu_mate/Teacher/SelectClass.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_mate/Teacher/SelectClass.dart';
+import 'package:edu_mate/service/database.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class LoginScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
-    );
-  }
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class LoginScreen extends StatelessWidget {
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final DatabaseMethods _databaseMethods = DatabaseMethods();
+  bool _isLoading = false;
+
+  void _login() async {
+    setState(() => _isLoading = true);
+
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+
+    var user = await _databaseMethods.loginTeacher(email, password);
+
+    if (user != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Selectclass()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Invalid credentials. Try again.")),
+      );
+    }
+
+    setState(() => _isLoading = false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false, 
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -32,21 +49,13 @@ class LoginScreen extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-    //            gradient: LinearGradient(
-    //             colors: [Color(0xFF1C1E43), Color(0xFF131333)],
-    //             begin: Alignment.topLeft,
-    //             end: Alignment.bottomRight,
-    // ),
             ),
-          ),    
+          ),
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.asset(
-                  'assets/images/AppLogo.png',
-                  height: 70,
-                ),
+                Image.asset('assets/images/AppLogo.png', height: 70),
                 const SizedBox(height: 10),
                 const Text(
                   'EduMate',
@@ -56,13 +65,12 @@ class LoginScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 50),      
+                const SizedBox(height: 50),
                 Container(
-                  height: 480, 
+                  height: 480,
                   width: MediaQuery.of(context).size.width * 0.85,
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    // ignore: deprecated_member_use
                     color: Color(0xFF28313F).withOpacity(0.4),
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -77,12 +85,13 @@ class LoginScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 50),              
+                      const SizedBox(height: 50),
                       TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Color(0xFF28313F),
-                          hintText: 'Teacher ID',
+                          hintText: 'Teacher Email',
                           hintStyle: TextStyle(color: Colors.white70),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -92,8 +101,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                         style: TextStyle(color: Colors.white),
                       ),
-                      const SizedBox(height: 50), 
+                      const SizedBox(height: 50),
                       TextField(
+                        controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
@@ -108,7 +118,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         style: TextStyle(color: Colors.white),
                       ),
-                      const SizedBox(height: 10),                  
+                      const SizedBox(height: 10),
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
@@ -119,14 +129,11 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 80), 
-                      SizedBox(  
+                      const SizedBox(height: 80),
+                      SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => Selectclass()),
-                            );
-                          },
+                          onPressed: _isLoading ? null : _login,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFF3A2AE0),
                             shape: RoundedRectangleBorder(
@@ -134,16 +141,18 @@ class LoginScreen extends StatelessWidget {
                             ),
                             padding: EdgeInsets.symmetric(vertical: 12),
                           ),
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
+                          child: _isLoading
+                              ? CircularProgressIndicator(color: Colors.white)
+                              : const Text(
+                                  'Login',
+                                  style: TextStyle(color: Colors.white, fontSize: 16),
+                                ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 90), 
+                const SizedBox(height: 90),
               ],
             ),
           ),

@@ -3,6 +3,10 @@ import 'package:edu_mate/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseMethods {
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   //Set Student Details
   Future addStudentDetails(
       Map<String, dynamic> studentInfoMap, String id) async {

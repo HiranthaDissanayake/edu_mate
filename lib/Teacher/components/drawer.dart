@@ -64,8 +64,7 @@ class NavBar extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                     ),
                   onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Teacherdashboard()),
-                        );
+                        Navigator.pop(context);
                   },
                 ),
                 ListTile(
