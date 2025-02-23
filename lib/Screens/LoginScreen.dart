@@ -1,5 +1,6 @@
 import 'package:edu_mate/Admin/AdminHomePage.dart';
 import 'package:edu_mate/Student/Student_main_page.dart';
+import 'package:edu_mate/Teacher/SelectClass.dart';
 import 'package:edu_mate/Teacher/TeacherDashboard.dart';
 import 'package:edu_mate/service/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -204,9 +205,10 @@ class _LoginscreenState extends State<Loginscreen> {
           context, MaterialPageRoute(builder: (context) => StudentMainPage()));
     } else if (userData == widget.role && widget.role == "teacher") {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Teacherdashboard(
-            Grade: '',
-          )));
+          context, MaterialPageRoute(builder: (context) => Selectclass(
+            teacherID: password,
+          ),
+          ));
     } else if (userData == widget.role && widget.role == "admin") {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Adminhomepage()));

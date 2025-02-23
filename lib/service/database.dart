@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_mate/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
 class DatabaseMethods {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -65,29 +66,6 @@ class DatabaseMethods {
         .doc(id)
         .delete();
   }
-<<<<<<< HEAD
-=======
-  
-// Future<void> addAttendanceFieldToAllStudents() async {
-//   CollectionReference students = FirebaseFirestore.instance.collection('Students');
-
-//   QuerySnapshot snapshot = await students.get();
-
-//   for (var doc in snapshot.docs) {
-//     // Safely check if 'attendance' field exists by first checking if data is not null
-//     var studentData = doc.data() as Map<String, dynamic>?;
-
-//     if (studentData != null && !studentData.containsKey('attendance')) {
-//       await students.doc(doc.id).update({
-//         'attendance': {}, // Adding an empty map if not exists
-//       }).then((_) {
-//         print("Added attendance field for student ${doc.id}");
-//       }).catchError((error) {
-//         print("Failed to update student ${doc.id}: $error");
-//       });
-//     }
-//   }
-// }
 
  // **Authenticate User**
   Future<User?> loginTeacher(String email, String password) async {
@@ -178,7 +156,6 @@ class DatabaseMethods {
 
 
 
->>>>>>> 2808674 (resolved conflicts)
 
   //Add the attendance column
   Future<void> addAttendanceFieldToAllStudents() async {
@@ -299,68 +276,36 @@ class DatabaseMethods {
     }
   }
 
-<<<<<<< HEAD
-  //Add student marks
-  Future<void> addStudentMarks(String studentId, String testNo, String marks) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('Students')  // Main collection
-          .doc(studentId)          // Locate the student by ID
-          .collection('Marks')     // Subcollection for storing marks
-          .doc(testNo)             // Each test has its own document
-          .set({
-        'testNo': testNo,
-        'marks': marks,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
+     /// **Fetch Grades for a Given Teacher**
+  Future<List<String>> fetchGrades(String teacherID) async {
+  try {
+    DocumentSnapshot teacherDoc = await FirebaseFirestore.instance
+        .collection('Teachers')
+        .doc(teacherID)
+        .get();
 
-      print("Marks added successfully!");
-    } catch (e) {
-      print("Error adding marks: $e");
+    if (!teacherDoc.exists) {
+      print("No document found for teacher: $teacherID");
+      return [];
     }
-  }
 
-  //Edit student marks
-   Future<void> editStudentMarks(String studentId, String testNo, String newMarks) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('Students')   // Locate the main collection
-          .doc(studentId)           // Find the specific student
-          .collection('Marks')      // Navigate to Marks subcollection
-          .doc(testNo)              // Find the test document
-          .update({
-        'marks': newMarks,          // Update the marks field
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-
-      print("Marks updated successfully!");
-    } catch (e) {
-      print("Error updating marks: $e");
+    if (!teacherDoc.data().toString().contains('Grade')) {
+      print("Error: 'Grade' field is missing in Firestore document");
+      return [];
     }
-  }
 
-   Future<void> sendAlert(String message) async {
-    try {
-      // Get the number of current alerts in the 'Alerts' collection
-      QuerySnapshot alertsSnapshot = await _firestore.collection('Alerts').get();
-      int alertCount = alertsSnapshot.size;
-
-      // Generate the next alert ID
-      String alertId = 'Alert_ID_${(alertCount + 1).toString().padLeft(3, '0')}';
-
-      // Save the alert to Firestore
-      await _firestore.collection('Alerts').doc(alertId).set({
-        'message': message,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-
-      print("Alert sent successfully!");
-    } catch (e) {
-      print("Error sending alert: $e");
+    var gradesData = teacherDoc.get('Grade');
+    if (gradesData is List) {
+      return List<String>.from(gradesData);
+    } else {
+      print("Error: 'Grade' is not a valid list");
+      return [];
     }
+  } catch (e) {
+    print("Error fetching grades: $e");
+    return [];
   }
+}
 
 
-=======
->>>>>>> 2808674 (resolved conflicts)
 }
