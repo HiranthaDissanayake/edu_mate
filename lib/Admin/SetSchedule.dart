@@ -42,6 +42,7 @@ class _SetscheduleState extends State<Setschedule> {
           gradient: LinearGradient(
             colors: [
               const Color(0xFF13134C),
+              const Color(0xFF13134C),
               Color(0xFF2D2DB2),
             ],
             begin: Alignment.topCenter,
@@ -55,6 +56,7 @@ class _SetscheduleState extends State<Setschedule> {
               width: double.infinity,
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
+                    Color(0xFF010127),
                     Color(0xFF010127),
                     Color(0xFF0B0C61),
                   ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
@@ -155,7 +157,7 @@ class _SetscheduleState extends State<Setschedule> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     contentPadding: EdgeInsets.all(20),
-                    backgroundColor:Color(0xFF080B2E),
+                    backgroundColor:Color(0xFF28313F),
                     titleTextStyle: TextStyle(
                       color: Colors.white,
                       fontSize: 20,

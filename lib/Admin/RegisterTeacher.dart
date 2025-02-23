@@ -1,5 +1,4 @@
 import 'package:edu_mate/Admin/SetSchedule.dart';
-import 'package:edu_mate/service/auth_service.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,8 +13,6 @@ class Registerteacher extends StatefulWidget {
 }
 
 class _RegisterteacherState extends State<Registerteacher> {
-
-  final _auth = AuthService();
 
   final _nameController = TextEditingController();
   final _dateController = TextEditingController();
@@ -43,6 +40,7 @@ class _RegisterteacherState extends State<Registerteacher> {
           gradient: LinearGradient(
             colors: [
               Color(0xFF13134C),
+              Color(0xFF13134C),
               Color(0xFF2D2DB2),
             ],
             begin: Alignment.topCenter,
@@ -57,6 +55,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(colors: [
+                      Color(0xFF010127),
                       Color(0xFF010127),
                       Color(0xFF0B0C61),
                     ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
@@ -137,7 +136,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF28313F),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Full Name",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -167,7 +166,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF181A47),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Date Of Birth",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -229,7 +228,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF181A47),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Gender",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -288,7 +287,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF181A47),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Subject",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -453,7 +452,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF181A47),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Education Qualifications",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -484,7 +483,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF181A47),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Contact No.",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -517,7 +516,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 255, 13, 0, 253)),
                                       ),
                                       filled: true,
-                                      fillColor:Color(0xFF181A47),
+                                      fillColor: Color(0xFF28313F),
                                       labelText: "Email",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
@@ -569,7 +568,8 @@ class _RegisterteacherState extends State<Registerteacher> {
                                         await DatabaseMethods()
                                             .addTeacherDetails(
                                                 teacherInfoMap, id);
-                                        _auth.crateEmailAndPasswordForStudent(_emailController.text, id);
+                                        await DatabaseMethods().setTeacherRole(
+                                            id, _emailController.text);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
                                                 content: Text(
@@ -582,13 +582,29 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                         Grade: Grades,
                                                         scheduleInfoMap:
                                                             scheduleInfoMap)));
+
+                                        setState(() {
+                                          _nameController.clear();
+                                          _dateController.clear();
+                                          _genderController.clear();
+                                          _subjectController.clear();
+                                          _qualificationController.clear();
+                                          _phoneController.clear();
+                                          _emailController.clear();
+                                          _grade6 = false;
+                                          _grade7 = false;
+                                          _grade8 = false;
+                                          _grade9 = false;
+                                          _grade10 = false;
+                                          _grade11 = false;
+                                        });
                                       }
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          color:Color(0xFF3A2AE0),
+                                          color: Color(0xFF3A2AE0),
                                           boxShadow: [
                                             BoxShadow(
                                                 blurRadius: BorderSide
