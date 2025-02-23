@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_mate/Screens/LoginScreen.dart';
 import 'package:edu_mate/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DatabaseMethods {
   //Set Student Details
@@ -183,43 +180,5 @@ class DatabaseMethods {
       print(" Error add admin role: $e");
     }
   }
-
-// get the user role based on email
-  Future<String?> getUserRole(String email) async {
-    try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection("users")
-          .where("email", isEqualTo: email)
-          .get();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        String role = querySnapshot.docs.first.get("role");
-
-        if (role == "student") {
-          return "student";
-        } else if (role == "teacher") {
-          return "teacher";
-        } else if (role == "admin") {
-          return "admin";
-        } else {
-          return null;
-        }
-      } else {
-        return null;
-      }
-    } catch (e) {
-      print("Error fetching user role: $e");
-      return null;
-    }
-  }
-
-//save the user's email and role in SharedPreferences
-  Future<void> saveLoginData(String email, String password, String role) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('email', email);
-    await prefs.setString("password", password);
-    await prefs.setString('role', role);
-  }
-
 
 }
