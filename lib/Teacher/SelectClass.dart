@@ -23,7 +23,7 @@ class _SelectclassState extends State<Selectclass> {
   }
 
   Future<void> fetchGrades() async {
-    List<String> fetchedGrades = await databaseMethods.fetchGrades(widget.teacherID);
+    List<String> fetchedGrades = await DatabaseMethods().fetchGrades(widget.teacherID);
     setState(() {
       grades = fetchedGrades;
     });

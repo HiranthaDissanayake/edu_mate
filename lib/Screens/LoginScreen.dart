@@ -1,9 +1,10 @@
 import 'package:edu_mate/Admin/AdminHomePage.dart';
 import 'package:edu_mate/Student/Student_main_page.dart';
-import 'package:edu_mate/Teacher/SelectClass.dart';
 import 'package:edu_mate/Teacher/TeacherDashboard.dart';
 import 'package:edu_mate/service/auth_service.dart';
+import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Loginscreen extends StatefulWidget {
   final String role;
@@ -62,7 +63,6 @@ class _LoginscreenState extends State<Loginscreen> {
                     width: MediaQuery.of(context).size.width * 0.85,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      // ignore: deprecated_member_use
                       color: Color(0xFF28313F).withOpacity(0.4),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -187,32 +187,43 @@ class _LoginscreenState extends State<Loginscreen> {
   }
 
   void login(String email, String password) async {
+    DatabaseMethods databaseMethods = DatabaseMethods();
     AuthService authService = AuthService();
 
     bool? valiedUser = await authService.loginUser(email, password);
-    print("valiedUser: $valiedUser");
     String? userData;
     if (valiedUser) {
-      userData = await authService.getUserRole(email);
+      userData = await databaseMethods.getUserRole(email);
+      
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('email', email);
+      await prefs.setString('role', userData!);
+
     } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Invalid Credentials")));
       print("User not found");
     }
-    print(userData);
-    print("User Role: ${widget.role}");
+
     // Redirect Based on Role
     if (userData == widget.role && widget.role == "student") {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => StudentMainPage()));
+          // ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(builder: (context) => StudentMainPage()));
     } else if (userData == widget.role && widget.role == "teacher") {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Selectclass(
-            teacherID: password,
-          ),
-          ));
+      //Navigator.push(
+          // ignore: use_build_context_synchronously
+         // context,
+          //MaterialPageRoute(builder: (context) => Teacherdashboard(Grade: Grades))
+        //  );
     } else if (userData == widget.role && widget.role == "admin") {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Adminhomepage()));
+          // ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(builder: (context) => Adminhomepage()));
     } else {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Invalid Credentials")));
     }
