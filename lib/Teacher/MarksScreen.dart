@@ -1,5 +1,6 @@
 import 'package:edu_mate/Teacher/TeacherDashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_mate/service/database.dart';
 
 class Marksscreen extends StatefulWidget {
   const Marksscreen({super.key});
@@ -9,6 +10,66 @@ class Marksscreen extends StatefulWidget {
 }
 
 class _MarksscreenState extends State<Marksscreen> {
+
+  //controllers for add marks
+  final TextEditingController studentIdController = TextEditingController();
+  final TextEditingController testNoController = TextEditingController();
+  final TextEditingController marksController = TextEditingController();
+  
+  //controllers for edit marks
+  final TextEditingController editStudentIdController = TextEditingController();
+  final TextEditingController editTestNoController = TextEditingController();
+  final TextEditingController newMarksController = TextEditingController();
+
+
+  void submitMarks() async {
+    String studentId = studentIdController.text.trim();
+    String testNo = testNoController.text.trim();
+    String marks = marksController.text.trim();
+
+    if (studentId.isNotEmpty && testNo.isNotEmpty && marks.isNotEmpty) {
+      await DatabaseMethods().addStudentMarks(studentId, testNo, marks);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Marks added successfully!"))
+      );
+
+      // Clear the input fields after submission
+      studentIdController.clear();
+      testNoController.clear();
+      marksController.clear();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("All fields are required"))
+      );
+    }
+  }
+
+  void updateMarks() async {
+  String studentId = editStudentIdController.text.trim();
+  String testNo = editTestNoController.text.trim();
+  String newMarks = newMarksController.text.trim();
+
+  if (studentId.isNotEmpty && testNo.isNotEmpty && newMarks.isNotEmpty) {
+    await DatabaseMethods().editStudentMarks(studentId, testNo, newMarks);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Marks updated successfully!"))
+    );
+
+    // Clear input fields after submission
+    studentIdController.clear();
+    testNoController.clear();
+    newMarksController.clear();
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("All fields are required"))
+    );
+  }
+}
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +107,9 @@ class _MarksscreenState extends State<Marksscreen> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Teacherdashboard()),
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Teacherdashboard(
+                            Grade: '',
+                          )),
                           );
                         },
                         icon: Icon(
@@ -103,78 +166,44 @@ class _MarksscreenState extends State<Marksscreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Student ID',
+                              // Text(
+                              //   'Student ID',
+                              //   style: TextStyle(
+                              //     color: Colors.white,
+                              //   ),
+                              // ),
+                              SizedBox(
+                                height: 7,
+                              ),
+                              TextField(
+                                controller: studentIdController,
+                                decoration: InputDecoration(
+                                  labelText: 'Student ID',
+                                  border: OutlineInputBorder(),
+                                ),
                                 style: TextStyle(color: Colors.white),
                               ),
                               SizedBox(
-                                height: 7,
+                                height: 25,
                               ),
-                              SizedBox(
-                                height: 40,
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 15),
-                                    fillColor: Color(0xFF26284A),
-                                    filled: true,
-                                  ),
+                              TextField(
+                                controller: testNoController,
+                                decoration: InputDecoration(
+                                  labelText: 'Test No.',
+                                  border: OutlineInputBorder(),
                                 ),
+                                style: TextStyle(color: Colors.white),
                               ),
                               SizedBox(
-                                height: 7,
-                              ),
-                              Text(
-                                'Test No.',
-                                style: TextStyle(
-                                  color: Colors.white,
+                                height: 25,
+                              ), 
+                              TextField(
+                                controller: marksController,
+                                decoration: InputDecoration(
+                                  labelText: 'Marks Obtained',
+                                  border: OutlineInputBorder(),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              SizedBox(
-                                height: 40,
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    fillColor: Color(0xFF26284A),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 15),
-                                    filled: true,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              Text(
-                                'Marks Obtained',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              SizedBox(
-                                height: 40,
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    fillColor: Color(0xFF26284A),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 15),
-                                    filled: true,
-                                  ),
-                                ),
+                                style: TextStyle(color: Colors.white),
                               ),
                             ],
                           ),
@@ -187,7 +216,7 @@ class _MarksscreenState extends State<Marksscreen> {
                         child: SizedBox(
                           height: 35,
                           child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: submitMarks,
                               child: Text(
                                 'Submit',
                                 style: TextStyle(
@@ -244,79 +273,37 @@ class _MarksscreenState extends State<Marksscreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Student ID',
+                               TextField(
+                                  controller: editStudentIdController,
+                                  decoration: InputDecoration(
+                                    labelText: "Student ID",
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              SizedBox(
+                                height: 25,
+                              ),
+                              TextField(
+                                controller: editTestNoController,
+                                decoration: InputDecoration(
+                                  labelText: "Test No.",
+                                  border: OutlineInputBorder(),
+                                ),
+                                 
                                 style: TextStyle(color: Colors.white),
                               ),
                               SizedBox(
-                                height: 7,
+                                height: 25,
                               ),
-                              SizedBox(
-                                height: 40,
-                                child: TextFormField(
+                               TextField(
+                                  controller: newMarksController,
                                   decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 15),
-                                    fillColor: Color(0xFF26284A),
-                                    filled: true,
+                                    labelText: "New Marks",
+                                    border: OutlineInputBorder(),
                                   ),
+                                  style: TextStyle(color: Colors.white),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              Text(
-                                'Test No.',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              SizedBox(
-                                height: 40,
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    fillColor: Color(0xFF26284A),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 15),
-                                    filled: true,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              Text(
-                                'New Marks',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              SizedBox(
-                                height: 40,
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    fillColor: Color(0xFF26284A),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 15),
-                                    filled: true,
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
@@ -328,9 +315,9 @@ class _MarksscreenState extends State<Marksscreen> {
                         child: SizedBox(
                           height: 35,
                           child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: updateMarks,
                               child: Text(
-                                'Submit',
+                                'Update Marks',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),

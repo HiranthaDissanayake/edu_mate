@@ -42,7 +42,9 @@ class _PaymentsState extends State<Payments> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Teacherdashboard()),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Teacherdashboard(
+                      Grade: '',
+                    )),
                     );
                   }, 
                   icon: Icon(Icons.arrow_back),

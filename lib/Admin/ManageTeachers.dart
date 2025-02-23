@@ -1,4 +1,4 @@
-import 'package:edu_mate/Admin/RegisterStudent.dart';
+import 'package:edu_mate/Admin/RegisterTeacher.dart';
 import 'package:edu_mate/Admin/components/PopupMore.dart';
 import 'package:edu_mate/Admin/components/Searchbar.dart';
 import 'package:edu_mate/service/database.dart';
@@ -261,7 +261,7 @@ class _ManagestudentsState extends State<Manageteachers> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Registerstudent(),
+                      builder: (context) => Registerteacher(),
                     ),
                   );
                 },
