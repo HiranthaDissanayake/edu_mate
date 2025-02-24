@@ -1,5 +1,6 @@
 import 'package:edu_mate/Admin/RegisterTeacher.dart';
-import 'package:edu_mate/Admin/components/PopupMore.dart';
+import 'package:edu_mate/Admin/components/PopupMoreStudent.dart';
+import 'package:edu_mate/Admin/components/PopupMoreTeacher.dart';
 import 'package:edu_mate/Admin/components/Searchbar.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +15,7 @@ class Manageteachers extends StatefulWidget {
 
 class _ManagestudentsState extends State<Manageteachers> {
   List<Map<dynamic, dynamic>> teachers = [];
-  List<Map<dynamic, dynamic>> filteredStudents = [];
+  List<Map<dynamic, dynamic>> filteredTeachers = [];
   DatabaseMethods databaseMethods = DatabaseMethods();
   TextEditingController searchController = TextEditingController();
 
@@ -34,13 +35,13 @@ class _ManagestudentsState extends State<Manageteachers> {
           setState(() {
             teachers = snapshot.docs.map((doc) {
               return {
-                'id': doc.id,
+                'id': doc['TeacherId'],
                 'name': doc['Name'], // Use 'Name' instead of 'name'
                 'subjects':
                     doc['Subject'], // Use 'Subject' instead of 'subjects'
               };
             }).toList();
-            filteredStudents = List.from(teachers);
+            filteredTeachers = List.from(teachers);
           });
         } else {
           print("No students found in Firestore.");
@@ -51,11 +52,11 @@ class _ManagestudentsState extends State<Manageteachers> {
     }
   }
 
-  void _filterStudents(String query) {
+  void _filterTeachers(String query) {
     setState(() {
-      filteredStudents = teachers
-          .where((student) =>
-              student['name'].toLowerCase().contains(query.toLowerCase()))
+      filteredTeachers = teachers
+          .where((teacher) =>
+              teacher['name'].toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }
@@ -135,16 +136,16 @@ class _ManagestudentsState extends State<Manageteachers> {
                   child: Searchbar(
                     hintText: "Search for a teacher",
                     controller: searchController,
-                    onChange: _filterStudents,
+                    onChange: _filterTeachers,
                   ),
                 ),
 
                 // List of students
                 Expanded(
                   child: ListView.builder(
-                    itemCount: filteredStudents.length,
+                    itemCount: filteredTeachers.length,
                     itemBuilder: (context, index) {
-                      final student = filteredStudents[index];
+                      final teacher = filteredTeachers[index];
                       // Student cards
                       return Padding(
                         padding: const EdgeInsets.only(
@@ -182,7 +183,7 @@ class _ManagestudentsState extends State<Manageteachers> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        student['name'],
+                                        teacher['name'],
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 16),
                                       ),
@@ -190,7 +191,7 @@ class _ManagestudentsState extends State<Manageteachers> {
                                         height: 5,
                                       ),
                                       Text(
-                                        '${student['subjects']}',
+                                        '${teacher['subjects']}',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 12,
@@ -219,8 +220,8 @@ class _ManagestudentsState extends State<Manageteachers> {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          PopupMore(
-                                                  id: student['id'],
+                                          PopupMoreTeacher(
+                                                  id: teacher['id'],
                                                   collection: 'Teachers')
                                               .showPopup(context);
                                         },
@@ -232,7 +233,7 @@ class _ManagestudentsState extends State<Manageteachers> {
                                       ),
                                       Spacer(),
                                       Text(
-                                        '${student['id']}\nID',
+                                        '${teacher['id']}\nID',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 12,
