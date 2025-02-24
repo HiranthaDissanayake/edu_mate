@@ -7,10 +7,10 @@ class PopupMoreStudent extends StatelessWidget {
   final String id;
   final String collection; // Add collection parameter if needed
   const PopupMoreStudent({
-    Key? key,
+    super.key,
     required this.id,
     required this.collection, // Add collection parameter if needed
-  }) : super(key: key);
+  });
 
   // Renamed method to showPopup
   void showPopup(BuildContext context) {
