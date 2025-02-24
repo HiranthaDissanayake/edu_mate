@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_mate/Admin/EditProfileScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String id;
@@ -180,7 +181,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(
                   width: 200,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfileScreen(
+                            id: widget.id,
+                            collection: widget.collection,
+                            name: name,
+                            email: email,
+                            birthday: birthday,
+                            grade: grade,
+                            grades: grades,
+                            gender: gender,
+                            subject: subject,
+                            subjects: subjects,
+                            qualification: qualification,
+                            contactNo: contactNo,
+                            parentContactNo: parentContactNo,
+                          ),
+                        ),
+                      );
+                    },
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(const Color(0xFF3A2AE0)),

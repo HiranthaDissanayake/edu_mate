@@ -46,6 +46,7 @@ class PopupMoreTeacher extends StatelessWidget {
                 onPressed: () async {
                   await DatabaseMethods()
                       .deleteStudent(id); // Ensure this method exists
+                  // ignore: use_build_context_synchronously
                   Navigator.of(context).pop();
                 },
                 child: Text(

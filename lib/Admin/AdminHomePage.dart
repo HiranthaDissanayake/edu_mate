@@ -92,7 +92,11 @@ class _AdminhomepageState extends State<Adminhomepage> {
           height: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [const Color(0xFF13134C),const Color(0xFF13134C), const Color(0XFF2D2DB2)],
+              colors: [
+                const Color(0xFF13134C),
+                const Color(0xFF13134C),
+                const Color(0XFF2D2DB2)
+              ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -259,7 +263,27 @@ class _AdminhomepageState extends State<Adminhomepage> {
                 ),
               ),
               SizedBox(
-                height: 100,
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: const Color(0xFF3A2AE0),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                    child: Text(
+                      "Class fee",
+                      style: GoogleFonts.poppins(
+                          color: Colors.white, fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -328,7 +352,10 @@ class _AdminhomepageState extends State<Adminhomepage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Manageteachers()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Manageteachers()));
                             },
                             child: Container(
                               height: 60,
