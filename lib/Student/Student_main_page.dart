@@ -6,7 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StudentMainPage extends StatefulWidget {
-  const StudentMainPage({super.key});
+  
+  String? stEmail;
+
+   StudentMainPage({
+    super.key,
+    required this.stEmail,
+    });
 
   @override
   State<StudentMainPage> createState() => _StudentMainPageState();
@@ -14,8 +20,6 @@ class StudentMainPage extends StatefulWidget {
 
 class _StudentMainPageState extends State<StudentMainPage> {
 
-  String stId = "MtfWlUjDtj";
-  String grade = "Grade 9";
 
   int _selectedMethod = 0;
 
@@ -112,8 +116,8 @@ class _StudentMainPageState extends State<StudentMainPage> {
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                        Text("Student ID : ",style: GoogleFonts.poppins(color: Colors.white,fontSize: 17, fontWeight: FontWeight.bold),),
-                                        Text(stId,style: GoogleFonts.poppins(color: Colors.white,fontSize: 17, fontWeight: FontWeight.bold),)
+                                        Text("Email : ",style: GoogleFonts.poppins(color: Colors.white,fontSize: 17, fontWeight: FontWeight.bold),),
+                                        Text(widget.stEmail!,style: GoogleFonts.poppins(color: Colors.white,fontSize: 17, fontWeight: FontWeight.bold),)
                                     ],
                                 ),
                               ),
@@ -214,7 +218,7 @@ class _StudentMainPageState extends State<StudentMainPage> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          _selectedMethod == 0 ? Classescontainer(stId: stId, grade: grade) : _selectedMethod == 1 ?  Reportcontainer() : Attendencecontainer(),
+                          _selectedMethod == 0 ? Classescontainer(stEmail: widget.stEmail!) : _selectedMethod == 1 ?  Reportcontainer(stEmail: widget.stEmail!) : Attendencecontainer(),
               
                         ],
                       ),

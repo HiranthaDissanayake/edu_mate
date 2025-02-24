@@ -1,15 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_mate/Student/components/teacherDetailsCard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Classescontainer extends StatefulWidget {
-  String stId;
-  String grade;
+  String stEmail;
   Classescontainer({
     super.key,
-    required this.stId,
-    required this.grade,
+    required this.stEmail,
   });
 
   @override
@@ -17,39 +14,48 @@ class Classescontainer extends StatefulWidget {
 }
 
 class _ClassescontainerState extends State<Classescontainer> {
-  Future<Stream<QuerySnapshot>> getStudents() async {
-    return FirebaseFirestore.instance
-        .collection("Students")
-        .where('id', isEqualTo: widget.stId)
-        .snapshots();
-  }
 
-  Future<Stream<QuerySnapshot>> getTeachers() async {
-    return FirebaseFirestore.instance
-        .collection("Teachers")
-        .where('Grade', arrayContains: widget.grade)
-        .snapshots();
-  }
-
-  Future<Stream<QuerySnapshot>> getSchedules() async {
-    return FirebaseFirestore.instance
-        .collection("Schedules")
-        .where('Grade', isEqualTo: widget.grade)
-        .snapshots();
-  }
+  String? stGrade = "";
 
   Stream? studentStream;
   Stream? teacherStream;
   Stream? scheduleStream;
 
-  getonload() async {
-    studentStream = await getStudents();
-    teacherStream = await getTeachers();
-    scheduleStream = await getSchedules();
-    if (mounted) {
-      setState(() {});
-    }
+getonload() async {
+  var studentSnapshot = await FirebaseFirestore.instance
+      .collection("Students")
+      .where('Email', isEqualTo: widget.stEmail)
+      .get();
+
+  if (studentSnapshot.docs.isNotEmpty && mounted) {
+    setState(() {
+      stGrade = studentSnapshot.docs.first['Grade'];
+    });
   }
+
+  if (!mounted) return; // Prevents calling setState() on disposed widget
+
+  studentStream = FirebaseFirestore.instance
+      .collection("Students")
+      .where('Email', isEqualTo: widget.stEmail)
+      .snapshots();
+
+  teacherStream = FirebaseFirestore.instance
+      .collection("Teachers")
+      .where('Grade', arrayContains: stGrade)
+      .snapshots();
+
+  scheduleStream = FirebaseFirestore.instance
+      .collection("Schedules")
+      .where('Grade', isEqualTo: stGrade)
+      .snapshots();
+
+  if (mounted) { 
+    setState(() {});
+  }
+}
+
+
 
   @override
   void initState() {
@@ -64,7 +70,7 @@ Widget studentDetails() {
       if (!snapshot.hasData || snapshot.data.docs.isEmpty) {
         return Center(
           child: Text(
-            "No student data available",
+            "No Subjects Found",
             style: GoogleFonts.poppins(color: Colors.white, fontSize: 17),
           ),
         );
@@ -72,6 +78,7 @@ Widget studentDetails() {
 
       DocumentSnapshot ds = snapshot.data.docs[0]; // Now safe
       List subjects = ds['Subject'];
+
 
       return Container(
         width: double.infinity,
@@ -133,12 +140,21 @@ Widget studentDetails() {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                 
                   Text(
                     "Subject: ${doc['Subject']}",
                     style: GoogleFonts.poppins(
                       color: Colors.deepOrange,
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                   Text(
+                    "Class : ${stGrade}",
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 15,
                     ),
                   ),
                   SizedBox(height: 5),
@@ -191,6 +207,14 @@ Widget studentDetails() {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
+                    stGrade.toString(),
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  Text(
                     "Subject: ${doc['Subject']}",
                     style: GoogleFonts.poppins(
                       color: Colors.deepOrange,
@@ -198,6 +222,7 @@ Widget studentDetails() {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  
                   Text(
                     "Teacher: ${doc['Name']}",
                     style: GoogleFonts.poppins(
@@ -205,6 +230,8 @@ Widget studentDetails() {
                       fontSize: 17,
                     ),
                   ),
+
+                  
                 ],
               ),
             );
