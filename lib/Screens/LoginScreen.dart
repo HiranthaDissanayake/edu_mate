@@ -212,10 +212,10 @@ class _LoginscreenState extends State<Loginscreen> {
           context,
           MaterialPageRoute(builder: (context) => StudentMainPage()));
     } else if (userData == widget.role && widget.role == "teacher") {
-      //Navigator.push(
-          // ignore: use_build_context_synchronously
-          //context,
-          //MaterialPageRoute(builder: (context) => Teacherdashboard()));
+      Navigator.push(
+           //ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(builder: (context) => Teacherdashboard(Grade: "")));
     } else if (userData == widget.role && widget.role == "admin") {
       Navigator.push(
           // ignore: use_build_context_synchronously

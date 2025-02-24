@@ -326,7 +326,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                             controlAffinity:
                                                 ListTileControlAffinity.leading,
                                             title: Text(
-                                              "Grade 6",
+                                              "Grade6",
                                               style: TextStyle(
                                                   color: Colors.white),
                                             ),
@@ -343,7 +343,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                             controlAffinity:
                                                 ListTileControlAffinity.leading,
                                             title: Text(
-                                              "Grade 7",
+                                              "Grade7",
                                               style: TextStyle(
                                                   color: Colors.white),
                                             ),
@@ -360,7 +360,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                             controlAffinity:
                                                 ListTileControlAffinity.leading,
                                             title: Text(
-                                              "Grade 8",
+                                              "Grade8",
                                               style: TextStyle(
                                                   color: Colors.white),
                                             ),
@@ -377,7 +377,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                             controlAffinity:
                                                 ListTileControlAffinity.leading,
                                             title: Text(
-                                              "Grade 9",
+                                              "Grade9",
                                               style: TextStyle(
                                                   color: Colors.white),
                                             ),
@@ -394,7 +394,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                             controlAffinity:
                                                 ListTileControlAffinity.leading,
                                             title: Text(
-                                              "Grade 10",
+                                              "Grade10",
                                               style: TextStyle(
                                                   color: Colors.white),
                                             ),
@@ -411,7 +411,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                             controlAffinity:
                                                 ListTileControlAffinity.leading,
                                             title: Text(
-                                              "Grade 11",
+                                              "Grade11",
                                               style: TextStyle(
                                                   color: Colors.white),
                                             ),
