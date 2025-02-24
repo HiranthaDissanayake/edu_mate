@@ -28,7 +28,7 @@ class _Splashscreen1State extends State<Splashscreen1> {
               context, MaterialPageRoute(builder: (context) => Adminhomepage()));
         } else if (finalRole == "student") {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => StudentMainPage()));
+              context, MaterialPageRoute(builder: (context) => StudentMainPage(stEmail: finalEmail)));
         } else if (finalRole == "teacher") {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => Teacherdashboard(Grade: "")));

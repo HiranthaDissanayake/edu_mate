@@ -14,7 +14,14 @@ class _BeforeloginscreenState extends State<Beforeloginscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=> Loginscreen(role: "admin")));}, child: Text("Login"),),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=> Loginscreen(role: "admin")));}, child: Text("admin"),),
+            ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=> Loginscreen(role: "student")));}, child: Text("student"),),
+
+          ],
+        ),
       ),  
     );
   }

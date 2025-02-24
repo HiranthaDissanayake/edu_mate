@@ -18,7 +18,7 @@ class Reportdetailscard extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(title ,style: GoogleFonts.poppins(color: title == "Marks" ? Color(0xFFF34EF9) : Color(0xFF308FAF),fontSize: 17, fontWeight: FontWeight.bold),),
+          child: Text(title ,style: GoogleFonts.poppins(color: title == "Marks : " ? Color(0xFFF34EF9) : Color(0xFF308FAF),fontSize: 17, fontWeight: FontWeight.bold),),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
