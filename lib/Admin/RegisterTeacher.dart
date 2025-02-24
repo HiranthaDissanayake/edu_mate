@@ -556,7 +556,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                           "Gender": _genderController.text,
                                           "Subject": _subjectController.text,
                                           "Grade": Grades,
-                                          "Quelification":
+                                          "Qualification":
                                               _qualificationController.text,
                                           "ContactNo": _phoneController.text,
                                           "Email": _emailController.text
