@@ -3,10 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:edu_mate/service/database.dart'; // Ensure this import is correct
 import 'package:edu_mate/Admin/ProfileScreen.dart'; // Ensure this import is correct
 
-class PopupMore extends StatelessWidget {
+class PopupMoreTeacher extends StatelessWidget {
   final String id;
   final String collection; // Add collection parameter if needed
-  const PopupMore({
+  const PopupMoreTeacher({
     Key? key,
     required this.id,
     required this.collection, // Add collection parameter if needed
