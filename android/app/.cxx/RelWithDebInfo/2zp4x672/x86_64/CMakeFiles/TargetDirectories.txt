@@ -1,0 +1,2 @@
+D:/Flutter projects/EduMate - Tution Class Management App/edu_mate/android/app/.cxx/RelWithDebInfo/2zp4x672/x86_64/CMakeFiles/edit_cache.dir
+D:/Flutter projects/EduMate - Tution Class Management App/edu_mate/android/app/.cxx/RelWithDebInfo/2zp4x672/x86_64/CMakeFiles/rebuild_cache.dir
