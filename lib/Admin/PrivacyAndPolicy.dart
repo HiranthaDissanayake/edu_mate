@@ -31,8 +31,6 @@ class _PrivacyandpolicyState extends State<Privacyandpolicy> {
     style: TextStyle(color: Colors.white),
   );
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,29 +61,32 @@ class _PrivacyandpolicyState extends State<Privacyandpolicy> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Container(
-            height: 300,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Color(0xFF13134C),
             ),
-            child: Container(
-              decoration: BoxDecoration(),
-              child: Column(
-                children: [
-                  Text(
-                    "Privacy and Policy",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  Padding(
+            child: Column(
+              children: [
+                Text(
+                  "Privacy and Policy",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                Expanded(
+                  child: Padding(
                     padding: const EdgeInsets.only(top: 30),
-                    child: Container(
-                      width: 300,
-                      height: 700,
-                      child: Expanded(child: privacyPolicy(),
-                      )),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                            width:300,
+                            child: privacyPolicy(),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
