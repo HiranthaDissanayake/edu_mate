@@ -76,7 +76,7 @@ class _TermsandconditionsState extends State<Termsandconditions> {
                   padding: const EdgeInsets.only(top: 30),
                   child: Container(
                     width: 300,
-                    height: 700,
+                    height: double.infinity,
                     child: SingleChildScrollView(
                       child: termsAndConditions(),
                     ),
