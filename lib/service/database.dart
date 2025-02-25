@@ -101,20 +101,16 @@ class DatabaseMethods {
     return termsList.map((e) => e.trim()).toList(); // Trim whitespace
   }
   // Fetch privacy policy
-
-  Future<List<String>> fetchPrivacyPolicy() async {
+  
+  Future<DocumentSnapshot<Object?>> fetchPrivacyPolicy() async {
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
         .collection("privacy_policy")
         .doc("latest_privacy_policy")
         .get();
 
-    String termsText = snapshot["content"];
-
-    // Splitting the terms at each numbered item (e.g., "01.", "02.", etc.)
-    List<String> privacyList = termsText.split(RegExp(r'(?=\d{2}\.)'));
-
-    return privacyList.map((e) => e.trim()).toList(); // Trim whitespace
+    return snapshot;
   }
+
 
   //set user role for student
   Future<void> setStudentRole(String id, String email) async {
