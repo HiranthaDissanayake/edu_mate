@@ -63,7 +63,7 @@ class _DrawermenuState extends State<Drawermenu> {
           ),
           ListTile(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Privacyandpolicy()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>PrivacyPolicyScreen()));
             },
             leading: SizedBox(
               height: 25,
