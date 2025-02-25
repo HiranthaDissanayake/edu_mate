@@ -205,7 +205,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFF3A2AE0)),
+                          WidgetStateProperty.all(const Color(0xFF3A2AE0)),
                     ),
                     child: Text(
                       "Edit Profile",

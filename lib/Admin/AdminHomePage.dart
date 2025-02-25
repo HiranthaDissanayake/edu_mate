@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_mate/Admin/DrawerMenu.dart';
+import 'package:edu_mate/Admin/ManageScheduleScreen.dart';
 import 'package:edu_mate/Admin/ManageStudents.dart';
 import 'package:edu_mate/Admin/ManageTeachers.dart';
+import 'package:edu_mate/Admin/PaymentScreen.dart';
+import 'package:edu_mate/Admin/SetSchedule.dart';
+import 'package:edu_mate/Admin/UpdateScheduleScreen.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -265,19 +269,23 @@ class _AdminhomepageState extends State<Adminhomepage> {
               SizedBox(
                 height: 50,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Container(
-                  height: 50,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: const Color(0xFF3A2AE0),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                    child: Text(
-                      "Class fee",
-                      style: GoogleFonts.poppins(
-                          color: Colors.white, fontSize: 20),
+              GestureDetector(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Paymentscreen())),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Container(
+                    height: 50,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: const Color(0xFF3A2AE0),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                      child: Text(
+                        "Class fee",
+                        style: GoogleFonts.poppins(
+                            color: Colors.white, fontSize: 20),
+                      ),
                     ),
                   ),
                 ),
@@ -285,19 +293,23 @@ class _AdminhomepageState extends State<Adminhomepage> {
               SizedBox(
                 height: 30,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Container(
-                  height: 50,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: const Color(0xFF3A2AE0),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                    child: Text(
-                      "Schedule Classes ",
-                      style: GoogleFonts.poppins(
-                          color: Colors.white, fontSize: 20),
+              GestureDetector(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Manageschedules())),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Container(
+                    height: 50,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: const Color(0xFF3A2AE0),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                      child: Text(
+                        "Schedule Classes ",
+                        style: GoogleFonts.poppins(
+                            color: Colors.white, fontSize: 20),
+                      ),
                     ),
                   ),
                 ),

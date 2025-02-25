@@ -127,9 +127,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  const Color(0xFF13134C),
-                  const Color(0xFF13134C),
-                  const Color(0XFF2D2DB2)
+                  Color(0xFF13134C),
+                  Color(0xFF13134C),
+                  Color(0XFF2D2DB2)
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
