@@ -1,0 +1,2 @@
+C:/Users/123gi/OneDrive/Documents/GitHub/edu_mate/android/app/.cxx/Debug/95u13656/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/123gi/OneDrive/Documents/GitHub/edu_mate/android/app/.cxx/Debug/95u13656/x86_64/CMakeFiles/rebuild_cache.dir

@@ -38,6 +38,11 @@ class DatabaseMethods {
         .set(scheduleMap);
   }
 
+  //get schedule
+  Future<Stream<QuerySnapshot>> getSchedules() async {
+    return await FirebaseFirestore.instance.collection('Schedules').snapshots();
+  }
+
   // Fetch all Student details
   Future<Stream<QuerySnapshot>> getStudents() async {
     return await FirebaseFirestore.instance.collection("Students").snapshots();
