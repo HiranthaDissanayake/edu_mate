@@ -4,8 +4,6 @@ import 'package:edu_mate/Admin/ManageScheduleScreen.dart';
 import 'package:edu_mate/Admin/ManageStudents.dart';
 import 'package:edu_mate/Admin/ManageTeachers.dart';
 import 'package:edu_mate/Admin/PaymentScreen.dart';
-import 'package:edu_mate/Admin/SetSchedule.dart';
-import 'package:edu_mate/Admin/UpdateScheduleScreen.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
