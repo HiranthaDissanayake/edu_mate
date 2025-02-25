@@ -26,9 +26,15 @@ class _TermsandconditionsState extends State<Termsandconditions> {
     getonetheload();
   }
 
-  Widget termsAndConditions() => Text(
-        termsStream.join('\n\n'),
-        style: TextStyle(color: Colors.white),
+  Widget termsAndConditions() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: termsStream.map((term) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Text(
+            term,
+            style: TextStyle(color: Colors.white),
+          ),
+        )).toList(),
       );
 
   @override
@@ -61,7 +67,6 @@ class _TermsandconditionsState extends State<Termsandconditions> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Container(
-            height: 300,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Color(0xFF13134C),
@@ -72,11 +77,9 @@ class _TermsandconditionsState extends State<Termsandconditions> {
                   "Terms and Conditions",
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Container(
-                    width: 300,
-                    height: double.infinity,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
                     child: SingleChildScrollView(
                       child: termsAndConditions(),
                     ),
