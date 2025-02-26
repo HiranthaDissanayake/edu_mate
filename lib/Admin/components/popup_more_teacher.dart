@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:edu_mate/service/database.dart'; // Ensure this import is correct
-import 'package:edu_mate/Admin/ProfileScreen.dart'; // Ensure this import is correct
+import 'package:edu_mate/Admin/profile_screen.dart'; // Ensure this import is correct
 
-class PopupMoreStudent extends StatelessWidget {
+class PopupMoreTeacher extends StatelessWidget {
   final String id;
   final String collection; // Add collection parameter if needed
-  const PopupMoreStudent({
+  const PopupMoreTeacher({
     super.key,
     required this.id,
     required this.collection, // Add collection parameter if needed

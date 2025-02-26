@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
-import 'package:edu_mate/Admin/EditProfileScreen.dart';
+import 'package:edu_mate/Admin/edit_profile.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String id;
