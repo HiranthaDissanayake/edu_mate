@@ -1,7 +1,7 @@
-import 'package:edu_mate/Admin/AdminHomePage.dart';
-import 'package:edu_mate/Admin/PrivacyAndPolicy.dart';
-import 'package:edu_mate/Admin/RegisterAdmin.dart';
-import 'package:edu_mate/Admin/TermsAndConditions.dart';
+import 'package:edu_mate/Admin/admin_home_page.dart';
+import 'package:edu_mate/Admin/privacy_and_policy.dart';
+import 'package:edu_mate/Admin/register_admin.dart';
+import 'package:edu_mate/Admin/terms_and_conditions.dart';
 import 'package:edu_mate/Screens/splashScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

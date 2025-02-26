@@ -1,6 +1,6 @@
-import 'package:edu_mate/Admin/RegisterStudent.dart';
-import 'package:edu_mate/Admin/components/PopupMoreStudent.dart';
-import 'package:edu_mate/Admin/components/Searchbar.dart';
+import 'package:edu_mate/Admin/register_student.dart';
+import 'package:edu_mate/Admin/components/popup_more_student.dart';
+import 'package:edu_mate/Admin/components/searchbar.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

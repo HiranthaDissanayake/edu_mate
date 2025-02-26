@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_mate/Admin/components/Searchbar.dart';
+import 'package:edu_mate/Admin/components/searchbar.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 

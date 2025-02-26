@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_mate/Admin/DrawerMenu.dart';
-import 'package:edu_mate/Admin/ManageScheduleScreen.dart';
-import 'package:edu_mate/Admin/ManageStudents.dart';
-import 'package:edu_mate/Admin/ManageTeachers.dart';
-import 'package:edu_mate/Admin/PaymentScreen.dart';
+import 'package:edu_mate/Admin/drawer_menu.dart';
+import 'package:edu_mate/Admin/manage_schedules.dart';
+import 'package:edu_mate/Admin/manage_students.dart';
+import 'package:edu_mate/Admin/manage_teachers.dart';
+import 'package:edu_mate/Admin/payment_screen.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

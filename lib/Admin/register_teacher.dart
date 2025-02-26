@@ -1,4 +1,4 @@
-import 'package:edu_mate/Admin/SetSchedule.dart';
+import 'package:edu_mate/Admin/set_schedule.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

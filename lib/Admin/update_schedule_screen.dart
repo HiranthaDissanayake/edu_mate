@@ -233,120 +233,123 @@ class _Updateschedulescreen extends State<Updateschedulescreen> {
                   ),
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Form(
-                    key: _formKey,
-                    child: ListView(
-                      children: [
-                        TextFormField(
-                          enabled: false,
-                          controller: teacherIdController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: const InputDecoration(
-                            labelText: "Teacher ID",
-                            labelStyle: TextStyle(color: Colors.white),
+              SingleChildScrollView(
+                child: Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Form(
+                      key: _formKey,
+                      child: ListView(
+                        children: [
+                          TextFormField(
+                            enabled: false,
+                            controller: teacherIdController,
+                            style: TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
+                              labelText: "Teacher ID",
+                              labelStyle: TextStyle(color: Colors.white),
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          enabled: false,
-                          controller: teacherNameController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: const InputDecoration(
-                            labelText: "Teacher Name",
-                            labelStyle: TextStyle(color: Colors.white),
+                          TextFormField(
+                            enabled: false,
+                            controller: teacherNameController,
+                            style: TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
+                              labelText: "Teacher Name",
+                              labelStyle: TextStyle(color: Colors.white),
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          enabled: false,
-                          controller: subjectController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: const InputDecoration(
-                            labelText: "Subject",
-                            labelStyle: TextStyle(color: Colors.white),
+                          TextFormField(
+                            enabled: false,
+                            controller: subjectController,
+                            style: TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
+                              labelText: "Subject",
+                              labelStyle: TextStyle(color: Colors.white),
+                            ),
+                            validator: (value) =>
+                                value!.isEmpty ? "Enter Subject" : null,
                           ),
-                          validator: (value) =>
-                              value!.isEmpty ? "Enter Subject" : null,
-                        ),
-                        DropdownButtonFormField(
-                          value: selectedGrade,
-                          dropdownColor: Colors.blueGrey,
-                          decoration: const InputDecoration(
-                            labelText: "Grade",
-                            labelStyle: TextStyle(color: Colors.white),
+                          DropdownButtonFormField(
+                            value: selectedGrade,
+                            dropdownColor: Colors.blueGrey,
+                            decoration: const InputDecoration(
+                              labelText: "Grade",
+                              labelStyle: TextStyle(color: Colors.white),
+                            ),
+                            items: grades.map((grade) {
+                              return DropdownMenuItem(
+                                value: grade,
+                                child: Text(grade,
+                                    style: TextStyle(color: Colors.white)),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedGrade = value!;
+                              });
+                            },
                           ),
-                          items: grades.map((grade) {
-                            return DropdownMenuItem(
-                              value: grade,
-                              child: Text(grade,
-                                  style: TextStyle(color: Colors.white)),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              selectedGrade = value!;
-                            });
-                          },
-                        ),
-                        DropdownButtonFormField(
-                          value: selectedClassDay,
-                          dropdownColor: Colors.blueGrey,
-                          decoration: const InputDecoration(
-                            labelText: "Class Day",
-                            labelStyle: TextStyle(color: Colors.white),
+                          DropdownButtonFormField(
+                            value: selectedClassDay,
+                            dropdownColor: Colors.blueGrey,
+                            decoration: const InputDecoration(
+                              labelText: "Class Day",
+                              labelStyle: TextStyle(color: Colors.white),
+                            ),
+                            items: classDays.map((day) {
+                              return DropdownMenuItem(
+                                value: day,
+                                child: Text(day,
+                                    style: TextStyle(color: Colors.white)),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedClassDay = value!;
+                              });
+                            },
                           ),
-                          items: classDays.map((day) {
-                            return DropdownMenuItem(
-                              value: day,
-                              child: Text(day,
-                                  style: TextStyle(color: Colors.white)),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              selectedClassDay = value!;
-                            });
-                          },
-                        ),
-                        ListTile(
-                          leading: Text(
-                            "Start Time",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                          title: Text(startTime,
-                              style: TextStyle(color: Colors.white)),
-                          trailing:
-                              Icon(Icons.access_time, color: Colors.white),
-                          onTap: () => _selectTime(context, true),
-                        ),
-                        ListTile(
-                          leading: Text("End Time",
+                          ListTile(
+                            leading: Text(
+                              "Start Time",
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 16)),
-                          title: Text(endTime,
-                              style: TextStyle(color: Colors.white)),
-                          trailing:
-                              Icon(Icons.access_time, color: Colors.white),
-                          onTap: () => _selectTime(context, false),
-                        ),
-                        TextFormField(
-                          controller: classFeeController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: const InputDecoration(
-                            labelText: "Class Fee",
-                            labelStyle: TextStyle(color: Colors.white),
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                            title: Text(startTime,
+                                style: TextStyle(color: Colors.white)),
+                            trailing:
+                                Icon(Icons.access_time, color: Colors.white),
+                            onTap: () => _selectTime(context, true),
                           ),
-                          validator: (value) =>
-                              value!.isEmpty ? "Enter Class Fee" : null,
-                        ),
-                        SizedBox(height: 100),
-                        ElevatedButton(
-                          onPressed: _updateSchedule,
-                          child: const Text("Save Changes"),
-                        ),
-                        const SizedBox(height: 20),
-                      ],
+                          ListTile(
+                            leading: Text("End Time",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16)),
+                            title: Text(endTime,
+                                style: TextStyle(color: Colors.white)),
+                            trailing:
+                                Icon(Icons.access_time, color: Colors.white),
+                            onTap: () => _selectTime(context, false),
+                          ),
+                          TextFormField(
+                            controller: classFeeController,
+                            style: TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
+                              labelText: "Class Fee",
+                              labelStyle: TextStyle(color: Colors.white),
+                            ),
+                            validator: (value) =>
+                                value!.isEmpty ? "Enter Class Fee" : null,
+                          ),
+                          SizedBox(height: 100),
+                          ElevatedButton(
+                            onPressed: _updateSchedule,
+                            child: const Text("Save Changes"),
+                          ),
+                          const SizedBox(height: 20),
+                        ],
+                      ),
                     ),
                   ),
                 ),

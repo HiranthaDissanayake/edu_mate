@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_mate/Admin/UpdateScheduleScreen.dart';
+import 'package:edu_mate/Admin/update_schedule_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_mate/service/database.dart';
 
