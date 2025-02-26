@@ -47,16 +47,17 @@ class _Updateschedulescreen extends State<Updateschedulescreen> {
   @override
   void initState() {
     super.initState();
+    fetchSchedule();
     teacherIdController = TextEditingController();
     teacherNameController = TextEditingController();
     subjectController = TextEditingController();
     classFeeController = TextEditingController();
-    fetchSchedule();
   }
 
   @override
   void dispose() {
     teacherIdController.dispose();
+    teacherNameController.dispose();
     subjectController.dispose();
     classFeeController.dispose();
     super.dispose();
@@ -78,6 +79,7 @@ class _Updateschedulescreen extends State<Updateschedulescreen> {
           selectedClassDay = data["ClassDay"] ?? "Monday";
           startTime = data["StartTime"] ?? "Select Start Time";
           endTime = data["EndTime"] ?? "Select End Time";
+          classFeeController.text = data["ClassFee"] ?? "Enter class fee";
         });
       }
 
@@ -233,13 +235,13 @@ class _Updateschedulescreen extends State<Updateschedulescreen> {
                   ),
                 ),
               ),
-              SingleChildScrollView(
-                child: Expanded(
+              Expanded(
+                child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Form(
                       key: _formKey,
-                      child: ListView(
+                      child: Column(
                         children: [
                           TextFormField(
                             enabled: false,
@@ -270,6 +272,8 @@ class _Updateschedulescreen extends State<Updateschedulescreen> {
                             validator: (value) =>
                                 value!.isEmpty ? "Enter Subject" : null,
                           ),
+
+                          // Grades dropdown
                           DropdownButtonFormField(
                             value: selectedGrade,
                             dropdownColor: Colors.blueGrey,
@@ -290,6 +294,8 @@ class _Updateschedulescreen extends State<Updateschedulescreen> {
                               });
                             },
                           ),
+
+                          // Day dropdown
                           DropdownButtonFormField(
                             value: selectedClassDay,
                             dropdownColor: Colors.blueGrey,
@@ -310,6 +316,8 @@ class _Updateschedulescreen extends State<Updateschedulescreen> {
                               });
                             },
                           ),
+
+                          // Start time selector
                           ListTile(
                             leading: Text(
                               "Start Time",
@@ -322,6 +330,8 @@ class _Updateschedulescreen extends State<Updateschedulescreen> {
                                 Icon(Icons.access_time, color: Colors.white),
                             onTap: () => _selectTime(context, true),
                           ),
+
+                          // End time selector
                           ListTile(
                             leading: Text("End Time",
                                 style: TextStyle(
@@ -332,6 +342,8 @@ class _Updateschedulescreen extends State<Updateschedulescreen> {
                                 Icon(Icons.access_time, color: Colors.white),
                             onTap: () => _selectTime(context, false),
                           ),
+
+                          // Class fee field
                           TextFormField(
                             controller: classFeeController,
                             style: TextStyle(color: Colors.white),
