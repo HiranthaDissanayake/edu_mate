@@ -4,6 +4,7 @@ import 'package:edu_mate/Admin/manage_schedules.dart';
 import 'package:edu_mate/Admin/manage_students.dart';
 import 'package:edu_mate/Admin/manage_teachers.dart';
 import 'package:edu_mate/Admin/payment_screen.dart';
+import 'package:edu_mate/Admin/report_generate.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -143,7 +144,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
                                 },
                                 icon: Icon(Icons.menu),
                                 color: Color(0xFF5BAFDB),
-                                iconSize: 40,
+                                iconSize: 32,
                               ),
                             )),
                             SizedBox(
@@ -393,7 +394,10 @@ class _AdminhomepageState extends State<Adminhomepage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              //type the code
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ReportGenerate()));
                             },
                             child: Container(
                               height: 60,
