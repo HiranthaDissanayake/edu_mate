@@ -297,4 +297,5 @@ class DatabaseMethods {
         .doc(id)
         .snapshots();
   }
+  
 }

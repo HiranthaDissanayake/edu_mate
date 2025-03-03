@@ -69,33 +69,4 @@ class AuthService {
   }
 }
 
-Future<String?> getUserRole(String email) async {
-  try {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection("users")
-        .where("email", isEqualTo: email)
-        .get();
-
-    if (querySnapshot.docs.isNotEmpty) {
-      String role = querySnapshot.docs.first.get("role");
-
-
-      if (role == "student") {
-        return "student";
-      } else if (role == "teacher") {
-        return "teacher";
-      } else if (role == "admin") {
-        return "admin";
-      } else {
-        return null; // If role is not recognized
-      }
-    } else {
-      return null; // No user found
-    }
-  } catch (e) {
-    print("Error fetching user role: $e");
-    return null;
-  }
-}
-
 }
