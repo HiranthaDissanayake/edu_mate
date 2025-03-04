@@ -3,8 +3,9 @@ import 'package:edu_mate/Student/Student_main_page.dart';
 import 'package:edu_mate/Teacher/TeacherDashboard.dart';
 import 'package:edu_mate/service/auth_service.dart';
 import 'package:edu_mate/service/database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Loginscreen extends StatefulWidget {
   final String role;
@@ -16,9 +17,7 @@ class Loginscreen extends StatefulWidget {
 
 class _LoginscreenState extends State<Loginscreen> {
   bool isObscure = true;
-
   final _formKey = GlobalKey<FormState>();
-
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -63,7 +62,7 @@ class _LoginscreenState extends State<Loginscreen> {
                     width: MediaQuery.of(context).size.width * 0.85,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Color(0xFF28313F).withOpacity(0.4),
+                      color: const Color(0xFF28313F).withOpacity(0.4),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(
@@ -88,17 +87,17 @@ class _LoginscreenState extends State<Loginscreen> {
                           },
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: Color(0xFF28313F),
+                            fillColor: const Color(0xFF28313F),
                             hintText: '${widget.role} email',
-                            hintStyle: TextStyle(color: Colors.white70),
+                            hintStyle: const TextStyle(color: Colors.white70),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: BorderSide.none,
                             ),
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                           ),
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                         const SizedBox(height: 50),
                         TextFormField(
@@ -123,17 +122,17 @@ class _LoginscreenState extends State<Loginscreen> {
                               color: Colors.white70,
                             ),
                             filled: isObscure,
-                            fillColor: Color(0xFF28313F),
+                            fillColor: const Color(0xFF28313F),
                             hintText: 'Password',
-                            hintStyle: TextStyle(color: Colors.white70),
+                            hintStyle: const TextStyle(color: Colors.white70),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: BorderSide.none,
                             ),
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                           ),
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                         const SizedBox(height: 10),
                         Align(
@@ -160,11 +159,11 @@ class _LoginscreenState extends State<Loginscreen> {
                               _passwordController.clear();
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF3A2AE0),
+                              backgroundColor: const Color(0xFF3A2AE0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              padding: EdgeInsets.symmetric(vertical: 12),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
                             ),
                             child: const Text(
                               'Login',
@@ -185,46 +184,50 @@ class _LoginscreenState extends State<Loginscreen> {
       ),
     );
   }
+void login(String email, String password) async {
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
 
-  void login(String email, String password) async {
-    DatabaseMethods databaseMethods = DatabaseMethods();
-    AuthService authService = AuthService();
-
-    bool? valiedUser = await authService.loginUser(email, password);
-    String? userData;
-    if (valiedUser) {
-      userData = await databaseMethods.getUserRole(email);
+    if (userCredential.user != null) {
+      String? userData = await DatabaseMethods().getUserRole(email);
       
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('email', email);
-      await prefs.setString('role', userData!);
+      if (userData != null && userData == widget.role) {
+        final storage = const FlutterSecureStorage();
+        await storage.write(key: 'email', value: email);
+        await storage.write(key: 'role', value: userData);
+        await storage.write(key: 'password', value: password);
 
+        // Redirect Based on Role
+        if (userData == "student") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => StudentMainPage(stEmail: email)),
+          );
+        } else if (userData == "teacher") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Teacherdashboard(Grade: "")),
+          );
+        } else if (userData == "admin") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Adminhomepage()),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Invalid Credentials or Role Mismatch")));
+      }
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Invalid Credentials")));
-      print("User not found");
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Invalid Credentials")));
     }
-
-    // Redirect Based on Role
-    if (userData == widget.role && widget.role == "student") {
-      Navigator.push(
-          // ignore: use_build_context_synchronously
-          context,
-          MaterialPageRoute(builder: (context) => StudentMainPage(stEmail: email.toString())));
-    } else if (userData == widget.role && widget.role == "teacher") {
-      Navigator.push(
-           //ignore: use_build_context_synchronously
-          context,
-          MaterialPageRoute(builder: (context) => Teacherdashboard(Grade: "")));
-    } else if (userData == widget.role && widget.role == "admin") {
-      Navigator.push(
-          // ignore: use_build_context_synchronously
-          context,
-          MaterialPageRoute(builder: (context) => Adminhomepage()));
-    } else {
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Invalid Credentials")));
-    }
+  } catch (e) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text("An error occurred")));
+    print("Login error: $e");
   }
+}
+
 }

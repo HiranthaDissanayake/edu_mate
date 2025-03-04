@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_mate/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class DatabaseMethods {
   //Set Student Details
@@ -210,14 +210,6 @@ class DatabaseMethods {
     }
   }
 
-//save the user's email and role in SharedPreferences
-  Future<void> saveLoginData(String email, String password, String role) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('email', email);
-    await prefs.setString("password", password);
-    await prefs.setString('role', role);
-  }
-
   /// *Fetch Grades for a Given Teacher*
   Future<List<String>> fetchGrades(String teacherID) async {
     try {
@@ -298,4 +290,21 @@ class DatabaseMethods {
         .snapshots();
   }
   
+
+
+  final storage = FlutterSecureStorage();
+
+//store secure data
+  Future<void> storeSecureData(String key, String value) async {
+  await storage.write(key: key, value: value);
+}
+Future<String?> getSecureData(String key) async {
+  return await storage.read(key: key);
+}
+Future<void> deleteSecureData(String key) async {
+  await storage.delete(key: key);
+}
+
+
+
 }

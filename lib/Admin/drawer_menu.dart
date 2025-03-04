@@ -4,7 +4,7 @@ import 'package:edu_mate/Admin/register_admin.dart';
 import 'package:edu_mate/Admin/terms_and_conditions.dart';
 import 'package:edu_mate/Screens/splashScreen1.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Drawermenu extends StatefulWidget {
   const Drawermenu({super.key});
@@ -91,8 +91,10 @@ class _DrawermenuState extends State<Drawermenu> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: GestureDetector(
               onTap: () async {
-                final SharedPreferences prefs = await SharedPreferences.getInstance();
-                await prefs.clear();
+                final  _secureStorage = const FlutterSecureStorage();
+                await _secureStorage.delete(key: "email");
+                await _secureStorage.delete(key: "password");
+                await _secureStorage.delete(key: "role");
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Splashscreen1()));
               },
               child: Container(
