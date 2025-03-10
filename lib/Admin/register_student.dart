@@ -588,22 +588,22 @@ class _RegisterstudentState extends State<Registerstudent> {
 
                                       if (_formKey.currentState!.validate()) {
                                         if (_maths) {
-                                          Subjects["maths"] = {};
+                                          Subjects["Maths"] = {};
                                         }
                                         if (_science) {
-                                          Subjects["science"] = {};
+                                          Subjects["Science"] = {};
                                         }
                                         if (_english) {
-                                          Subjects["english"] = {};
+                                          Subjects["English"] = {};
                                         }
                                         if (_history) {
-                                          Subjects["history"] = {};
+                                          Subjects["History"] = {};
                                         }
                                         if (_sinhala) {
-                                          Subjects["sinhala"] = {};
+                                          Subjects["Sinhala"] = {};
                                         }
                                         if (_commerce) {
-                                          Subjects["commerce"] = {};
+                                          Subjects["Commerce"] = {};
                                         }
 
                                         await DatabaseMethods().setStudentRole(
