@@ -302,7 +302,7 @@ class _StudentMainPageState extends State<StudentMainPage> {
                               ? Classescontainer(stEmail: widget.stEmail!)
                               : _selectedMethod == 1
                                   ? Reportcontainer(stEmail: widget.stEmail!)
-                                  : Attendencecontainer(),
+                                  : Attendencecontainer(stEmail: widget.stEmail!),
                         ],
                       ),
                     ));
