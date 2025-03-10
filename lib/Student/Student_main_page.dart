@@ -161,18 +161,55 @@ class _StudentMainPageState extends State<StudentMainPage> {
                               StreamBuilder<QuerySnapshot>(
                                 stream: studentStream,
                                 builder: (context,
-                                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  if (!snapshot.hasData ||
-                                      snapshot.data!.docs.isEmpty) {
+                                    AsyncSnapshot<QuerySnapshot> snapshot1) {
+                                  if (!snapshot1.hasData ||
+                                      snapshot1.data!.docs.isEmpty) {
                                     return Text("Loading...",
                                         style: GoogleFonts.poppins(
                                             color: Colors.white,
                                             fontSize: 17,
                                             fontWeight: FontWeight.bold));
                                   }
-                                  var studentData = snapshot.data!.docs
+                                  var studentData = snapshot1.data!.docs
                                       .first; // Get the first document
                                   return Text(studentData['Name'],
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.white,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold));
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Grade : ",
+                                style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              StreamBuilder<QuerySnapshot>(
+                                stream: studentStream,
+                                builder: (context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot1) {
+                                  if (!snapshot1.hasData ||
+                                      snapshot1.data!.docs.isEmpty) {
+                                    return Text("Loading...",
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold));
+                                  }
+                                  var studentData1 = snapshot1.data!.docs
+                                      .first; // Get the first document
+                                  return Text(studentData1['Grade'],
                                       style: GoogleFonts.poppins(
                                           color: Colors.white,
                                           fontSize: 17,
