@@ -13,7 +13,6 @@ class Registerstudent extends StatefulWidget {
 }
 
 class _RegisterstudentState extends State<Registerstudent> {
-
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
@@ -584,28 +583,32 @@ class _RegisterstudentState extends State<Registerstudent> {
                                   child: GestureDetector(
                                     onTap: () async {
                                       String id = randomAlphaNumeric(10);
-                                      List<String> Subjects = [];
+                                      Map<String, dynamic> Subjects =
+                                          {}; // Initialize map properly
+
                                       if (_formKey.currentState!.validate()) {
                                         if (_maths) {
-                                          Subjects.add("Maths");
+                                          Subjects["maths"] = {};
                                         }
                                         if (_science) {
-                                          Subjects.add("Science");
+                                          Subjects["science"] = {};
                                         }
                                         if (_english) {
-                                          Subjects.add('English');
+                                          Subjects["english"] = {};
                                         }
                                         if (_history) {
-                                          Subjects.add("History");
+                                          Subjects["history"] = {};
                                         }
                                         if (_sinhala) {
-                                          Subjects.add("Sinhala");
+                                          Subjects["sinhala"] = {};
                                         }
                                         if (_commerce) {
-                                          Subjects.add("Commerce");
+                                          Subjects["commerce"] = {};
                                         }
+
                                         await DatabaseMethods().setStudentRole(
                                             id, _emailController.text);
+
                                         Map<String, dynamic> studentInfoMap = {
                                           "id": id,
                                           "Name": _nameController.text,
@@ -613,7 +616,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                                           "DateOfBirth": _dateController.text,
                                           "Gender": _genderController.text,
                                           "Grade": _gradeController.text,
-                                          "Subject": Subjects,
+                                          "Subject":
+                                              Subjects,
                                           "ContactNo": _phoneController.text,
                                           "ParentNo": _patentNoController.text,
                                           "Email": _emailController.text,
@@ -627,9 +631,9 @@ class _RegisterstudentState extends State<Registerstudent> {
                                           msg:
                                               "Student Registered Successfully",
                                           gravity: ToastGravity.CENTER,
-                                          textColor: const Color.fromARGB(
-                                              255, 0, 0, 0),
-                                          backgroundColor: Colors.green,
+                                          textColor: Colors.black,
+                                          backgroundColor:
+                                              Colors.green, // Fixed color issue
                                           fontSize: 20,
                                         );
 
