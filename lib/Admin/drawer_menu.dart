@@ -18,84 +18,110 @@ class _DrawermenuState extends State<Drawermenu> {
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Color(0xFF080A30),
-      child: ListView(
-        padding: EdgeInsets.zero,
+      child: Column(
         children: [
+          // Drawer Header
           DrawerHeader(
-              child: Center(
-            child: Column(
+            child: Center(
+              child: Column(
+                children: [
+                  Image.asset(
+                    "assets/images/AppLogo.png",
+                    width: 80,
+                    height: 80,
+                  ),
+                  Text(
+                    "EduMate",
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // List of Menu Items
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
               children: [
-                Image.asset(
-                  "assets/images/AppLogo.png",
-                  width: 80,
-                  height: 80,
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Adminhomepage()),
+                    );
+                  },
+                  leading: SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: Image.asset("assets/images/dashboard.png"),
+                  ),
+                  title:
+                      Text("Dashboard", style: TextStyle(color: Colors.white)),
                 ),
-                Text(
-                  "EduMate",
-                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Registeradmin()),
+                    );
+                  },
+                  leading: SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: Image.asset("assets/images/registerAdmin.png"),
+                  ),
+                  title: Text("Register Admin",
+                      style: TextStyle(color: Colors.white)),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PrivacyPolicyScreen()),
+                    );
+                  },
+                  leading: SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: Image.asset("assets/images/privacy_policy.png"),
+                  ),
+                  title: Text("Privacy & Policy",
+                      style: TextStyle(color: Colors.white)),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Termsandconditions()),
+                    );
+                  },
+                  leading: SizedBox(
+                    height: 25,
+                    width: 25,
+                    child:
+                        Image.asset("assets/images/terms_and_conditions.png"),
+                  ),
+                  title: Text("Terms & Conditions",
+                      style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),
-          )),
-          ListTile(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Adminhomepage()));
-            },
-            leading: SizedBox(
-              height: 25,
-              width: 25,
-              child: Image.asset("assets/images/dashboard.png"),
-            ),
-            title: Text("Dashboard", style: TextStyle(color: Colors.white))
           ),
-          ListTile(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Registeradmin()));
-            },
-            leading: SizedBox(
-              height: 25,
-              width: 25,
-              child: Image.asset("assets/images/registerAdmin.png"),
-            ),
-            title: Text("Register Admin",
-                style: TextStyle(color: Colors.white)),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>PrivacyPolicyScreen()));
-            },
-            leading: SizedBox(
-              height: 25,
-              width: 25,
-              child: Image.asset("assets/images/privacy_policy.png"),
-            ),
-            title:
-                Text("Privacy & Policy", style: TextStyle(color: Colors.white)),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Termsandconditions()));
-            },
-            leading: SizedBox(
-              height: 25,
-              width: 25,
-              child: Image.asset("assets/images/terms_and_conditions.png"),
-            ),
-            title: Text("Terms & Conditions",
-                style: TextStyle(color: Colors.white)),
-          ),
-          SizedBox(
-            height: 360,
-          ),
+          // Logout Button
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: GestureDetector(
               onTap: () async {
-                final  _secureStorage = const FlutterSecureStorage();
+                final _secureStorage = const FlutterSecureStorage();
                 await _secureStorage.delete(key: "email");
                 await _secureStorage.delete(key: "password");
                 await _secureStorage.delete(key: "role");
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Splashscreen1()));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Splashscreen1()),
+                );
               },
               child: Container(
                 height: 40,
@@ -112,7 +138,7 @@ class _DrawermenuState extends State<Drawermenu> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

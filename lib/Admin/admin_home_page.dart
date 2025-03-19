@@ -58,7 +58,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
           return Text(
             "$studentCount",
             style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
           );
         });
   }
@@ -82,7 +82,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
           return Text(
             "$teacherCount",
             style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
           );
         });
   }
@@ -90,342 +90,346 @@ class _AdminhomepageState extends State<Adminhomepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawermenu(),
-        body: Container(
-          height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                const Color(0xFF13134C),
-                const Color(0xFF13134C),
-                const Color(0XFF2D2DB2)
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+      drawer: Drawermenu(),
+      body: Container(
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              const Color(0xFF13134C),
+              const Color(0xFF13134C),
+              const Color(0XFF2D2DB2)
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
+        ),
+        child: SingleChildScrollView(
           child: Column(
             children: [
+              // App Bar Section
               Container(
                 height: 350,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: const Color(0xFF080B2E),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(50),
-                      bottomRight: Radius.circular(50),
-                    )),
+                  color: const Color(0xFF080B2E),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(50),
+                  ),
+                ),
                 child: Column(
                   children: [
+                    // Top App Bar
                     Container(
                       height: 120,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [
-                                const Color(0xFF010127),
-                                const Color(0xFF010127),
-                                const Color(0xFF0B0C61)
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter),
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(70),
-                              topRight: Radius.circular(150))),
+                        gradient: LinearGradient(
+                          colors: [
+                            const Color(0xFF010127),
+                            const Color(0xFF010127),
+                            const Color(0xFF0B0C61)
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(70),
+                          topRight: Radius.circular(150),
+                        ),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.only(top: 30),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Expanded(
-                                child: Builder(
+                            Builder(
                               builder: (context) => IconButton(
                                 onPressed: () {
                                   Scaffold.of(context).openDrawer();
                                 },
                                 icon: Icon(Icons.menu),
                                 color: Color(0xFF5BAFDB),
-                                iconSize: 32,
-                              ),
-                            )),
-                            SizedBox(
-                              width: 60,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "EduMate",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
+                                iconSize: 28,
                               ),
                             ),
-                            SizedBox(
-                              width: 60,
+                            Text(
+                              "EduMate",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
                             ),
+                            SizedBox(width: 48), // Placeholder for balance
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 200,
-                      width: 200,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: Column(
-                          children: [
-                            Image(
-                                image: AssetImage("assets/images/AppLogo.png")),
-                            Text(
-                              "EduMate",
-                              style: GoogleFonts.poppins(
-                                  color: Colors.white, fontSize: 22),
+                    // Logo and Title
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: Column(
+                        children: [
+                          Image(
+                            image: AssetImage("assets/images/AppLogo.png"),
+                            width: 100,
+                            height: 100,
+                          ),
+                          Text(
+                            "EduMate",
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 22,
                             ),
+                          ),
+                          Text(
+                            "Admin Panel",
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Stats Section
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF181A47),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Text(
-                              "Admin Panel",
+                              "Total Number Of Students",
                               style: GoogleFonts.poppins(
-                                  color: Colors.white, fontSize: 12),
-                            )
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF282845),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: Center(
+                                child: NumberOfStudents(),
+                              ),
+                            ),
                           ],
+                        ),
+                        SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Total Number Of Teachers",
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF282845),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: Center(
+                                child: NumberOfTeachers(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // Buttons Section
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Paymentscreen()),
+                      ),
+                      child: Container(
+                        height: 50,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF3A2AE0),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Class fee",
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Manageschedules()),
+                      ),
+                      child: Container(
+                        height: 50,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF3A2AE0),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Schedule Classes",
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
-                height: 60,
-              ),
+              // Bottom Navigation Section
               Padding(
-                padding: const EdgeInsets.all(10),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    height: 150,
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF181A47),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                            blurRadius: 5,
-                            offset: Offset(0, 3),
-                          )
-                        ]),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  "Total Number Of Students",
-                                  style: GoogleFonts.poppins(
-                                      color: Colors.white, fontSize: 18),
-                                ),
-                              ),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF282845),
-                                    borderRadius: BorderRadius.circular(100)),
-                                child: Center(
-                                  child: NumberOfStudents(),
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  "Total Number Of Teachers",
-                                  style: GoogleFonts.poppins(
-                                      color: Colors.white, fontSize: 18),
-                                ),
-                              ),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF282845),
-                                    borderRadius: BorderRadius.circular(100)),
-                                child: Center(
-                                  child: NumberOfTeachers(),
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Paymentscreen())),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Container(
-                    height: 50,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF3A2AE0),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Center(
-                      child: Text(
-                        "Class fee",
-                        style: GoogleFonts.poppins(
-                            color: Colors.white, fontSize: 20),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Manageschedules())),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Container(
-                    height: 50,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF3A2AE0),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Center(
-                      child: Text(
-                        "Schedule Classes ",
-                        style: GoogleFonts.poppins(
-                            color: Colors.white, fontSize: 20),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
-                    height: 60,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF080B2E),
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Center(
-                        child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Managestudents()));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: 60,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image(
-                                    image:
-                                        AssetImage("assets/images/student.png"),
-                                    width: 35,
-                                    height: 35,
-                                  ),
-                                  Text("Student",
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                      )),
-                                ],
+                  height: 60,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF080B2E),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Managestudents()),
+                            );
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image(
+                                image: AssetImage("assets/images/student.png"),
+                                width: 24,
+                                height: 24,
                               ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 50,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Manageteachers()));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: 60,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image(
-                                    image:
-                                        AssetImage("assets/images/teacher.png"),
-                                    width: 35,
-                                    height: 35,
-                                  ),
-                                  Text("Teachers",
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                      )),
-                                ],
+                              Text(
+                                "Student",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                          SizedBox(
-                            width: 50,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ReportGenerate()));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: 60,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image(
-                                    image:
-                                        AssetImage("assets/images/report.png"),
-                                    width: 35,
-                                    height: 35,
-                                  ),
-                                  Text("Reports",
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                      )),
-                                ],
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Manageteachers()),
+                            );
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image(
+                                image: AssetImage("assets/images/teacher.png"),
+                                width: 24,
+                                height: 24,
                               ),
-                            ),
+                              Text(
+                                "Teachers",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ))),
-              )
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ReportGenerate()),
+                            );
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image(
+                                image: AssetImage("assets/images/report.png"),
+                                width: 24,
+                                height: 24,
+                              ),
+                              Text(
+                                "Reports",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
