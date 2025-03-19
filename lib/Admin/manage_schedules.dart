@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edu_mate/Admin/create_new_schedule.dart';
 import 'package:edu_mate/Admin/update_schedule_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_mate/service/database.dart';
@@ -90,53 +91,54 @@ class _ManageschedulesState extends State<Manageschedules> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Column(
-          children: [
-            Container(
-              height: 120,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0xFF010127), Color(0xFF0B0C61)],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 120,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF010127), Color(0xFF0B0C61)],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(70),
+                    topRight: Radius.circular(150),
+                  ),
                 ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(70),
-                  topRight: Radius.circular(150),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(Icons.arrow_back),
-                      color: Colors.white,
-                      iconSize: 25,
-                    ),
-                    Spacer(),
-                    Text(
-                      "Manage Schedules",
-                      style: TextStyle(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back),
                         color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
+                        iconSize: 25,
                       ),
-                    ),
-                    Spacer(),
-                  ],
+                      Spacer(),
+                      Text(
+                        "Manage Schedules",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
+              ListView.builder(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 itemCount: filteredSchedules.length,
+                shrinkWrap: true,
                 itemBuilder: (context, index) {
                   final schedule = filteredSchedules[index];
                   return Padding(
@@ -221,8 +223,24 @@ class _ManageschedulesState extends State<Manageschedules> {
                   );
                 },
               ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateNewSchedule(),
             ),
-          ],
+          );
+        },
+        backgroundColor: Color(0xFF3A2AE0),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 30,
         ),
       ),
     );
