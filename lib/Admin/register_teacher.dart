@@ -13,7 +13,6 @@ class Registerteacher extends StatefulWidget {
 }
 
 class _RegisterteacherState extends State<Registerteacher> {
-
   final _nameController = TextEditingController();
   final _dateController = TextEditingController();
   final _genderController = TextEditingController();
@@ -625,7 +624,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                       ),
                                     ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),

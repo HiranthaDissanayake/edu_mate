@@ -17,7 +17,11 @@ class _ReportGenerateState extends State<ReportGenerate> {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFF13134C), Color(0xFF2D2DB2)],
+                colors: [
+                  Color(0xFF13134C),
+                  Color(0xFF13134C),
+                  Color(0XFF2D2DB2)
+                ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -25,12 +29,17 @@ class _ReportGenerateState extends State<ReportGenerate> {
           ),
           Column(
             children: [
+              // App Bar Section
               Container(
                 height: 120,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF010127), Color(0xFF0B0C61)],
+                    colors: [
+                      Color(0xFF010127),
+                      const Color(0xFF010127),
+                      const Color(0xFF0B0C61)
+                    ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
@@ -42,80 +51,87 @@ class _ReportGenerateState extends State<ReportGenerate> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 30),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.arrow_back),
-                        color: Colors.white,
-                        iconSize: 25,
+                      Builder(
+                        builder: (context) => IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.arrow_back),
+                          color: Colors.white,
+                          iconSize: 25,
+                        ),
                       ),
-                      Spacer(),
                       Text(
                         "Report Generate",
                         style: TextStyle(
-                          color: Color(0xFFFFFFFF),
+                          color: Colors.white,
                           fontSize: 20,
-                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Spacer(),
+                      SizedBox(width: 48), // Placeholder for balance
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
+              // Buttons Section
               Column(
                 children: [
                   GestureDetector(
-                    onTap: () => (),
+                    onTap: () {
+                      // Add functionality here
+                    },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Container(
                         height: 50,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            color: const Color(0xFF3A2AE0),
-                            borderRadius: BorderRadius.circular(10)),
+                          color: const Color(0xFF3A2AE0),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: Center(
                           child: Text(
                             "Class fee",
                             style: GoogleFonts.poppins(
-                                color: Colors.white, fontSize: 20),
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizedBox(height: 30),
                   GestureDetector(
-                    onTap: () => (),
+                    onTap: () {
+                      // Add functionality here
+                    },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Container(
                         height: 50,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            color: const Color(0xFF3A2AE0),
-                            borderRadius: BorderRadius.circular(10)),
+                          color: const Color(0xFF3A2AE0),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: Center(
                           child: Text(
-                            "Schedule Classes ",
+                            "Schedule Classes",
                             style: GoogleFonts.poppins(
-                                color: Colors.white, fontSize: 20),
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ],

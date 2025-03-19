@@ -88,134 +88,142 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         child: Stack(
           children: [
-            Column(
-              children: [
-                // Custom Appbar
-                Container(
-                  height: 120,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        const Color(0xFF010127),
-                        const Color(0xFF0B0C61)
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(70),
-                      topRight: Radius.circular(150),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(Icons.arrow_back),
-                          color: Colors.white,
-                          iconSize: 25,
-                        ),
-                        SizedBox(width: 120),
-                        Text(
-                          "Profile",
-                          style: TextStyle(
-                            color: Color(0xFFFFFFFF),
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Spacer(),
-                      ],
-                    ),
-                  ),
+            // App Bar (Fixed at the top)
+            Container(
+              height: 120,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [const Color(0xFF010127), const Color(0xFF0B0C61)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
-                SizedBox(height: 20),
-
-                // Profile Picture
-                SizedBox(
-                  width: 150,
-                  height: 150,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: const Image(
-                        image: AssetImage("assets/images/student_logo.png")),
-                  ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(70),
+                  topRight: Radius.circular(150),
                 ),
-                SizedBox(height: 20),
-
-                Text(
-                  name,
-                  style: TextStyle(
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back),
                       color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold),
+                      iconSize: 25,
+                    ),
+                    SizedBox(width: 120),
+                    Text(
+                      "Profile",
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Spacer(),
+                  ],
                 ),
-                SizedBox(height: 40),
+              ),
+            ),
 
-                _buildProfileDetailTable("Email", email),
-                if (widget.collection == 'Students') ...[
-                  _buildProfileDetailTable("Birthday", birthday),
-                  _buildProfileDetailTable("Grade", grade),
-                  _buildProfileDetailTable("Subjects", subjects.join(", ")),
-                  _buildProfileDetailTable("Contact No", contactNo),
-                  _buildProfileDetailTable(
-                      "Parent Contact No", parentContactNo),
-                ] else if (widget.collection == 'Teachers') ...[
-                  _buildProfileDetailTable("Birthday", birthday),
-                  _buildProfileDetailTable("Grade", grades.join(",\n ")),
-                  _buildProfileDetailTable("Gender", gender),
-                  _buildProfileDetailTable("Subject", subject),
-                  _buildProfileDetailTable("Contact No", contactNo),
-                  _buildProfileDetailTable("Qualification", qualification),
-                ],
+            // Scrollable Content
+            Positioned(
+              top: 120, // Position below the app bar
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: 20),
 
-                SizedBox(height: 50),
+                    // Profile Picture
+                    SizedBox(
+                      width: 150,
+                      height: 150,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: const Image(
+                            image:
+                                AssetImage("assets/images/student_logo.png")),
+                      ),
+                    ),
+                    SizedBox(height: 20),
 
-                // Edit Profile Button
-                SizedBox(
-                  width: 200,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditProfileScreen(
-                            id: widget.id,
-                            collection: widget.collection,
-                            name: name,
-                            email: email,
-                            birthday: birthday,
-                            grade: grade,
-                            grades: grades,
-                            gender: gender,
-                            subject: subject,
-                            subjects: subjects,
-                            qualification: qualification,
-                            contactNo: contactNo,
-                            parentContactNo: parentContactNo,
-                          ),
+                    Text(
+                      name,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 40),
+
+                    _buildProfileDetailTable("Email", email),
+                    if (widget.collection == 'Students') ...[
+                      _buildProfileDetailTable("Birthday", birthday),
+                      _buildProfileDetailTable("Grade", grade),
+                      _buildProfileDetailTable("Subjects", subjects.join(", ")),
+                      _buildProfileDetailTable("Contact No", contactNo),
+                      _buildProfileDetailTable(
+                          "Parent Contact No", parentContactNo),
+                    ] else if (widget.collection == 'Teachers') ...[
+                      _buildProfileDetailTable("Birthday", birthday),
+                      _buildProfileDetailTable("Grade", grades.join(",\n ")),
+                      _buildProfileDetailTable("Gender", gender),
+                      _buildProfileDetailTable("Subject", subject),
+                      _buildProfileDetailTable("Contact No", contactNo),
+                      _buildProfileDetailTable("Qualification", qualification),
+                    ],
+
+                    SizedBox(height: 50),
+
+                    // Edit Profile Button
+                    SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditProfileScreen(
+                                id: widget.id,
+                                collection: widget.collection,
+                                name: name,
+                                email: email,
+                                birthday: birthday,
+                                grade: grade,
+                                grades: grades,
+                                gender: gender,
+                                subject: subject,
+                                subjects: subjects,
+                                qualification: qualification,
+                                contactNo: contactNo,
+                                parentContactNo: parentContactNo,
+                              ),
+                            ),
+                          );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              WidgetStateProperty.all(const Color(0xFF3A2AE0)),
                         ),
-                      );
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          WidgetStateProperty.all(const Color(0xFF3A2AE0)),
+                        child: Text(
+                          "Edit Profile",
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                      ),
                     ),
-                    child: Text(
-                      "Edit Profile",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
+                    SizedBox(height: 20),
+                  ],
                 ),
-                SizedBox(height: 20),
-              ],
-            )
+              ),
+            ),
           ],
         ),
       ),
