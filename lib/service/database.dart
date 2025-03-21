@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class DatabaseMethods {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   //Set Student Details
   Future addStudentDetails(
       Map<String, dynamic> studentInfoMap, String id) async {
@@ -101,7 +103,7 @@ class DatabaseMethods {
     return termsList.map((e) => e.trim()).toList(); // Trim whitespace
   }
   // Fetch privacy policy
-  
+
   Future<DocumentSnapshot<Object?>> fetchPrivacyPolicy() async {
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
         .collection("privacy_policy")
@@ -110,7 +112,6 @@ class DatabaseMethods {
 
     return snapshot;
   }
-
 
   //set user role for student
   Future<void> setStudentRole(String id, String email) async {
@@ -289,22 +290,91 @@ class DatabaseMethods {
         .doc(id)
         .snapshots();
   }
-  
-
 
   final storage = FlutterSecureStorage();
 
 //store secure data
   Future<void> storeSecureData(String key, String value) async {
-  await storage.write(key: key, value: value);
-}
-Future<String?> getSecureData(String key) async {
-  return await storage.read(key: key);
-}
-Future<void> deleteSecureData(String key) async {
-  await storage.delete(key: key);
-}
+    await storage.write(key: key, value: value);
+  }
 
+  Future<String?> getSecureData(String key) async {
+    return await storage.read(key: key);
+  }
 
+  Future<void> deleteSecureData(String key) async {
+    await storage.delete(key: key);
+  }
 
+  Future<bool> generatePaymentRecordsForAllStudents() async {
+    try {
+      // Get the current month (e.g., "2025-03")
+      String currentMonth = DateTime.now().toIso8601String().substring(0, 7);
+
+      // Fetch all students
+      QuerySnapshot studentsSnapshot =
+          await _firestore.collection('Students').get();
+
+      for (var studentDoc in studentsSnapshot.docs) {
+        String studentId = studentDoc.id;
+        Map<String, dynamic> subjects = studentDoc['Subject'];
+
+        // Generate payment records for each subject
+        for (String subject in subjects.keys) {
+          // Skip attendance dates (e.g., "2025-03-11")
+          if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(subject)) {
+            await _firestore.collection('Payment').add({
+              'studentId': studentId,
+              'month': currentMonth,
+              'subject': subject,
+              'isPaid': false, // Default value
+              'paymentDate': null, // No payment date initially
+            });
+          }
+        }
+      }
+
+      return true; // Success
+    } catch (e) {
+      print("Error generating payment records: $e");
+      return false; // Failure
+    }
+  }
+
+  // Function to update payment status
+  Future<bool> updatePaymentStatus({
+    required String studentId,
+    required String month,
+    required String subject,
+  }) async {
+    try {
+      // Find the payment document for the student, month, and subject
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('Payment')
+          .where('studentId', isEqualTo: studentId)
+          .where('month', isEqualTo: month)
+          .where('subject', isEqualTo: subject)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        // Update the payment record
+        await _firestore
+            .collection('Payment')
+            .doc(querySnapshot.docs.first.id)
+            .update({
+          'isPaid': true,
+          'paymentDate': DateTime.now().toString(),
+        });
+
+        print("Payment status updated successfully.");
+        return true; // Return true on success
+      } else {
+        print("No payment record found for the given criteria.");
+        return false; // Return false if no record is found
+      }
+    } catch (e) {
+      print("Error updating payment status: $e");
+      return false; // Return false on failure
+    }
+  }
 }
