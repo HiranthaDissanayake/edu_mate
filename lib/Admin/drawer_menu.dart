@@ -1,4 +1,5 @@
 import 'package:edu_mate/Admin/admin_home_page.dart';
+import 'package:edu_mate/Admin/more_screen.dart';
 import 'package:edu_mate/Admin/privacy_and_policy.dart';
 import 'package:edu_mate/Admin/register_admin.dart';
 import 'package:edu_mate/Admin/terms_and_conditions.dart';
@@ -105,6 +106,20 @@ class _DrawermenuState extends State<Drawermenu> {
                   ),
                   title: Text("Terms & Conditions",
                       style: TextStyle(color: Colors.white)),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MoreScreen()),
+                    );
+                  },
+                  leading: SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: Image.asset("assets/images/more.png"),
+                  ),
+                  title: Text("More", style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),
