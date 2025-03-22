@@ -1,17 +1,6 @@
-import 'package:edu_mate/Admin/admin_home_page.dart';
-import 'package:edu_mate/Admin/register_teacher.dart';
-import 'package:edu_mate/Screens/LoginScreen.dart';
 import 'package:edu_mate/Screens/splashScreen1.dart';
-import 'package:edu_mate/Student/Student_main_page.dart';
-import 'package:edu_mate/Teacher/SelectClass.dart';
-import 'package:edu_mate/Teacher/TeacherDashboard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:edu_mate/Teacher/LoginScreen.dart';
-import 'package:edu_mate/Admin/register_student.dart';
-import 'package:edu_mate/Teacher/SendAlerts.dart';
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

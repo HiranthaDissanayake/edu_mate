@@ -7,12 +7,30 @@ class DatabaseMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   //Set Student Details
-  Future addStudentDetails(
+  Future<void> addStudentDetails(
       Map<String, dynamic> studentInfoMap, String id) async {
-    return await FirebaseFirestore.instance
-        .collection("Students")
-        .doc(id)
-        .set(studentInfoMap);
+    try {
+      // Add the student to Firestore
+      await FirebaseFirestore.instance
+          .collection("Students")
+          .doc(id)
+          .set(studentInfoMap);
+
+      // Generate payment records for the student
+      bool paymentRecordsGenerated = await generatePaymentRecordsForStudent(id);
+
+      if (paymentRecordsGenerated) {
+        print("Payment records generated successfully for student: $id");
+      } else {
+        print("Failed to generate payment records for student: $id");
+      }
+
+      // Return after both operations are complete
+      return;
+    } catch (e) {
+      print("Error adding student details: $e");
+      rethrow; // Rethrow the error to handle it in the calling function
+    }
   }
 
   //Set Admin Details
@@ -311,7 +329,6 @@ class DatabaseMethods {
       // Get the current month (e.g., "2025-03")
       String currentMonth = DateTime.now().toIso8601String().substring(0, 7);
 
-      // Fetch all students
       QuerySnapshot studentsSnapshot =
           await _firestore.collection('Students').get();
 
@@ -327,17 +344,52 @@ class DatabaseMethods {
               'studentId': studentId,
               'month': currentMonth,
               'subject': subject,
-              'isPaid': false, // Default value
-              'paymentDate': null, // No payment date initially
+              'isPaid': false,
+              'paymentDate': null,
             });
           }
         }
       }
 
-      return true; // Success
+      return true;
     } catch (e) {
       print("Error generating payment records: $e");
-      return false; // Failure
+      return false;
+    }
+  }
+
+  Future<bool> generatePaymentRecordsForStudent(String studentId) async {
+    try {
+      // Get the current month (e.g., "2025-03")
+      String currentMonth = DateTime.now().toIso8601String().substring(0, 7);
+
+      DocumentSnapshot studentDoc =
+          await _firestore.collection('Students').doc(studentId).get();
+
+      if (studentDoc.exists) {
+        Map<String, dynamic> subjects = studentDoc['Subject'];
+
+        // Generate payment records for each subject
+        for (String subject in subjects.keys) {
+          if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(subject)) {
+            await _firestore.collection('Payment').add({
+              'studentId': studentId,
+              'month': currentMonth,
+              'subject': subject,
+              'isPaid': false,
+              'paymentDate': null,
+            });
+          }
+        }
+
+        return true;
+      } else {
+        print("Student document not found.");
+        return false;
+      }
+    } catch (e) {
+      print("Error generating payment records: $e");
+      return false;
     }
   }
 

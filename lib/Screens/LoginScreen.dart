@@ -1,7 +1,6 @@
 import 'package:edu_mate/Admin/admin_home_page.dart';
 import 'package:edu_mate/Student/Student_main_page.dart';
 import 'package:edu_mate/Teacher/TeacherDashboard.dart';
-import 'package:edu_mate/service/auth_service.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
