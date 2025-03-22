@@ -47,7 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               email = document['Email'];
               birthday = document['DateOfBirth'];
               grade = document['Grade'];
-              subjects = List<String>.from(document['Subject']);
+              subjects = List<String>.from(document['Subject'].keys);
               contactNo = document['ContactNo'];
               parentContactNo = document['ParentNo'];
             } else if (widget.collection == 'Teachers') {

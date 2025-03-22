@@ -46,52 +46,57 @@ class _RegisterstudentState extends State<Registerstudent> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                height: 120,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                      Color(0xFF010127),
-                      Color(0xFF010127),
-                      Color(0xFF0B0C61),
-                    ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(70),
-                        topRight: Radius.circular(150))),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(Icons.arrow_back),
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          iconSize: 30,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 320,
-                      ),
-                    ],
-                  ),
+        child: Column(
+          children: [
+            Container(
+              height: 120,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF010127),
+                    Color(0xFF010127),
+                    Color(0xFF0B0C61),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(70),
+                  topRight: Radius.circular(150),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Container(
-                  width: double.infinity,
-                  height: 700,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF181A47),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back),
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        iconSize: 30,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 320,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF181A47),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                     child: Column(
                       children: [
                         Image(
@@ -112,6 +117,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Column(
                               children: [
+                                // Form fields (unchanged)
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 20),
@@ -320,17 +326,16 @@ class _RegisterstudentState extends State<Registerstudent> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Expanded(
-                                        child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 30, top: 15),
-                                      child: Text(
-                                        "Subjects",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 18),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 30, top: 15),
+                                        child: Text(
+                                          "Subjects",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
                                       ),
-                                    )),
-                                    SizedBox(
-                                      width: 10,
                                     ),
                                     Expanded(
                                       child: Column(
@@ -616,8 +621,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                           "DateOfBirth": _dateController.text,
                                           "Gender": _genderController.text,
                                           "Grade": _gradeController.text,
-                                          "Subject":
-                                              Subjects,
+                                          "Subject": Subjects,
                                           "ContactNo": _phoneController.text,
                                           "ParentNo": _patentNoController.text,
                                           "Email": _emailController.text,
@@ -692,8 +696,8 @@ class _RegisterstudentState extends State<Registerstudent> {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

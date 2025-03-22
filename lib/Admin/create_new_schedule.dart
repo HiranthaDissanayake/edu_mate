@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_mate/service/database.dart';
 import 'package:flutter/material.dart';
 
 class CreateNewSchedule extends StatefulWidget {
@@ -13,6 +14,7 @@ class _CreateNewScheduleState extends State<CreateNewSchedule> {
   final _formKey = GlobalKey<FormState>();
 
   List<String> teachers = [];
+  StreamSubscription<QuerySnapshot>? _teacherStreamSubscription;
 
   String? selectedName;
   String? selectedSubject;
@@ -55,22 +57,32 @@ class _CreateNewScheduleState extends State<CreateNewSchedule> {
   }
 
   void _fetchTeachers() async {
+    print("Fetching teachers...");
     try {
-      Stream<QuerySnapshot> teacherStream =
-          await DatabaseMethods().getTeachers();
+      QuerySnapshot snapshot =
+          await FirebaseFirestore.instance.collection("Teachers").get();
 
-      teacherStream.listen((QuerySnapshot snapshot) {
-        if (snapshot.docs.isNotEmpty) {
-          setState(() {
-            teachers = snapshot.docs
-                .map((doc) => "${doc['_id']}|${doc['Name']}|${doc['subject']}")
-                .toList();
-          });
-        }
-      });
+      if (snapshot.docs.isNotEmpty) {
+        setState(() {
+          teachers = snapshot.docs.map((doc) {
+            String id = doc.id; // Use document ID
+            String name = doc['Name'] ?? 'N/A';
+            String subject = doc['Subject'] ?? 'N/A';
+            return "$id|$name|$subject";
+          }).toList();
+        });
+      } else {
+        print("No teachers found in Firestore.");
+      }
     } catch (error) {
       print("Error fetching teachers: $error");
     }
+  }
+
+  @override
+  void dispose() {
+    _teacherStreamSubscription?.cancel(); // Dispose of the stream
+    super.dispose();
   }
 
   void _addNewSchedule() async {
@@ -133,7 +145,7 @@ class _CreateNewScheduleState extends State<CreateNewSchedule> {
           ? (startTime ?? TimeOfDay.now())
           : (endTime ?? TimeOfDay.now()),
     );
-    if (picked != null) {
+    if (picked != null && mounted) {
       setState(() {
         if (isStartTime) {
           startTime = picked;
@@ -158,6 +170,7 @@ class _CreateNewScheduleState extends State<CreateNewSchedule> {
         ),
         child: Column(
           children: [
+            // App Bar
             Container(
               height: 120,
               width: double.infinity,
@@ -199,6 +212,8 @@ class _CreateNewScheduleState extends State<CreateNewSchedule> {
                 ),
               ),
             ),
+
+            // Form
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
