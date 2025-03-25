@@ -429,4 +429,12 @@ class DatabaseMethods {
       return false; // Return false on failure
     }
   }
+
+  // Function to fetch payment records for a student
+  Future<List<Map<String, dynamic>>> fetchPaymentRecords() async {
+    QuerySnapshot snapshot = await _firestore.collection('Payment').get();
+    return snapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+  }
 }

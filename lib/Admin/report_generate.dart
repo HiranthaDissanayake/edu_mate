@@ -1,3 +1,4 @@
+import 'package:edu_mate/Admin/class_fee_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -81,7 +82,10 @@ class _ReportGenerateState extends State<ReportGenerate> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // Add functionality here
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ClassFeeScreen()));
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
