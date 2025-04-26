@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_mate/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:edu_mate/service/app_logger.dart';
 
 class DatabaseMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -10,26 +11,23 @@ class DatabaseMethods {
   Future<void> addStudentDetails(
       Map<String, dynamic> studentInfoMap, String id) async {
     try {
-      // Add the student to Firestore
       await FirebaseFirestore.instance
           .collection("Students")
           .doc(id)
           .set(studentInfoMap);
 
-      // Generate payment records for the student
       bool paymentRecordsGenerated = await generatePaymentRecordsForStudent(id);
 
       if (paymentRecordsGenerated) {
-        print("Payment records generated successfully for student: $id");
+        AppLogger().d("Payment records generated successfully for student: $id");
       } else {
-        print("Failed to generate payment records for student: $id");
+        AppLogger().w("Failed to generate payment records for student: $id");
       }
 
-      // Return after both operations are complete
       return;
     } catch (e) {
-      print("Error adding student details: $e");
-      rethrow; // Rethrow the error to handle it in the calling function
+      AppLogger().e("Error adding student details: $e");
+      rethrow;
     }
   }
 
@@ -97,11 +95,11 @@ class DatabaseMethods {
 
     for (var doc in snapshot.docs) {
       await students.doc(doc.id).update({
-        'attendance': {} // Adding an empty map
+        'attendance': {}
       }).then((_) {
-        print("Updated student ${doc.id}");
+        AppLogger().d("Updated student ${doc.id}");
       }).catchError((error) {
-        print("Failed to update student ${doc.id}: $error");
+        AppLogger().e("Failed to update student ${doc.id}: $error");
       });
     }
   }
@@ -115,13 +113,12 @@ class DatabaseMethods {
 
     String termsText = snapshot["content"];
 
-    // Splitting the terms at each numbered item (e.g., "01.", "02.", etc.)
     List<String> termsList = termsText.split(RegExp(r'(?=\d{2}\.)'));
 
-    return termsList.map((e) => e.trim()).toList(); // Trim whitespace
+    return termsList.map((e) => e.trim()).toList();
   }
-  // Fetch privacy policy
 
+  // Fetch privacy policy
   Future<DocumentSnapshot<Object?>> fetchPrivacyPolicy() async {
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
         .collection("privacy_policy")
@@ -134,7 +131,6 @@ class DatabaseMethods {
   //set user role for student
   Future<void> setStudentRole(String id, String email) async {
     try {
-      // 🔹 Create Student Account
       User? user =
           await AuthService().createEmailAndPasswordForStudent(email, id);
 
@@ -145,19 +141,18 @@ class DatabaseMethods {
           'createdAt': FieldValue.serverTimestamp(),
         });
 
-        print(" Student role added successfully!");
+        AppLogger().i("Student role added successfully!");
       } else {
-        print(" Failed to add student role.");
+        AppLogger().w("Failed to add student role.");
       }
     } catch (e) {
-      print(" Error add student role: $e");
+      AppLogger().e("Error adding student role: $e");
     }
   }
 
   //set user role for teacher
   Future<void> setTeacherRole(String id, String email) async {
     try {
-      // 🔹 Create Student Account
       User? user =
           await AuthService().createEmailAndPasswordForStudent(email, id);
 
@@ -168,19 +163,18 @@ class DatabaseMethods {
           'createdAt': FieldValue.serverTimestamp(),
         });
 
-        print(" teacher role added successfully!");
+        AppLogger().i("Teacher role added successfully!");
       } else {
-        print(" Failed to add teacher role.");
+        AppLogger().w("Failed to add teacher role.");
       }
     } catch (e) {
-      print(" Error add teacher role: $e");
+      AppLogger().e("Error adding teacher role: $e");
     }
   }
 
-  //set user role for student
+  //set user role for admin
   Future<void> setAdminRole(String id, String email) async {
     try {
-      // 🔹 Create Student Account
       User? user =
           await AuthService().createEmailAndPasswordForStudent(email, id);
 
@@ -191,16 +185,16 @@ class DatabaseMethods {
           'createdAt': FieldValue.serverTimestamp(),
         });
 
-        print(" Admin role added successfully!");
+        AppLogger().i("Admin role added successfully!");
       } else {
-        print(" Failed to add admin role.");
+        AppLogger().w("Failed to add admin role.");
       }
     } catch (e) {
-      print(" Error add admin role: $e");
+      AppLogger().e("Error adding admin role: $e");
     }
   }
 
-// get the user role based on email
+  // get the user role based on email
   Future<String?> getUserRole(String email) async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -224,7 +218,7 @@ class DatabaseMethods {
         return null;
       }
     } catch (e) {
-      print("Error fetching user role: $e");
+      AppLogger().e("Error fetching user role: $e");
       return null;
     }
   }
@@ -238,12 +232,12 @@ class DatabaseMethods {
           .get();
 
       if (!teacherDoc.exists) {
-        print("No document found for teacher: $teacherID");
+        AppLogger().w("No document found for teacher: $teacherID");
         return [];
       }
 
       if (!teacherDoc.data().toString().contains('Grade')) {
-        print("Error: 'Grade' field is missing in Firestore document");
+        AppLogger().w("Error: 'Grade' field is missing in Firestore document");
         return [];
       }
 
@@ -251,11 +245,11 @@ class DatabaseMethods {
       if (gradesData is List) {
         return List<String>.from(gradesData);
       } else {
-        print("Error: 'Grade' is not a valid list");
+        AppLogger().w("Error: 'Grade' is not a valid list");
         return [];
       }
     } catch (e) {
-      print("Error fetching grades: $e");
+      AppLogger().e("Error fetching grades: $e");
       return [];
     }
   }
@@ -265,19 +259,19 @@ class DatabaseMethods {
       String studentId, String testNo, String marks) async {
     try {
       await FirebaseFirestore.instance
-          .collection('Students') // Main collection
-          .doc(studentId) // Locate the student by ID
-          .collection('Marks') // Subcollection for storing marks
-          .doc(testNo) // Each test has its own document
+          .collection('Students')
+          .doc(studentId)
+          .collection('Marks')
+          .doc(testNo)
           .set({
         'testNo': testNo,
         'marks': marks,
         'timestamp': FieldValue.serverTimestamp(),
       });
 
-      print("Marks added successfully!");
+      AppLogger().i("Marks added successfully!");
     } catch (e) {
-      print("Error adding marks: $e");
+      AppLogger().e("Error adding marks: $e");
     }
   }
 
@@ -286,18 +280,18 @@ class DatabaseMethods {
       String studentId, String testNo, String newMarks) async {
     try {
       await FirebaseFirestore.instance
-          .collection('Students') // Locate the main collection
-          .doc(studentId) // Find the specific student
-          .collection('Marks') // Navigate to Marks subcollection
-          .doc(testNo) // Find the test document
+          .collection('Students')
+          .doc(studentId)
+          .collection('Marks')
+          .doc(testNo)
           .update({
-        'marks': newMarks, // Update the marks field
+        'marks': newMarks,
         'timestamp': FieldValue.serverTimestamp(),
       });
 
-      print("Marks updated successfully!");
+      AppLogger().i("Marks updated successfully!");
     } catch (e) {
-      print("Error updating marks: $e");
+      AppLogger().e("Error updating marks: $e");
     }
   }
 
@@ -311,7 +305,7 @@ class DatabaseMethods {
 
   final storage = FlutterSecureStorage();
 
-//store secure data
+  //store secure data
   Future<void> storeSecureData(String key, String value) async {
     await storage.write(key: key, value: value);
   }
@@ -326,7 +320,6 @@ class DatabaseMethods {
 
   Future<bool> generatePaymentRecordsForAllStudents() async {
     try {
-      // Get the current month (e.g., "2025-03")
       String currentMonth = DateTime.now().toIso8601String().substring(0, 7);
 
       QuerySnapshot studentsSnapshot =
@@ -336,9 +329,7 @@ class DatabaseMethods {
         String studentId = studentDoc.id;
         Map<String, dynamic> subjects = studentDoc['Subject'];
 
-        // Generate payment records for each subject
         for (String subject in subjects.keys) {
-          // Skip attendance dates (e.g., "2025-03-11")
           if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(subject)) {
             await _firestore.collection('Payment').add({
               'studentId': studentId,
@@ -353,14 +344,13 @@ class DatabaseMethods {
 
       return true;
     } catch (e) {
-      print("Error generating payment records: $e");
+      AppLogger().e("Error generating payment records: $e");
       return false;
     }
   }
 
   Future<bool> generatePaymentRecordsForStudent(String studentId) async {
     try {
-      // Get the current month (e.g., "2025-03")
       String currentMonth = DateTime.now().toIso8601String().substring(0, 7);
 
       DocumentSnapshot studentDoc =
@@ -369,7 +359,6 @@ class DatabaseMethods {
       if (studentDoc.exists) {
         Map<String, dynamic> subjects = studentDoc['Subject'];
 
-        // Generate payment records for each subject
         for (String subject in subjects.keys) {
           if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(subject)) {
             await _firestore.collection('Payment').add({
@@ -384,11 +373,11 @@ class DatabaseMethods {
 
         return true;
       } else {
-        print("Student document not found.");
+        AppLogger().w("Student document not found.");
         return false;
       }
     } catch (e) {
-      print("Error generating payment records: $e");
+      AppLogger().e("Error generating payment records: $e");
       return false;
     }
   }
@@ -400,7 +389,6 @@ class DatabaseMethods {
     required String subject,
   }) async {
     try {
-      // Find the payment document for the student, month, and subject
       QuerySnapshot querySnapshot = await _firestore
           .collection('Payment')
           .where('studentId', isEqualTo: studentId)
@@ -409,7 +397,6 @@ class DatabaseMethods {
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
-        // Update the payment record
         await _firestore
             .collection('Payment')
             .doc(querySnapshot.docs.first.id)
@@ -418,15 +405,15 @@ class DatabaseMethods {
           'paymentDate': DateTime.now().toString(),
         });
 
-        print("Payment status updated successfully.");
-        return true; // Return true on success
+        AppLogger().i("Payment status updated successfully.");
+        return true;
       } else {
-        print("No payment record found for the given criteria.");
-        return false; // Return false if no record is found
+        AppLogger().w("No payment record found for the given criteria.");
+        return false;
       }
     } catch (e) {
-      print("Error updating payment status: $e");
-      return false; // Return false on failure
+      AppLogger().e("Error updating payment status: $e");
+      return false;
     }
   }
 

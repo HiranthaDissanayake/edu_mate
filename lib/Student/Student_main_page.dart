@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_mate/Student/components/Categories/AttendenceContainer.dart';
-import 'package:edu_mate/Student/components/Categories/ClassesContainer.dart';
-import 'package:edu_mate/Student/components/Categories/ReportContainer.dart';
+import 'package:edu_mate/Student/components/Categories/attendence_container.dart';
+import 'package:edu_mate/Student/components/Categories/classes_container.dart';
+import 'package:edu_mate/Student/components/Categories/report_container.dart';
 import 'package:edu_mate/Student/components/Studet_Drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

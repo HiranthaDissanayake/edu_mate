@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:edu_mate/Teacher/TeacherDashboard.dart';
+import 'package:edu_mate/Teacher/teacher_dashboard.dart';
 import 'package:edu_mate/service/database.dart'; // Import database.dart
 
 class Selectclass extends StatefulWidget {
   final String teacherID;
 
-  const Selectclass({required this.teacherID, Key? key}) : super(key: key);
+  const Selectclass({required this.teacherID, super.key});
 
   @override
   State<Selectclass> createState() => _SelectclassState();
@@ -19,11 +19,12 @@ class _SelectclassState extends State<Selectclass> {
   @override
   void initState() {
     super.initState();
-    fetchGrades(); 
+    fetchGrades();
   }
 
   Future<void> fetchGrades() async {
-    List<String> fetchedGrades = await DatabaseMethods().fetchGrades(widget.teacherID);
+    List<String> fetchedGrades =
+        await DatabaseMethods().fetchGrades(widget.teacherID);
     setState(() {
       grades = fetchedGrades;
     });
@@ -60,7 +61,8 @@ class _SelectclassState extends State<Selectclass> {
               ),
               SizedBox(height: 100),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 child: Container(
                   height: 450,
                   decoration: BoxDecoration(
@@ -72,15 +74,20 @@ class _SelectclassState extends State<Selectclass> {
                     children: [
                       const Text(
                         'Select Class',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 20, left: 40, right: 40, bottom: 80),
+                        padding: const EdgeInsets.only(
+                            top: 20, left: 40, right: 40, bottom: 80),
                         child: Column(
                           children: [
                             grades.isEmpty
                                 ? CircularProgressIndicator()
-                                : _buildDropdown('Grade', grades, selectedGrade, (value) {
+                                : _buildDropdown('Grade', grades, selectedGrade,
+                                    (value) {
                                     setState(() {
                                       selectedGrade = value;
                                     });
@@ -89,7 +96,8 @@ class _SelectclassState extends State<Selectclass> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 20),
                         child: GestureDetector(
                           onTap: () {
                             if (selectedGrade != null) {
@@ -97,7 +105,7 @@ class _SelectclassState extends State<Selectclass> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => Teacherdashboard(
-                                    Grade: selectedGrade!,
+                                    grade: selectedGrade!,
                                   ),
                                 ),
                               );
@@ -135,7 +143,8 @@ class _SelectclassState extends State<Selectclass> {
     );
   }
 
-  Widget _buildDropdown(String hint, List<String> items, String? selectedValue, Function(String?) onChanged) {
+  Widget _buildDropdown(String hint, List<String> items, String? selectedValue,
+      Function(String?) onChanged) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(

@@ -1,6 +1,4 @@
-import 'package:edu_mate/Screens/LoginScreen.dart';
-import 'package:edu_mate/Teacher/LoginScreen.dart';
-import 'package:edu_mate/Teacher/TeacherDashboard.dart';
+import 'package:edu_mate/Screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
@@ -31,7 +29,8 @@ class NavBar extends StatelessWidget {
                     Center(
                       child: CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage('assets/images/teacher_profile.png'),
+                        backgroundImage:
+                            AssetImage('assets/images/teacher_profile.png'),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -53,71 +52,61 @@ class NavBar extends StatelessWidget {
                 ),
               ),
             ),
-            
-        
             Column(
-
               children: [
                 ListTile(
-                  leading: Icon(Icons.dashboard_rounded, color: const Color.fromARGB(255, 255, 255, 255)),
+                  leading: Icon(Icons.dashboard_rounded,
+                      color: const Color.fromARGB(255, 255, 255, 255)),
                   title: Text(
                     'Home',
                     style: TextStyle(color: Colors.white),
-                    ),
+                  ),
                   onTap: () {
-                        Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.privacy_tip, color: const Color.fromARGB(255, 255, 255, 255)),
-                  title: Text(
-                    'Privacy & Policy',
-                    style: TextStyle(color: Colors.white)
-                    ),
-                  onTap: () {
-                
-                  },
+                  leading: Icon(Icons.privacy_tip,
+                      color: const Color.fromARGB(255, 255, 255, 255)),
+                  title: Text('Privacy & Policy',
+                      style: TextStyle(color: Colors.white)),
+                  onTap: () {},
                 ),
                 ListTile(
-                  leading: Icon(Icons.content_copy_outlined, color: const Color.fromARGB(255, 255, 255, 255)),
-                  title: Text(
-                    'Terms & Conditions',
-                    style: TextStyle(color: Colors.white)
-                    ),
-                  onTap: () {
-                        
-                  },
+                  leading: Icon(Icons.content_copy_outlined,
+                      color: const Color.fromARGB(255, 255, 255, 255)),
+                  title: Text('Terms & Conditions',
+                      style: TextStyle(color: Colors.white)),
+                  onTap: () {},
                 ),
-                
                 ListTile(
-                  leading: Icon(Icons.settings, color: const Color.fromARGB(255, 255, 255, 255)),
-                  title: Text(
-                    'Settings',
-                    style: TextStyle(color: Colors.white)
-                    ),
-                  onTap: () {
-                        
-                  },
+                  leading: Icon(Icons.settings,
+                      color: const Color.fromARGB(255, 255, 255, 255)),
+                  title:
+                      Text('Settings', style: TextStyle(color: Colors.white)),
+                  onTap: () {},
                 ),
               ],
             ),
-
             Padding(
-              padding: const EdgeInsets.only(top: 150,left: 40, right: 40),
-              child: ElevatedButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Loginscreen(role: 'Teacher')),
-                );
-              }, 
-              child:
-                 Text(
+              padding: const EdgeInsets.only(top: 150, left: 40, right: 40),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Loginscreen(role: 'Teacher')),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF3A2AE0),
+                ),
+                child: Text(
                   'Logout',
                   style: TextStyle(
                     color: Colors.white,
                   ),
                 ),
-                style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF3A2AE0),
-               ),
               ),
             ),
           ],
