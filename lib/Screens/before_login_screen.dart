@@ -1,4 +1,4 @@
-import 'package:edu_mate/Screens/LoginScreen.dart';
+import 'package:edu_mate/Screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class Beforeloginscreen extends StatefulWidget {

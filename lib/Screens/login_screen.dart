@@ -1,6 +1,6 @@
 import 'package:edu_mate/Admin/admin_home_page.dart';
 import 'package:edu_mate/Student/Student_main_page.dart';
-import 'package:edu_mate/Teacher/TeacherDashboard.dart';
+import 'package:edu_mate/Teacher/teacher_dashboard.dart';
 import 'package:edu_mate/service/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -183,50 +183,52 @@ class _LoginscreenState extends State<Loginscreen> {
       ),
     );
   }
-void login(String email, String password) async {
-  try {
-    UserCredential userCredential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
 
-    if (userCredential.user != null) {
-      String? userData = await DatabaseMethods().getUserRole(email);
-      
-      if (userData != null && userData == widget.role) {
-        final storage = const FlutterSecureStorage();
-        await storage.write(key: 'email', value: email);
-        await storage.write(key: 'role', value: userData);
-        await storage.write(key: 'password', value: password);
+  void login(String email, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
 
-        // Redirect Based on Role
-        if (userData == "student") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => StudentMainPage(stEmail: email)),
-          );
-        } else if (userData == "teacher") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Teacherdashboard(Grade: "")),
-          );
-        } else if (userData == "admin") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Adminhomepage()),
-          );
+      if (userCredential.user != null) {
+        String? userData = await DatabaseMethods().getUserRole(email);
+
+        if (userData != null && userData == widget.role) {
+          final storage = const FlutterSecureStorage();
+          await storage.write(key: 'email', value: email);
+          await storage.write(key: 'role', value: userData);
+          await storage.write(key: 'password', value: password);
+
+          // Redirect Based on Role
+          if (userData == "student") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => StudentMainPage(stEmail: email)),
+            );
+          } else if (userData == "teacher") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Teacherdashboard(grade: "")),
+            );
+          } else if (userData == "admin") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Adminhomepage()),
+            );
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Invalid Credentials or Role Mismatch")));
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Invalid Credentials or Role Mismatch")));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Invalid Credentials")));
       }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Invalid Credentials")));
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("An error occurred")));
+      print("Login error: $e");
     }
-  } catch (e) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text("An error occurred")));
-    print("Login error: $e");
   }
-}
-
 }

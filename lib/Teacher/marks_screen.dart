@@ -1,4 +1,4 @@
-import 'package:edu_mate/Teacher/TeacherDashboard.dart';
+import 'package:edu_mate/Teacher/teacher_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_mate/service/database.dart';
 
@@ -10,17 +10,15 @@ class Marksscreen extends StatefulWidget {
 }
 
 class _MarksscreenState extends State<Marksscreen> {
-
   //controllers for add marks
   final TextEditingController studentIdController = TextEditingController();
   final TextEditingController testNoController = TextEditingController();
   final TextEditingController marksController = TextEditingController();
-  
+
   //controllers for edit marks
   final TextEditingController editStudentIdController = TextEditingController();
   final TextEditingController editTestNoController = TextEditingController();
   final TextEditingController newMarksController = TextEditingController();
-
 
   void submitMarks() async {
     String studentId = studentIdController.text.trim();
@@ -30,45 +28,39 @@ class _MarksscreenState extends State<Marksscreen> {
     if (studentId.isNotEmpty && testNo.isNotEmpty && marks.isNotEmpty) {
       await DatabaseMethods().addStudentMarks(studentId, testNo, marks);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Marks added successfully!"))
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Marks added successfully!")));
 
       // Clear the input fields after submission
       studentIdController.clear();
       testNoController.clear();
       marksController.clear();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("All fields are required"))
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("All fields are required")));
     }
   }
 
   void updateMarks() async {
-  String studentId = editStudentIdController.text.trim();
-  String testNo = editTestNoController.text.trim();
-  String newMarks = newMarksController.text.trim();
+    String studentId = editStudentIdController.text.trim();
+    String testNo = editTestNoController.text.trim();
+    String newMarks = newMarksController.text.trim();
 
-  if (studentId.isNotEmpty && testNo.isNotEmpty && newMarks.isNotEmpty) {
-    await DatabaseMethods().editStudentMarks(studentId, testNo, newMarks);
+    if (studentId.isNotEmpty && testNo.isNotEmpty && newMarks.isNotEmpty) {
+      await DatabaseMethods().editStudentMarks(studentId, testNo, newMarks);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Marks updated successfully!"))
-    );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Marks updated successfully!")));
 
-    // Clear input fields after submission
-    studentIdController.clear();
-    testNoController.clear();
-    newMarksController.clear();
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("All fields are required"))
-    );
+      // Clear input fields after submission
+      studentIdController.clear();
+      testNoController.clear();
+      newMarksController.clear();
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("All fields are required")));
+    }
   }
-}
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +99,12 @@ class _MarksscreenState extends State<Marksscreen> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Teacherdashboard(
-                            Grade: '',
-                          )),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Teacherdashboard(
+                                      grade: '',
+                                    )),
                           );
                         },
                         icon: Icon(
@@ -196,7 +191,7 @@ class _MarksscreenState extends State<Marksscreen> {
                               ),
                               SizedBox(
                                 height: 25,
-                              ), 
+                              ),
                               TextField(
                                 controller: marksController,
                                 decoration: InputDecoration(
@@ -273,14 +268,14 @@ class _MarksscreenState extends State<Marksscreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                               TextField(
-                                  controller: editStudentIdController,
-                                  decoration: InputDecoration(
-                                    labelText: "Student ID",
-                                    border: OutlineInputBorder(),
-                                  ),
-                                  style: TextStyle(color: Colors.white),
+                              TextField(
+                                controller: editStudentIdController,
+                                decoration: InputDecoration(
+                                  labelText: "Student ID",
+                                  border: OutlineInputBorder(),
                                 ),
+                                style: TextStyle(color: Colors.white),
+                              ),
                               SizedBox(
                                 height: 25,
                               ),
@@ -290,20 +285,19 @@ class _MarksscreenState extends State<Marksscreen> {
                                   labelText: "Test No.",
                                   border: OutlineInputBorder(),
                                 ),
-                                 
                                 style: TextStyle(color: Colors.white),
                               ),
                               SizedBox(
                                 height: 25,
                               ),
-                               TextField(
-                                  controller: newMarksController,
-                                  decoration: InputDecoration(
-                                    labelText: "New Marks",
-                                    border: OutlineInputBorder(),
-                                  ),
-                                  style: TextStyle(color: Colors.white),
+                              TextField(
+                                controller: newMarksController,
+                                decoration: InputDecoration(
+                                  labelText: "New Marks",
+                                  border: OutlineInputBorder(),
                                 ),
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ],
                           ),
                         ),

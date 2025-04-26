@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:edu_mate/Admin/admin_home_page.dart';
 import 'package:edu_mate/Screens/before_login_screen.dart';
 import 'package:edu_mate/Student/Student_main_page.dart';
-import 'package:edu_mate/Teacher/TeacherDashboard.dart';
+import 'package:edu_mate/Teacher/teacher_dashboard.dart';
 import 'package:edu_mate/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -41,7 +41,7 @@ class _Splashscreen1State extends State<Splashscreen1> {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => Teacherdashboard(Grade: "")));
+                  builder: (context) => Teacherdashboard(grade: "")));
         } else {
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => Beforeloginscreen()));

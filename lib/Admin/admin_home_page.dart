@@ -17,16 +17,16 @@ class Adminhomepage extends StatefulWidget {
 }
 
 class _AdminhomepageState extends State<Adminhomepage> {
-  Stream<QuerySnapshot>? StudentStream;
-  Stream<QuerySnapshot>? TeacherStream;
+  Stream<QuerySnapshot>? studentStream;
+  Stream<QuerySnapshot>? teacherStream;
 
   Future<void> getonetheload() async {
     try {
-      StudentStream = await DatabaseMethods().getStudents();
-      TeacherStream = await DatabaseMethods().getTeachers();
+      studentStream = await DatabaseMethods().getStudents();
+      teacherStream = await DatabaseMethods().getTeachers();
       setState(() {
-        StudentStream;
-        TeacherStream;
+        studentStream;
+        teacherStream;
       });
     } catch (e) {
       print("Error fetching data: $e");
@@ -42,7 +42,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
   // ignore: non_constant_identifier_names
   Widget NumberOfStudents() {
     return StreamBuilder<QuerySnapshot>(
-        stream: StudentStream,
+        stream: studentStream,
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
@@ -66,7 +66,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
   // ignore: non_constant_identifier_names
   Widget NumberOfTeachers() {
     return StreamBuilder<QuerySnapshot>(
-        stream: TeacherStream,
+        stream: teacherStream,
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();

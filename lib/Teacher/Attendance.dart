@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:edu_mate/Teacher/TeacherDashboard.dart';
+import 'package:edu_mate/Teacher/teacher_dashboard.dart';
 
 class Attendance extends StatefulWidget {
   const Attendance({super.key});
@@ -12,7 +12,7 @@ class Attendance extends StatefulWidget {
 
 class _AttendanceState extends State<Attendance> {
   // A map to hold attendance status for each student
-  Map<String, int> attendanceStatus = {}; 
+  Map<String, int> attendanceStatus = {};
 
   @override
   void initState() {
@@ -30,7 +30,6 @@ class _AttendanceState extends State<Attendance> {
         .collection('Students')
         .doc(studentId)
         .update({'attendance.$monthYear.$today': status});
-        
   }
 
   @override
@@ -73,8 +72,8 @@ class _AttendanceState extends State<Attendance> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => Teacherdashboard(
-                                Grade: '',
-                              )),
+                                    grade: '',
+                                  )),
                         );
                       },
                       icon: Icon(Icons.arrow_back),
@@ -119,12 +118,12 @@ class _AttendanceState extends State<Attendance> {
                     children: snapshot.data!.docs.map((doc) {
                       String studentId = doc.id;
                       String studentName = doc['Name'];
-                      
+
                       // String imageURL = doc['imageURL'];
-                      
 
                       // Get attendance status for the student if exists
-                      int currentAttendanceStatus = attendanceStatus[studentId] ?? 0;
+                      int currentAttendanceStatus =
+                          attendanceStatus[studentId] ?? 0;
 
                       return Card(
                         margin:
@@ -136,20 +135,22 @@ class _AttendanceState extends State<Attendance> {
                         child: ListTile(
                           leading: ClipOval(
                             child: Image.network(
-                            (doc.data() as Map<String, dynamic>).containsKey('imageURL')
-                                ? (doc.data() as Map<String, dynamic>)['imageURL']
-                                : 'https://drive.google.com/uc?export=view&id=1cogzIZVFFQMgVfr8emlld-PclxPUzqpv', // Fallback URL
-                                height: 40,
-                                width: 40,
-                            errorBuilder: (context, error, stackTrace) {
-                              // Fallback image in case of error
-                              return Image.network(
-                                'https://drive.google.com/uc?export=view&id=1cogzIZVFFQMgVfr8emlld-PclxPUzqpv', // Fallback image
-                                height: 40,
-                                width: 40,
-                              );
-                            },
-                          ),
+                              (doc.data() as Map<String, dynamic>)
+                                      .containsKey('imageURL')
+                                  ? (doc.data()
+                                      as Map<String, dynamic>)['imageURL']
+                                  : 'https://drive.google.com/uc?export=view&id=1cogzIZVFFQMgVfr8emlld-PclxPUzqpv', // Fallback URL
+                              height: 40,
+                              width: 40,
+                              errorBuilder: (context, error, stackTrace) {
+                                // Fallback image in case of error
+                                return Image.network(
+                                  'https://drive.google.com/uc?export=view&id=1cogzIZVFFQMgVfr8emlld-PclxPUzqpv', // Fallback image
+                                  height: 40,
+                                  width: 40,
+                                );
+                              },
+                            ),
                           ),
                           title: Text(
                             studentName,
@@ -160,7 +161,7 @@ class _AttendanceState extends State<Attendance> {
                             width: 115,
                             decoration: BoxDecoration(
                               border: Border.all(
-                               width: 2,
+                                width: 2,
                                 color: Colors.white,
                               ),
                               borderRadius: BorderRadius.circular(30),
@@ -178,7 +179,8 @@ class _AttendanceState extends State<Attendance> {
                                           markAttendance(studentId, 'Present');
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsets.only(left: 0),
+                                          padding:
+                                              const EdgeInsets.only(left: 0),
                                           child: Container(
                                             height: 25,
                                             width: 25,
@@ -217,7 +219,8 @@ class _AttendanceState extends State<Attendance> {
                                           markAttendance(studentId, 'Absent');
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsets.only(right: 0),
+                                          padding:
+                                              const EdgeInsets.only(right: 0),
                                           child: Container(
                                             height: 25,
                                             width: 25,
@@ -247,7 +250,6 @@ class _AttendanceState extends State<Attendance> {
                                           ),
                                         ),
                                       ),
-
                               ],
                             ),
                           ),

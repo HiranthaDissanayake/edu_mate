@@ -154,12 +154,12 @@ class _SendalertsState extends State<Sendalerts> {
                           width: 140,
                           child: ElevatedButton(
                             onPressed: sendAlert,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF3A2AE0),
+                            ),
                             child: Text(
                               'Send',
                               style: TextStyle(color: Colors.white),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF3A2AE0),
                             ),
                           ),
                         ),
