@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_mate/service/database.dart';
+import 'package:edu_mate/service/app_logger.dart';
+import 'package:edu_mate/service/database_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_mate/Admin/edit_profile.dart';
 
@@ -30,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _fetchData();
-    print(widget.id);
+    AppLogger().d(widget.id);
   }
 
   // Function to fetch a single student from Firestore
@@ -62,11 +63,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             }
           });
         } else {
-          print("Document not found.");
+          AppLogger().w("Document not found.");
         }
       });
     } catch (error) {
-      print("Error fetching document: $error");
+      AppLogger().e("Error fetching document: $error");
     }
   }
 

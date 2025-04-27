@@ -1,4 +1,4 @@
-import 'package:edu_mate/service/database.dart';
+import 'package:edu_mate/service/database_methods.dart';
 import 'package:flutter/material.dart';
 
 class MoreScreen extends StatefulWidget {

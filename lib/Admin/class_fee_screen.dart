@@ -1,5 +1,5 @@
 import 'package:edu_mate/Admin/components/generate_pdf.dart';
-import 'package:edu_mate/service/database.dart';
+import 'package:edu_mate/service/database_methods.dart';
 import 'package:flutter/material.dart';
 
 class ClassFeeScreen extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:edu_mate/Admin/more_screen.dart';
 import 'package:edu_mate/Admin/privacy_and_policy.dart';
 import 'package:edu_mate/Admin/register_admin.dart';
 import 'package:edu_mate/Admin/terms_and_conditions.dart';
-import 'package:edu_mate/Screens/splashScreen1.dart';
+import 'package:edu_mate/Screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -129,13 +129,13 @@ class _DrawermenuState extends State<Drawermenu> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: GestureDetector(
               onTap: () async {
-                final _secureStorage = const FlutterSecureStorage();
-                await _secureStorage.delete(key: "email");
-                await _secureStorage.delete(key: "password");
-                await _secureStorage.delete(key: "role");
+                final secureStorage = const FlutterSecureStorage();
+                await secureStorage.delete(key: "email");
+                await secureStorage.delete(key: "password");
+                await secureStorage.delete(key: "role");
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => Splashscreen1()),
+                  MaterialPageRoute(builder: (context) => Splashscreen()),
                 );
               },
               child: Container(

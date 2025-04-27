@@ -1,6 +1,6 @@
 import 'package:edu_mate/Teacher/teacher_dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:edu_mate/service/database.dart';
+import 'package:edu_mate/service/database_methods.dart';
 
 class Marksscreen extends StatefulWidget {
   const Marksscreen({super.key});
@@ -27,6 +27,8 @@ class _MarksscreenState extends State<Marksscreen> {
 
     if (studentId.isNotEmpty && testNo.isNotEmpty && marks.isNotEmpty) {
       await DatabaseMethods().addStudentMarks(studentId, testNo, marks);
+      
+      if (!mounted) return;
 
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Marks added successfully!")));
@@ -48,6 +50,8 @@ class _MarksscreenState extends State<Marksscreen> {
 
     if (studentId.isNotEmpty && testNo.isNotEmpty && newMarks.isNotEmpty) {
       await DatabaseMethods().editStudentMarks(studentId, testNo, newMarks);
+      
+      if (!mounted) return;
 
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Marks updated successfully!")));
@@ -212,14 +216,14 @@ class _MarksscreenState extends State<Marksscreen> {
                           height: 35,
                           child: ElevatedButton(
                               onPressed: submitMarks,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff3A2AE0),
+                              ),
                               child: Text(
                                 'Submit',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xff3A2AE0),
                               )),
                         ),
                       ),
@@ -310,14 +314,14 @@ class _MarksscreenState extends State<Marksscreen> {
                           height: 35,
                           child: ElevatedButton(
                               onPressed: updateMarks,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff3A2AE0),
+                              ),
                               child: Text(
                                 'Update Marks',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xff3A2AE0),
                               )),
                         ),
                       ),

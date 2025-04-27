@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StudentMainPage extends StatefulWidget {
-  String? stEmail;
+  final String? stEmail;
 
-  StudentMainPage({
+  const StudentMainPage({
     super.key,
     required this.stEmail,
   });

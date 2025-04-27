@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_mate/Student/components/reportDetailsCard.dart';
+import 'package:edu_mate/Student/components/report_details_card.dart';
+import 'package:edu_mate/service/app_logger.dart';
 import 'package:flutter/material.dart';
 
 class Reportcontainer extends StatefulWidget {
   final String? stEmail;
 
-  Reportcontainer({super.key, required this.stEmail});
+  const Reportcontainer({super.key, required this.stEmail});
 
   @override
   State<Reportcontainer> createState() => _ReportcontainerState();
@@ -41,10 +42,10 @@ class _ReportcontainerState extends State<Reportcontainer> {
               .snapshots();
         });
       } else {
-        print("Student not found!");
+        AppLogger().w("Student not found!");
       }
     } catch (e) {
-      print("Error fetching student ID and marks: $e");
+      AppLogger().e("Error fetching student ID and marks: $e");
     }
   }
 

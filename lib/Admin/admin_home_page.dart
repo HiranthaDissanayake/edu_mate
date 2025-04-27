@@ -5,7 +5,8 @@ import 'package:edu_mate/Admin/manage_students.dart';
 import 'package:edu_mate/Admin/manage_teachers.dart';
 import 'package:edu_mate/Admin/payment_screen.dart';
 import 'package:edu_mate/Admin/report_generate.dart';
-import 'package:edu_mate/service/database.dart';
+import 'package:edu_mate/service/app_logger.dart';
+import 'package:edu_mate/service/database_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,7 +30,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
         teacherStream;
       });
     } catch (e) {
-      print("Error fetching data: $e");
+      AppLogger().e("Error fetching data: $e");
     }
   }
 

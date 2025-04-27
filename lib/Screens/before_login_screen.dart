@@ -29,12 +29,34 @@ class _BeforeloginscreenState extends State<Beforeloginscreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            SizedBox(
+              height: 30,
+            ),
             Text(
               "Login As",
               style: TextStyle(
                   fontSize: 28,
                   color: Colors.white,
                   fontWeight: FontWeight.bold),
+            ),
+            Column(
+              children: [
+                Image.asset(
+                  "assets/images/AppLogo.png",
+                  height: 100,
+                  width: 100,
+                ),
+                Text(
+                  "EduMate",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                )
+              ],
             ),
             Column(
               children: [
@@ -103,24 +125,11 @@ class _BeforeloginscreenState extends State<Beforeloginscreen> {
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
+                SizedBox(
+                  height: 30,
+                ),
               ],
             ),
-            Column(
-              children: [
-                Image.asset(
-                  "assets/images/AppLogo.png",
-                  height: 100,
-                  width: 100,
-                ),
-                Text(
-                  "EduMate",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       ),

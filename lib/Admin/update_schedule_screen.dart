@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edu_mate/service/app_logger.dart';
 import 'package:flutter/material.dart';
 
 class Updateschedulescreen extends StatefulWidget {
   final String scheduleId;
   final String teacherId;
 
-  Updateschedulescreen(
+  const Updateschedulescreen(
       {super.key, required this.scheduleId, required this.teacherId});
 
   @override
@@ -138,7 +139,7 @@ class _Updateschedulescreen extends State<Updateschedulescreen> {
         return TimeOfDay(hour: hour, minute: minute);
       }
     } catch (e) {
-      print("Error parsing time: $e");
+      AppLogger().e("Error parsing time: $e");
     }
     return null;
   }
@@ -165,6 +166,8 @@ class _Updateschedulescreen extends State<Updateschedulescreen> {
             .update({
           "Name": teacherNameController.text,
         });
+      
+      if (!mounted) return;
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Schedule updated successfully!")),

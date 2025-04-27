@@ -2,20 +2,21 @@ import 'dart:async';
 
 import 'package:edu_mate/Admin/admin_home_page.dart';
 import 'package:edu_mate/Screens/before_login_screen.dart';
-import 'package:edu_mate/Student/Student_main_page.dart';
+import 'package:edu_mate/Student/student_main_page.dart';
 import 'package:edu_mate/Teacher/teacher_dashboard.dart';
+import 'package:edu_mate/service/app_logger.dart';
 import 'package:edu_mate/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class Splashscreen1 extends StatefulWidget {
-  const Splashscreen1({super.key});
+class Splashscreen extends StatefulWidget {
+  const Splashscreen({super.key});
 
   @override
-  _Splashscreen1State createState() => _Splashscreen1State();
+  State<Splashscreen> createState() => _Splashscreen1State();
 }
 
-class _Splashscreen1State extends State<Splashscreen1> {
+class _Splashscreen1State extends State<Splashscreen> {
   String finalEmail = "";
   String finalRole = "";
   String finalPassword = "";
@@ -24,10 +25,13 @@ class _Splashscreen1State extends State<Splashscreen1> {
   void initState() {
     super.initState();
     getValidationData().whenComplete(() async {
-      print("Email: $finalEmail, Role: $finalRole, Password: $finalPassword");
+      AppLogger()
+          .d("Email: $finalEmail, Role: $finalRole, Password: $finalPassword");
       Timer(Duration(seconds: 3), () async {
         bool? valiedUser =
             await AuthService().loginUser(finalEmail, finalPassword);
+
+        if (!mounted) return;
 
         if (finalRole == "admin" && valiedUser) {
           Navigator.pushReplacement(context,

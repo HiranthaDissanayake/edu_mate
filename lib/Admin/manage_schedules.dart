@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_mate/Admin/create_new_schedule.dart';
 import 'package:edu_mate/Admin/update_schedule_screen.dart';
+import 'package:edu_mate/service/app_logger.dart';
 import 'package:flutter/material.dart';
-import 'package:edu_mate/service/database.dart';
+import 'package:edu_mate/service/database_methods.dart';
 
 class Manageschedules extends StatefulWidget {
   const Manageschedules({super.key});
@@ -41,11 +42,11 @@ class _ManageschedulesState extends State<Manageschedules> {
             }).toList();
           });
         } else {
-          print("No teachers found in Firestore.");
+          AppLogger().w("No teachers found in Firestore.");
         }
       });
     } catch (e) {
-      print("Error fetching teachers: $e");
+      AppLogger().e("Error fetching teachers: $e");
     }
   }
 
@@ -71,11 +72,11 @@ class _ManageschedulesState extends State<Manageschedules> {
             filteredSchedules = List.from(schedules);
           });
         } else {
-          print("No schedules found in Firestore.");
+          AppLogger().w("No schedules found in Firestore.");
         }
       });
     } catch (e) {
-      print("Error fetching schedules: $e");
+      AppLogger().e("Error fetching schedules: $e");
     }
   }
 
@@ -91,61 +92,66 @@ class _ManageschedulesState extends State<Manageschedules> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                height: 120,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF010127), Color(0xFF0B0C61)],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(70),
-                    topRight: Radius.circular(150),
-                  ),
+        child: Column(
+          children: [
+            // 🔵 1. Top Header - stays fixed
+            Container(
+              height: 120,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFF010127), Color(0xFF0B0C61)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.arrow_back),
-                        color: Colors.white,
-                        iconSize: 25,
-                      ),
-                      Spacer(),
-                      Text(
-                        "Manage Schedules",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Spacer(),
-                    ],
-                  ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(70),
+                  topRight: Radius.circular(150),
                 ),
               ),
-              ListView.builder(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back),
+                      color: Colors.white,
+                      iconSize: 25,
+                    ),
+                    Spacer(),
+                    Text(
+                      "Manage Schedules",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Spacer(),
+                  ],
+                ),
+              ),
+            ),
+
+            // 🔵 2. Scrollable List
+            Expanded(
+              child: ListView.builder(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 itemCount: filteredSchedules.length,
-                shrinkWrap: true,
                 itemBuilder: (context, index) {
                   final schedule = filteredSchedules[index];
+                  final teacher = teachers.firstWhere(
+                    (teacher) => teacher['id'] == schedule['teacherId'],
+                    orElse: () => {'name': 'Unknown Teacher'},
+                  );
+
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 8.0,
-                    ),
+                        horizontal: 16.0, vertical: 8.0),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -157,11 +163,10 @@ class _ManageschedulesState extends State<Manageschedules> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${teachers.firstWhere((teacher) => teacher['id'] == schedule['teacherId'])['name']}",
+                                  teacher['name'],
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18),
                                 ),
@@ -174,25 +179,22 @@ class _ManageschedulesState extends State<Manageschedules> {
                                 Text(
                                   "${schedule['grade']}",
                                   style: TextStyle(
-                                    color: Colors.yellow.shade200,
-                                    fontSize: 14,
-                                  ),
+                                      color: Colors.yellow.shade200,
+                                      fontSize: 14),
                                 ),
                                 SizedBox(height: 5),
                                 Text(
                                   "Day: ${schedule['classDay']}",
                                   style: TextStyle(
-                                    color: Colors.yellow.shade200,
-                                    fontSize: 12,
-                                  ),
+                                      color: Colors.yellow.shade200,
+                                      fontSize: 12),
                                 ),
                                 SizedBox(height: 5),
                                 Text(
                                   "Time: ${schedule['startTime']} - ${schedule['endTime']}",
                                   style: TextStyle(
-                                    color: Colors.yellow.shade200,
-                                    fontSize: 12,
-                                  ),
+                                      color: Colors.yellow.shade200,
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
@@ -200,15 +202,15 @@ class _ManageschedulesState extends State<Manageschedules> {
                           Spacer(),
                           GestureDetector(
                             onTap: () {
-                              // Add action for schedule options
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Updateschedulescreen(
-                                              scheduleId: schedule['id'],
-                                              teacherId:
-                                                  schedule['teacherId'])));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Updateschedulescreen(
+                                    scheduleId: schedule['id'],
+                                    teacherId: schedule['teacherId'],
+                                  ),
+                                ),
+                              );
                             },
                             child: Icon(
                               Icons.mode_edit_rounded,
@@ -223,8 +225,8 @@ class _ManageschedulesState extends State<Manageschedules> {
                   );
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Classescontainer extends StatefulWidget {
-  String stEmail;
-  Classescontainer({
+  final String stEmail;
+  const Classescontainer({
     super.key,
     required this.stEmail,
   });
@@ -151,7 +151,7 @@ Widget studentDetails() {
                   ),
                   SizedBox(height: 5),
                    Text(
-                    "Class : ${stGrade}",
+                    "Class : $stGrade",
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 15,

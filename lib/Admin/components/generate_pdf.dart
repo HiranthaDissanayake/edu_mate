@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:edu_mate/service/app_logger.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -119,8 +120,8 @@ Future<void> generatePDF(List<Map<String, dynamic>> data) async {
 
     final file = File(filePath);
     await file.writeAsBytes(bytes);
-    print("PDF saved: $filePath");
+    AppLogger().i("PDF saved: $filePath");
   } else {
-    print("Storage permission denied.");
+    AppLogger().w("Storage permission denied.");
   }
 }

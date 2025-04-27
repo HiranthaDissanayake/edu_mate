@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edu_mate/service/app_logger.dart';
 import 'package:flutter/material.dart';
-import 'package:edu_mate/service/database.dart';
-import 'package:google_fonts/google_fonts.dart'; // Assuming DatabaseMethods is implemented
+import 'package:edu_mate/service/database_methods.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PrivacyPolicyScreen extends StatefulWidget {
+  const PrivacyPolicyScreen({super.key});
+
   @override
-  _PrivacyPolicyScreenState createState() => _PrivacyPolicyScreenState();
+  State<PrivacyPolicyScreen> createState() => _PrivacyPolicyScreenState();
 }
 
 class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
@@ -45,7 +48,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
         });
       }
     } catch (e) {
-      print("Error fetching data: $e");
+      AppLogger().e("Error fetching data: $e");
     } finally {
       setState(() {
         isLoading = false;

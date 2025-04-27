@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:edu_mate/service/database.dart'; // Ensure this import is correct
+import 'package:edu_mate/service/database_methods.dart'; // Ensure this import is correct
 import 'package:edu_mate/Admin/profile_screen.dart'; // Ensure this import is correct
 
 class PopupMoreStudent extends StatelessWidget {

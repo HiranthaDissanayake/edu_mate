@@ -1,4 +1,5 @@
-import 'package:edu_mate/service/database.dart';
+import 'package:edu_mate/service/app_logger.dart';
+import 'package:edu_mate/service/database_methods.dart';
 import 'package:flutter/material.dart';
 
 class Termsandconditions extends StatefulWidget {
@@ -16,7 +17,7 @@ class _TermsandconditionsState extends State<Termsandconditions> {
       termsStream = await DatabaseMethods().fetchTermsAndConditions();
       setState(() {});
     } catch (e) {
-      print('Error fetching terms and conditions: $e');
+      AppLogger().e('Error fetching terms and conditions: $e');
     }
   }
 

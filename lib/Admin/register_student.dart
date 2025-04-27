@@ -1,4 +1,4 @@
-import 'package:edu_mate/service/database.dart';
+import 'package:edu_mate/service/database_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -588,27 +588,27 @@ class _RegisterstudentState extends State<Registerstudent> {
                                   child: GestureDetector(
                                     onTap: () async {
                                       String id = randomAlphaNumeric(10);
-                                      Map<String, dynamic> Subjects =
+                                      Map<String, dynamic> subjects =
                                           {}; // Initialize map properly
 
                                       if (_formKey.currentState!.validate()) {
                                         if (_maths) {
-                                          Subjects["Maths"] = {};
+                                          subjects["Maths"] = {};
                                         }
                                         if (_science) {
-                                          Subjects["Science"] = {};
+                                          subjects["Science"] = {};
                                         }
                                         if (_english) {
-                                          Subjects["English"] = {};
+                                          subjects["English"] = {};
                                         }
                                         if (_history) {
-                                          Subjects["History"] = {};
+                                          subjects["History"] = {};
                                         }
                                         if (_sinhala) {
-                                          Subjects["Sinhala"] = {};
+                                          subjects["Sinhala"] = {};
                                         }
                                         if (_commerce) {
-                                          Subjects["Commerce"] = {};
+                                          subjects["Commerce"] = {};
                                         }
 
                                         await DatabaseMethods().setStudentRole(
@@ -621,7 +621,7 @@ class _RegisterstudentState extends State<Registerstudent> {
                                           "DateOfBirth": _dateController.text,
                                           "Gender": _genderController.text,
                                           "Grade": _gradeController.text,
-                                          "Subject": Subjects,
+                                          "Subject": subjects,
                                           "ContactNo": _phoneController.text,
                                           "ParentNo": _patentNoController.text,
                                           "Email": _emailController.text,
