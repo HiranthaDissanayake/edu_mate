@@ -6,7 +6,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Future<void> generatePDF(List<Map<String, dynamic>> data) async {
+Future<void> generateTeacherPDF(List<Map<String, dynamic>> data) async {
   final pdf = pw.Document();
 
   // Load custom font
@@ -17,7 +17,7 @@ Future<void> generatePDF(List<Map<String, dynamic>> data) async {
   DateTime now = DateTime.now();
   String formattedDate = DateFormat('yyyy-MM-dd').format(now);
   String formattedMonth = DateFormat('yyyy-MM').format(now);
-  final fileName = "${formattedMonth}_Fee_Report.pdf";
+  final fileName = "${formattedMonth}_TEACHER_REPORT.pdf";
 
   // Build the PDF
   pdf.addPage(
@@ -26,7 +26,7 @@ Future<void> generatePDF(List<Map<String, dynamic>> data) async {
       header: (pw.Context context) => pw.Column(
         children: [
           pw.Text(
-            'CLASS FEE REPORT',
+            'TEACHER DETAILS REPORT',
             style: pw.TextStyle(
               fontSize: 18,
               fontWeight: pw.FontWeight.bold,
@@ -59,12 +59,15 @@ Future<void> generatePDF(List<Map<String, dynamic>> data) async {
         pw.Table.fromTextArray(
           border: pw.TableBorder.all(width: 0.5),
           headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-          headers: ['Student ID', 'Subject', 'Status'],
+          headers: ['TeacherId', 'Name', 'Subject', 'Qualification', 'Contact', 'Email'],
           data: data
               .map((item) => [
-                    item['studentId'].toString(),
-                    item['subject'],
-                    item['isPaid'] ? 'PAID' : 'PENDING',
+                    item['TeacherId'].toString(),
+                    item['Name'].toString(),
+                    item['Subject'].toString(),
+                    item['Qualification'].toString(),
+                    item['ContactNo'].toString(),
+                    item['Email'].toString(),
                   ])
               .toList(),
         ),
@@ -73,27 +76,7 @@ Future<void> generatePDF(List<Map<String, dynamic>> data) async {
           mainAxisAlignment: pw.MainAxisAlignment.end,
           children: [
             pw.Text(
-              'Total Students: ${data.length}',
-              style: const pw.TextStyle(fontSize: 12),
-            ),
-          ],
-        ),
-        pw.SizedBox(height: 20),
-        pw.Row(
-          mainAxisAlignment: pw.MainAxisAlignment.end,
-          children: [
-            pw.Text(
-              'Paid Students: ${data.where((item) => item['isPaid']).length}',
-              style: const pw.TextStyle(fontSize: 12),
-            ),
-          ],
-        ),
-        pw.SizedBox(height: 20),
-        pw.Row(
-          mainAxisAlignment: pw.MainAxisAlignment.end,
-          children: [
-            pw.Text(
-              'Non Paid Students: ${data.where((item) => !item['isPaid']).length}',
+              'Total Teachers: ${data.length}',
               style: const pw.TextStyle(fontSize: 12),
             ),
           ],

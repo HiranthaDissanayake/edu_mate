@@ -1,4 +1,4 @@
-import 'package:edu_mate/Admin/components/generate_pdf.dart';
+import 'package:edu_mate/Admin/components/generate_fee_pdf.dart';
 import 'package:edu_mate/service/database_methods.dart';
 import 'package:flutter/material.dart';
 
@@ -61,7 +61,7 @@ class _ClassFeeScreenState extends State<ClassFeeScreen> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    generatePDF(data);
+                    generateFeePDF(data);
                     Navigator.pop(context);
                   },
                   child: Text("PDF"),

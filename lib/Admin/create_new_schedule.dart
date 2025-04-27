@@ -116,6 +116,8 @@ class _CreateNewScheduleState extends State<CreateNewSchedule> {
         await FirebaseFirestore.instance
             .collection("Schedules")
             .add(newSchedule);
+            
+        if (!mounted) return;
 
         // Show success message
         ScaffoldMessenger.of(context).showSnackBar(
