@@ -1,4 +1,6 @@
 import 'package:edu_mate/Admin/class_fee_screen.dart';
+import 'package:edu_mate/Admin/schedule_screen.dart';
+import 'package:edu_mate/Admin/teacher_details.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -112,6 +114,10 @@ class _ReportGenerateState extends State<ReportGenerate> {
                   GestureDetector(
                     onTap: () {
                       // Add functionality here
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TeacherDetails()));
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -124,7 +130,37 @@ class _ReportGenerateState extends State<ReportGenerate> {
                         ),
                         child: Center(
                           child: Text(
-                            "Schedule Classes",
+                            "Teacher Details",
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  GestureDetector(
+                    onTap: () {
+                      // Add functionality here
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ScheduleScreen()));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Container(
+                        height: 50,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF3A2AE0),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Schedule Details",
                             style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 16,
