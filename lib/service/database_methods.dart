@@ -61,17 +61,17 @@ class DatabaseMethods {
 
   //get schedule
   Future<Stream<QuerySnapshot>> getSchedules() async {
-    return FirebaseFirestore.instance.collection('Schedules').snapshots();
+    return await FirebaseFirestore.instance.collection('Schedules').snapshots();
   }
 
   // Fetch all Student details
   Future<Stream<QuerySnapshot>> getStudents() async {
-    return FirebaseFirestore.instance.collection("Students").snapshots();
+    return await FirebaseFirestore.instance.collection("Students").snapshots();
   }
 
   //Fetch all Teachers details
   Future<Stream<QuerySnapshot>> getTeachers() async {
-    return FirebaseFirestore.instance.collection("Teachers").snapshots();
+    return await FirebaseFirestore.instance.collection("Teachers").snapshots();
   }
 
   Future<Stream<DocumentSnapshot>> getStudent(String id) async {

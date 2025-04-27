@@ -69,140 +69,135 @@ class _ManageteachersState extends State<Manageteachers> {
             colors: [
               const Color(0xFF13134C),
               const Color(0xFF13134C),
-              const Color(0XFF2D2DB2)
+              const Color(0XFF2D2DB2),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
         ),
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              Container(
-                height: 120,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [const Color(0xFF010127), const Color(0xFF0B0C61)],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(70),
-                    topRight: Radius.circular(150),
-                  ),
+        child: Column(
+          children: [
+            // Top AppBar
+            Container(
+              height: 120,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [const Color(0xFF010127), const Color(0xFF0B0C61)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.arrow_back),
-                        color: Colors.white,
-                        iconSize: 25,
-                      ),
-                      Spacer(),
-                      Text(
-                        "Manage Teachers",
-                        style: TextStyle(
-                          color: Color(0xFFFFFFFF),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Spacer(),
-                    ],
-                  ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(70),
+                  topRight: Radius.circular(150),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Searchbar(
-                  hintText: "Search for a teacher",
-                  controller: searchController,
-                  onChange: _filterTeachers,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back),
+                      color: Colors.white,
+                      iconSize: 25,
+                    ),
+                    Spacer(),
+                    Text(
+                      "Manage Teachers",
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Spacer(),
+                  ],
                 ),
               ),
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.7,
-                ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: filteredTeachers.length,
-                  itemBuilder: (context, index) {
-                    final teacher = filteredTeachers[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 8.0,
+            ),
+
+            // Searchbar
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+              child: Searchbar(
+                hintText: "Search for a teacher",
+                controller: searchController,
+                onChange: _filterTeachers,
+              ),
+            ),
+
+            // List of teachers (scrollable)
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                itemCount: filteredTeachers.length,
+                itemBuilder: (context, index) {
+                  final teacher = filteredTeachers[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color(0xFF080B2E),
                       ),
-                      child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color(0xFF080B2E),
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(width: 20),
-                            Image.asset(
-                              'assets/images/student_logo.png',
-                              height: 50,
-                              width: 50,
-                            ),
-                            SizedBox(width: 10),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    teacher['name'],
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 16),
+                      child: Row(
+                        children: [
+                          SizedBox(width: 20),
+                          Image.asset(
+                            'assets/images/student_logo.png',
+                            height: 50,
+                            width: 50,
+                          ),
+                          SizedBox(width: 10),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  teacher['name'],
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  '${teacher['subjects']}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
                                   ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    '${teacher['subjects']}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                PopupMoreTeacher(
-                                        id: teacher['id'],
-                                        collection: 'Teachers')
-                                    .showPopup(context);
-                              },
-                              child: Icon(
-                                Icons.more_vert,
-                                color: Colors.white,
-                                size: 25,
-                              ),
+                          ),
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              PopupMoreTeacher(
+                                      id: teacher['id'], collection: 'Teachers')
+                                  .showPopup(context);
+                            },
+                            child: Icon(
+                              Icons.more_vert,
+                              color: Colors.white,
+                              size: 25,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
