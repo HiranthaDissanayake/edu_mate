@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edu_mate/service/app_logger.dart';
 import 'package:flutter/material.dart';
 
 class CreateNewSchedule extends StatefulWidget {
@@ -57,7 +58,7 @@ class _CreateNewScheduleState extends State<CreateNewSchedule> {
   }
 
   void _fetchTeachers() async {
-    print("Fetching teachers...");
+    AppLogger().i("Fetching teachers...");
     try {
       QuerySnapshot snapshot =
           await FirebaseFirestore.instance.collection("Teachers").get();
@@ -72,10 +73,10 @@ class _CreateNewScheduleState extends State<CreateNewSchedule> {
           }).toList();
         });
       } else {
-        print("No teachers found in Firestore.");
+        AppLogger().w("No teachers found in Firestore.");
       }
     } catch (error) {
-      print("Error fetching teachers: $error");
+      AppLogger().e("Error fetching teachers: $error");
     }
   }
 
@@ -131,7 +132,7 @@ class _CreateNewScheduleState extends State<CreateNewSchedule> {
           _classFeeController.clear();
         });
       } catch (error) {
-        print("Error adding schedule: $error");
+        AppLogger().e("Error adding schedule: $error");
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Failed to add schedule!")));
       }

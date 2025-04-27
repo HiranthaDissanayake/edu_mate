@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:edu_mate/Teacher/components/drawer.dart';
 
 class Teacherdashboard extends StatefulWidget {
-  String grade;
+  final String grade;
 
-  Teacherdashboard({super.key, required this.grade});
+  const Teacherdashboard({super.key, required this.grade});
 
   @override
   State<Teacherdashboard> createState() => _TeacherdashboardState();

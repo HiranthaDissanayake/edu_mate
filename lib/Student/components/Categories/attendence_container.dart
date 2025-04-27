@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Attendencecontainer extends StatefulWidget {
-  String? stEmail;
+  final String? stEmail;
 
-  Attendencecontainer({
+  const Attendencecontainer({
     super.key,
     required this.stEmail,
   });

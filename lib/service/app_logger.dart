@@ -16,7 +16,6 @@ class AppLogger {
             lineLength: 120,
             colors: true,
             printEmojis: true,
-            printTime: true,
           ),
         );
 
@@ -24,5 +23,4 @@ class AppLogger {
   void i(dynamic message) => _logger.i(message);
   void w(dynamic message) => _logger.w(message);
   void e(dynamic message) => _logger.e(message);
-  void v(dynamic message) => _logger.v(message);
 }

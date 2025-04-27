@@ -1,7 +1,8 @@
 import 'package:edu_mate/Admin/admin_home_page.dart';
-import 'package:edu_mate/Student/Student_main_page.dart';
+import 'package:edu_mate/Student/student_main_page.dart';
 import 'package:edu_mate/Teacher/teacher_dashboard.dart';
-import 'package:edu_mate/service/database.dart';
+import 'package:edu_mate/service/app_logger.dart';
+import 'package:edu_mate/service/database_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -174,7 +175,6 @@ class _LoginscreenState extends State<Loginscreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 90),
                 ],
               ),
             ),
@@ -198,6 +198,8 @@ class _LoginscreenState extends State<Loginscreen> {
           await storage.write(key: 'role', value: userData);
           await storage.write(key: 'password', value: password);
 
+          if (!mounted) return;
+
           // Redirect Based on Role
           if (userData == "student") {
             Navigator.push(
@@ -218,17 +220,21 @@ class _LoginscreenState extends State<Loginscreen> {
             );
           }
         } else {
+          if (!mounted) return;
+
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text("Invalid Credentials or Role Mismatch")));
         }
       } else {
+        if (!mounted) return;
+
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Invalid Credentials")));
       }
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("An error occurred")));
-      print("Login error: $e");
+      AppLogger().e("Login error: $e");
     }
   }
 }

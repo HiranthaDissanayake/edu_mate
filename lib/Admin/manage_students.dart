@@ -1,7 +1,8 @@
 import 'package:edu_mate/Admin/register_student.dart';
 import 'package:edu_mate/Admin/components/popup_more_student.dart';
 import 'package:edu_mate/Admin/components/searchbar.dart';
-import 'package:edu_mate/service/database.dart';
+import 'package:edu_mate/service/app_logger.dart';
+import 'package:edu_mate/service/database_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -42,11 +43,11 @@ class _ManagestudentsState extends State<Managestudents> {
             filteredStudents = List.from(students);
           });
         } else {
-          print("No students found in Firestore.");
+          AppLogger().w("No students found in Firestore.");
         }
       });
     } catch (e) {
-      print("Error fetching students: $e");
+      AppLogger().e("Error fetching students: $e");
     }
   }
 

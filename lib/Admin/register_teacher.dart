@@ -1,5 +1,5 @@
 import 'package:edu_mate/Admin/set_schedule.dart';
-import 'package:edu_mate/service/database.dart';
+import 'package:edu_mate/service/database_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -529,24 +529,24 @@ class _RegisterteacherState extends State<Registerteacher> {
                                     onTap: () async {
                                       if (_formkey.currentState!.validate()) {
                                         String id = randomAlphaNumeric(10);
-                                        List<String> Grades = [];
+                                        List<String> grades = [];
                                         if (_grade6) {
-                                          Grades.add("Grade 6");
+                                          grades.add("Grade 6");
                                         }
                                         if (_grade7) {
-                                          Grades.add("Grade 7");
+                                          grades.add("Grade 7");
                                         }
                                         if (_grade8) {
-                                          Grades.add('Grade 8');
+                                          grades.add('Grade 8');
                                         }
                                         if (_grade9) {
-                                          Grades.add("Grade 9");
+                                          grades.add("Grade 9");
                                         }
                                         if (_grade10) {
-                                          Grades.add("Grade 10");
+                                          grades.add("Grade 10");
                                         }
                                         if (_grade11) {
-                                          Grades.add("Grade 11");
+                                          grades.add("Grade 11");
                                         }
                                         Map<String, dynamic> teacherInfoMap = {
                                           "TeacherId": id,
@@ -554,7 +554,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                           "DateOfBirth": _dateController.text,
                                           "Gender": _genderController.text,
                                           "Subject": _subjectController.text,
-                                          "Grade": Grades,
+                                          "Grade": grades,
                                           "Qualification":
                                               _qualificationController.text,
                                           "ContactNo": _phoneController.text,
@@ -569,6 +569,9 @@ class _RegisterteacherState extends State<Registerteacher> {
                                                 teacherInfoMap, id);
                                         await DatabaseMethods().setTeacherRole(
                                             id, _emailController.text);
+
+                                        if (!mounted) return;
+
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
                                                 content: Text(
@@ -578,7 +581,7 @@ class _RegisterteacherState extends State<Registerteacher> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     Setschedule(
-                                                        Grade: Grades,
+                                                        grade: grades,
                                                         scheduleInfoMap:
                                                             scheduleInfoMap)));
 

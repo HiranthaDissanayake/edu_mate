@@ -1,6 +1,7 @@
+import 'package:edu_mate/service/app_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_mate/Teacher/teacher_dashboard.dart';
-import 'package:edu_mate/service/database.dart'; // Import database.dart
+import 'package:edu_mate/service/database_methods.dart'; // Import database.dart
 
 class Selectclass extends StatefulWidget {
   final String teacherID;
@@ -110,7 +111,7 @@ class _SelectclassState extends State<Selectclass> {
                                 ),
                               );
                             } else {
-                              print("Please select a grade before proceeding.");
+                              AppLogger().w("Please select a grade before proceeding.");
                             }
                           },
                           child: Container(

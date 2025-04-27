@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_mate/service/auth_service.dart';
+import 'package:edu_mate/service/sqlite_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:edu_mate/service/app_logger.dart';
 
 class DatabaseMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final SQLiteHelper _sqliteHelper = SQLiteHelper();
 
   //Set Student Details
   Future<void> addStudentDetails(
@@ -19,7 +21,8 @@ class DatabaseMethods {
       bool paymentRecordsGenerated = await generatePaymentRecordsForStudent(id);
 
       if (paymentRecordsGenerated) {
-        AppLogger().d("Payment records generated successfully for student: $id");
+        AppLogger()
+            .d("Payment records generated successfully for student: $id");
       } else {
         AppLogger().w("Failed to generate payment records for student: $id");
       }
@@ -58,21 +61,21 @@ class DatabaseMethods {
 
   //get schedule
   Future<Stream<QuerySnapshot>> getSchedules() async {
-    return await FirebaseFirestore.instance.collection('Schedules').snapshots();
+    return FirebaseFirestore.instance.collection('Schedules').snapshots();
   }
 
   // Fetch all Student details
   Future<Stream<QuerySnapshot>> getStudents() async {
-    return await FirebaseFirestore.instance.collection("Students").snapshots();
+    return FirebaseFirestore.instance.collection("Students").snapshots();
   }
 
-  // Fetch all Teachers details
+  //Fetch all Teachers details
   Future<Stream<QuerySnapshot>> getTeachers() async {
-    return await FirebaseFirestore.instance.collection("Teachers").snapshots();
+    return FirebaseFirestore.instance.collection("Teachers").snapshots();
   }
 
   Future<Stream<DocumentSnapshot>> getStudent(String id) async {
-    return await FirebaseFirestore.instance
+    return FirebaseFirestore.instance
         .collection("Students")
         .doc(id)
         .snapshots();
@@ -94,9 +97,7 @@ class DatabaseMethods {
     QuerySnapshot snapshot = await students.get();
 
     for (var doc in snapshot.docs) {
-      await students.doc(doc.id).update({
-        'attendance': {}
-      }).then((_) {
+      await students.doc(doc.id).update({'attendance': {}}).then((_) {
         AppLogger().d("Updated student ${doc.id}");
       }).catchError((error) {
         AppLogger().e("Failed to update student ${doc.id}: $error");
@@ -423,5 +424,42 @@ class DatabaseMethods {
     return snapshot.docs
         .map((doc) => doc.data() as Map<String, dynamic>)
         .toList();
+  }
+
+  Future<void> saveAllDataToSQLite() async {
+    await _saveCollectionToSQLite('Students');
+    await _saveCollectionToSQLite('Teachers');
+    await _saveCollectionToSQLite('Schedules');
+    await _saveCollectionToSQLite('Payment');
+  }
+
+  Future<void> _saveCollectionToSQLite(String collection) async {
+    final querySnapshot = await _firestore.collection(collection).get();
+    await _syncToSQLite(collection, querySnapshot.docs);
+  }
+
+  // Add this method to sync Firestore data to SQLite
+  Future<void> _syncToSQLite(
+      String collection, List<QueryDocumentSnapshot> docs) async {
+    for (var doc in docs) {
+      final data = doc.data() as Map<String, dynamic>;
+      data['id'] = doc.id;
+      data['lastUpdated'] = DateTime.now().millisecondsSinceEpoch;
+
+      switch (collection) {
+        case 'Students':
+          await _sqliteHelper.insertStudent(data);
+          break;
+        case 'Teachers':
+          await _sqliteHelper.insertTeacher(data);
+          break;
+        case 'Schedules':
+          await _sqliteHelper.insertSchedule(data);
+          break;
+        case 'Payment':
+          await _sqliteHelper.insertPayment(data);
+          break;
+      }
+    }
   }
 }
