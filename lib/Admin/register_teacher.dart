@@ -531,22 +531,22 @@ class _RegisterteacherState extends State<Registerteacher> {
                                         String id = randomAlphaNumeric(10);
                                         List<String> grades = [];
                                         if (_grade6) {
-                                          grades.add("Grade 6");
+                                          grades.add("Grade6");
                                         }
                                         if (_grade7) {
-                                          grades.add("Grade 7");
+                                          grades.add("Grade7");
                                         }
                                         if (_grade8) {
-                                          grades.add('Grade 8');
+                                          grades.add('Grade8');
                                         }
                                         if (_grade9) {
-                                          grades.add("Grade 9");
+                                          grades.add("Grade9");
                                         }
                                         if (_grade10) {
-                                          grades.add("Grade 10");
+                                          grades.add("Grade10");
                                         }
                                         if (_grade11) {
-                                          grades.add("Grade 11");
+                                          grades.add("Grade11");
                                         }
                                         Map<String, dynamic> teacherInfoMap = {
                                           "TeacherId": id,
