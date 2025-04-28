@@ -16,7 +16,8 @@ class Splashscreen extends StatefulWidget {
   State<Splashscreen> createState() => _Splashscreen1State();
 }
 
-class _Splashscreen1State extends State<Splashscreen> {
+class _Splashscreen1State extends State<Splashscreen>
+    with SingleTickerProviderStateMixin {
   String finalEmail = "";
   String finalRole = "";
   String finalPassword = "";
@@ -27,7 +28,7 @@ class _Splashscreen1State extends State<Splashscreen> {
     getValidationData().whenComplete(() async {
       AppLogger()
           .d("Email: $finalEmail, Role: $finalRole, Password: $finalPassword");
-      Timer(Duration(seconds: 3), () async {
+      Timer(const Duration(seconds: 3), () async {
         bool? valiedUser =
             await AuthService().loginUser(finalEmail, finalPassword);
 
@@ -35,7 +36,7 @@ class _Splashscreen1State extends State<Splashscreen> {
 
         if (finalRole == "admin" && valiedUser) {
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => Adminhomepage()));
+              MaterialPageRoute(builder: (context) => const Adminhomepage()));
         } else if (finalRole == "student" && valiedUser) {
           Navigator.pushReplacement(
               context,
@@ -45,17 +46,19 @@ class _Splashscreen1State extends State<Splashscreen> {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => Teacherdashboard(grade: "")));
+                  builder: (context) => const Teacherdashboard(grade: "")));
         } else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => Beforeloginscreen()));
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const Beforeloginscreen()));
         }
       });
     });
   }
 
   Future getValidationData() async {
-    final storage = FlutterSecureStorage();
+    final storage = const FlutterSecureStorage();
     var obtainEmail = await storage.read(key: "email");
     var obtainRole = await storage.read(key: "role");
     var obtainPassword = await storage.read(key: "password");
@@ -71,7 +74,39 @@ class _Splashscreen1State extends State<Splashscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TweenAnimationBuilder(
+              tween: Tween<double>(begin: 0.5, end: 1.0),
+              duration: const Duration(seconds: 2),
+              curve: Curves.easeOutExpo,
+              builder: (context, value, child) {
+                return Transform.scale(
+                  scale: value,
+                  child: child,
+                );
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/AppLogo.png',
+                    height: 100,
+                    width: 100,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'EduMate',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
+            const CircularProgressIndicator()
+          ],
+        ),
       ),
     );
   }

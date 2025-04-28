@@ -23,11 +23,22 @@ class _AttendencecontainerState extends State<Attendencecontainer> {
         .get();
 
     if (studentSnapshot.docs.isNotEmpty && mounted) {
+      var subjectMap =
+          studentSnapshot.docs.first['Subject'] as Map<String, dynamic>;
       setState(() {
-        subjects = studentSnapshot.docs.first['Subject'];
+        subjects = subjectMap.keys.toList();
       });
     }
   }
+
+  final Map<String, Color> subjectColors = {
+    "maths": Color(0xFFB72CBC),
+    "Science": Color.fromARGB(255, 176, 158, 3),
+    "English": Color.fromARGB(255, 2, 91, 164),
+    "Commerce": Color.fromARGB(255, 164, 99, 3),
+    "History": Color.fromARGB(255, 168, 13, 2),
+    "Sinhala": Color.fromARGB(255, 1, 154, 3),
+  };
 
   @override
   void initState() {
@@ -49,16 +60,9 @@ class _AttendencecontainerState extends State<Attendencecontainer> {
                         width: MediaQuery.of(context).size.width * 0.9,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: subject == "Maths"
-                              ? Color(0xFFB72CBC)
-                              : subject == "Science"
-                                  ? const Color.fromARGB(255, 176, 158, 3)
-                                  : subject == "English"
-                                      ? const Color.fromARGB(255, 2, 91, 164)
-                                      : subject == "Commerce"? const Color.fromARGB(255, 164, 99, 3)
-                                      : subject == "History"? const Color.fromARGB(255, 168, 13, 2)
-                                      : subject == "Sinhala"? const Color.fromARGB(255, 1, 154, 3): const Color.fromARGB(255, 166, 1, 56),
-                                      
+                          color: subjectColors[subject] ??
+                              Color.fromARGB(255, 166, 1,
+                                  56), // default color if not found
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
