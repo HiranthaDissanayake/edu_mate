@@ -1,0 +1,2 @@
+E:/Github/edu_mate/android/app/.cxx/Debug/1k6q7155/x86/CMakeFiles/edit_cache.dir
+E:/Github/edu_mate/android/app/.cxx/Debug/1k6q7155/x86/CMakeFiles/rebuild_cache.dir
