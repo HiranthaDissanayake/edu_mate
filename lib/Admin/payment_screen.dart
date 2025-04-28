@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_mate/Admin/components/searchbar.dart';
 import 'package:edu_mate/service/app_logger.dart';
 import 'package:edu_mate/service/database_methods.dart';
-import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Paymentscreen extends StatefulWidget {
   const Paymentscreen({super.key});
@@ -25,7 +26,6 @@ class _PaymentscreenState extends State<Paymentscreen> {
     _fetchStudents();
   }
 
-  // Function to fetch students and check their payment status
   void _fetchStudents() async {
     try {
       Stream<QuerySnapshot> studentStream = await databaseMethods.getStudents();
@@ -40,9 +40,7 @@ class _PaymentscreenState extends State<Paymentscreen> {
           for (var doc in snapshot.docs) {
             Map<String, dynamic> subjects = doc['Subject'] ?? {};
             for (var subject in subjects.keys) {
-              // Ensure we skip attendance dates inside subjects
               if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(subject)) {
-                // Check if payment is done
                 bool isPaid =
                     await _checkPaymentStatus(doc.id, currentMonth, subject);
                 if (isPaid) {
@@ -53,6 +51,7 @@ class _PaymentscreenState extends State<Paymentscreen> {
                   'id': doc.id,
                   'name': doc['Name'],
                   'subject': subject,
+                  'parentPhone': doc['ParentNo'],
                 });
               }
             }
@@ -72,7 +71,6 @@ class _PaymentscreenState extends State<Paymentscreen> {
     }
   }
 
-  // Check payment status for a student
   Future<bool> _checkPaymentStatus(
       String studentId, String month, String subject) async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -80,17 +78,45 @@ class _PaymentscreenState extends State<Paymentscreen> {
         .where('studentId', isEqualTo: studentId)
         .where('month', isEqualTo: month)
         .where('subject', isEqualTo: subject)
-        .where('isPaid', isEqualTo: true) // Only check for paid records
+        .where('isPaid', isEqualTo: true)
         .get();
 
     return querySnapshot.docs.isNotEmpty;
   }
 
-  // Function to mark a student as paid
   void _markAsPaid(String studentId, String subject) {
     setState(() {
       paidSubjects.add("$studentId-$subject");
     });
+  }
+
+  Future<void> _sendPaymentSMS(
+      String phoneNumber, String studentName, String subject) async {
+    final currentMonth = "${DateTime.now().month}/${DateTime.now().year}";
+    final message =
+        "Dear Parent, payment for $subject for $currentMonth has been received for $studentName. Thank you!";
+
+    final Uri uri = Uri(
+      scheme: 'sms',
+      path: phoneNumber,
+      queryParameters: {'body': message},
+    );
+
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        AppLogger().e("Could not launch SMS app");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Could not open messaging app")),
+        );
+      }
+    } catch (e) {
+      AppLogger().e("Error sending SMS: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error sending SMS")),
+      );
+    }
   }
 
   @override
@@ -111,7 +137,7 @@ class _PaymentscreenState extends State<Paymentscreen> {
         ),
         child: Column(
           children: [
-            // Top appbar
+            // Top appbar (unchanged)
             Container(
               height: 120,
               width: double.infinity,
@@ -157,7 +183,7 @@ class _PaymentscreenState extends State<Paymentscreen> {
               ),
             ),
 
-            // Search bar section
+            // Search bar section (unchanged)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Searchbar(
@@ -175,7 +201,7 @@ class _PaymentscreenState extends State<Paymentscreen> {
               ),
             ),
 
-            // List of students wrapped inside an Expanded widget
+            // List of students
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -246,8 +272,8 @@ class _PaymentscreenState extends State<Paymentscreen> {
                                       backgroundColor: isPaid
                                           ? Color(0xFF009d00)
                                           : Color(0xFF2D2DB2),
-                                      disabledBackgroundColor: Color(
-                                          0xFF009d00), // Ensure green when disabled
+                                      disabledBackgroundColor:
+                                          Color(0xFF009d00),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       ),
@@ -268,6 +294,17 @@ class _PaymentscreenState extends State<Paymentscreen> {
                                             if (success) {
                                               _markAsPaid(student['id'],
                                                   student['subject']);
+                                              // Send SMS to parent
+                                              if (student['parentPhone'] !=
+                                                      null &&
+                                                  student['parentPhone']
+                                                      .isNotEmpty) {
+                                                _sendPaymentSMS(
+                                                  student['parentPhone'],
+                                                  student['name'],
+                                                  student['subject'],
+                                                );
+                                              }
                                             }
                                           },
                                     child: Text(

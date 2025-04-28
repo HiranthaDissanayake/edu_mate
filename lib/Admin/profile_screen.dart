@@ -57,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               birthday = document['DateOfBirth'];
               gender = document['Gender'];
               grades = List<String>.from(document['Grade']);
-              qualification = document['Quelification'];
+              qualification = document['Qualification'];
               subject = document['Subject'];
               contactNo = document['ContactNo'];
             }
