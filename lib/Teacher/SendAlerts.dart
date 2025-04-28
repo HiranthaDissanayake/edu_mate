@@ -19,13 +19,11 @@ class _SendalertsState extends State<Sendalerts> {
     if (message.isNotEmpty) {
       try {
         // Get the last alert document to determine the next ID
-        QuerySnapshot alertsSnapshot =
-            await _firestore.collection('Alerts').get();
+        QuerySnapshot alertsSnapshot = await _firestore.collection('Alerts').get();
         int alertCount = alertsSnapshot.size;
 
         // Generate the next alert ID (Alert_ID_001, Alert_ID_002, ...)
-        String alertId =
-            'Alert_ID_${(alertCount + 1).toString().padLeft(3, '0')}';
+        String alertId = 'Alert_ID_${(alertCount + 1).toString().padLeft(3, '0')}';
 
         // Save the alert to Firestore
         await _firestore.collection('Alerts').doc(alertId).set({
@@ -33,23 +31,18 @@ class _SendalertsState extends State<Sendalerts> {
           'timestamp': FieldValue.serverTimestamp(),
         });
 
-        if (!mounted) return;
-
         // Show a success message
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Alert sent successfully!')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Alert sent successfully!')));
 
         // Clear the message input
         messageController.clear();
       } catch (e) {
         // Handle any errors
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Failed to send alert: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to send alert: $e')));
       }
     } else {
       // If message is empty, show a prompt
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Please type a message')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please type a message')));
     }
   }
 
@@ -72,8 +65,7 @@ class _SendalertsState extends State<Sendalerts> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(125),
-                    bottomLeft: Radius.circular(65)),
+                    topRight: Radius.circular(125), bottomLeft: Radius.circular(65)),
                 gradient: LinearGradient(
                   colors: [Color(0xFF010127), Color(0xFF0B0C61)],
                   begin: Alignment.topCenter,
@@ -148,8 +140,8 @@ class _SendalertsState extends State<Sendalerts> {
                           hintStyle: TextStyle(
                             color: const Color.fromARGB(255, 97, 97, 97),
                           ),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                         ),
                         style: TextStyle(color: Colors.white),
                       ),
@@ -162,12 +154,12 @@ class _SendalertsState extends State<Sendalerts> {
                           width: 140,
                           child: ElevatedButton(
                             onPressed: sendAlert,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF3A2AE0),
-                            ),
                             child: Text(
                               'Send',
                               style: TextStyle(color: Colors.white),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF3A2AE0),
                             ),
                           ),
                         ),

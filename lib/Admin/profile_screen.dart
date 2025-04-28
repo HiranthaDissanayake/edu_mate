@@ -35,10 +35,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // Function to fetch a single student from Firestore
-  void _fetchData() async {
+  void _fetchData() {
     try {
       Stream<DocumentSnapshot> dataStream =
-          await DatabaseMethods().getDocument(widget.collection, widget.id);
+          DatabaseMethods().getDocument(widget.collection, widget.id);
 
       dataStream.listen((document) {
         if (document.exists) {

@@ -1,14 +1,24 @@
-import 'package:edu_mate/Teacher/attendance.dart';
-import 'package:edu_mate/Teacher/marks_screen.dart';
-import 'package:edu_mate/Teacher/send_alerts.dart';
+import 'package:edu_mate/Teacher/Attendance.dart';
+import 'package:edu_mate/Teacher/SendAlerts.dart';
+import 'package:edu_mate/Teacher/StudentList.dart';
+import 'package:edu_mate/Teacher/ViewMarks.dart';
 import 'package:edu_mate/Teacher/payments.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_mate/Teacher/components/drawer.dart';
+import 'package:edu_mate/Teacher/components/teacher.dart';
+import 'package:edu_mate/service/database_methods.dart';
 
 class Teacherdashboard extends StatefulWidget {
-  final String grade;
+  final String teacherID;
+  final Teacher teacherData;
+  String grade;
 
-  const Teacherdashboard({super.key, required this.grade});
+  Teacherdashboard({
+    super.key,
+    required this.teacherID,
+    required this.teacherData,
+    required this.grade,
+  });
 
   @override
   State<Teacherdashboard> createState() => _TeacherdashboardState();
@@ -21,7 +31,7 @@ class _TeacherdashboardState extends State<Teacherdashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: NavBar(),
+      drawer: NavBar(teacherID: widget.teacherID, teacherEmail: widget.teacherData.email),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -65,14 +75,14 @@ class _TeacherdashboardState extends State<Teacherdashboard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Sandeepa Minol',
+                            widget.teacherData.name,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 17,
                             ),
                           ),
                           Text(
-                            'Bsc(hons) in Software Engineering',
+                            widget.teacherData.qualification,
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -125,12 +135,27 @@ class _TeacherdashboardState extends State<Teacherdashboard> {
                     ),
                   ),
                   Spacer(),
-                  Text(
-                    '     Today\nAttendance',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                    ),
+                  Column(
+                    children: [
+                      Text(
+                        widget.grade,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        '     Today\nAttendance',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -143,14 +168,14 @@ class _TeacherdashboardState extends State<Teacherdashboard> {
                 ),
                 Container(
                   height: 30,
-                  width: 210,
+                  width: 180,
                   decoration: BoxDecoration(
                     color: Color(0xFF181C5C),
                     borderRadius: BorderRadius.circular(13),
                   ),
                   child: Center(
                     child: Text(
-                      'Upcoming Classes Today',
+                      'Upcoming Classes',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -163,119 +188,65 @@ class _TeacherdashboardState extends State<Teacherdashboard> {
             Padding(
               padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
               child: Container(
-                height: 220,
+                height: 260, 
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: Color(0xFF10183C),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Grade 7 English',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            '8.00 a.m - 10.00 a.m',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
+                  color: Color(0xFF10183C),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: FutureBuilder<List<Map<String, dynamic>>>(
+                  future:
+                      DatabaseMethods().getTeacherSchedules(widget.teacherID),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return Center(
+                        child: Text("No schedules found",
+                            style: TextStyle(color: Colors.white)),
+                      );
+                    }
+
+                    List<Map<String, dynamic>> schedules = snapshot.data!;
+
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: schedules.map((schedule) {
+                            return Container(
+                              height: 50,
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 10),
+                              child: Card(
+                                color: Color(0xFF26284A),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "${schedule['Grade']} - ${schedule['ClassDay']}",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      Text(
+                                        "${schedule['StartTime']} - ${schedule['EndTime']}",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Grade 7 English',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            '8.00 a.m - 10.00 a.m',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Grade 7 English',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            '8.00 a.m - 10.00 a.m',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Grade 7 English',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            '8.00 a.m - 10.00 a.m',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Grade 7 English',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            '8.00 a.m - 10.00 a.m',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -291,7 +262,11 @@ class _TeacherdashboardState extends State<Teacherdashboard> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Marksscreen()),
+                                builder: (context) => StudentList(
+                                  teacherID: widget.teacherID,
+                                  grade: widget.grade
+                                  ),
+                                ),
                           );
                         },
                         child: Container(
@@ -335,7 +310,9 @@ class _TeacherdashboardState extends State<Teacherdashboard> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Sendalerts()),
+                                builder: (context) => Sendalerts(
+                                  // grade: widget.grade
+                                )),
                           );
                         },
                         child: Container(
@@ -422,7 +399,10 @@ class _TeacherdashboardState extends State<Teacherdashboard> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Attendance()),
+                                builder: (context) => Attendance(
+                                  teacherID: widget.teacherID,
+                                  grade: widget.grade,
+                                )),
                           );
                         },
                         child: Container(
@@ -444,6 +424,52 @@ class _TeacherdashboardState extends State<Teacherdashboard> {
                                 ),
                                 Text(
                                   'Attendance',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 20, left: 120, right: 120),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Viewmarks(
+                                  grade: widget.grade
+                                )),
+                          );
+                        },
+                        child: Container(
+                          height: 30,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Color(0xFF3A2AE0),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.view_cozy_outlined,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 40,
+                                ),
+                                Text(
+                                  'View Marks',
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
