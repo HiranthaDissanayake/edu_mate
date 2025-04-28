@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:edu_mate/Admin/admin_home_page.dart';
 import 'package:edu_mate/Screens/before_login_screen.dart';
 import 'package:edu_mate/Student/student_main_page.dart';
-import 'package:edu_mate/Teacher/teacher_dashboard.dart';
+import 'package:edu_mate/Teacher/SelectClass.dart';
+import 'package:edu_mate/Teacher/TeacherDashboard.dart';
 import 'package:edu_mate/service/app_logger.dart';
 import 'package:edu_mate/service/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,8 @@ class Splashscreen extends StatefulWidget {
   State<Splashscreen> createState() => _SplashscreenState();
 }
 
-class _SplashscreenState extends State<Splashscreen> with SingleTickerProviderStateMixin {
+class _SplashscreenState extends State<Splashscreen>
+    with SingleTickerProviderStateMixin {
   String finalEmail = "";
   String finalRole = "";
   String finalPassword = "";
@@ -29,11 +31,14 @@ class _SplashscreenState extends State<Splashscreen> with SingleTickerProviderSt
   Future<void> startSplashScreen() async {
     await getValidationData();
 
-    AppLogger().d("Email: $finalEmail, Role: $finalRole, Password: $finalPassword");
+    AppLogger()
+        .d("Email: $finalEmail, Role: $finalRole, Password: $finalPassword");
 
     bool validUser = false;
 
-    if (finalEmail.isNotEmpty && finalPassword.isNotEmpty && finalRole.isNotEmpty) {
+    if (finalEmail.isNotEmpty &&
+        finalPassword.isNotEmpty &&
+        finalRole.isNotEmpty) {
       // User already has data saved - try auto login
       validUser = await AuthService().loginUser(finalEmail, finalPassword);
       AppLogger().d("Attempted auto-login: $validUser");
@@ -55,12 +60,14 @@ class _SplashscreenState extends State<Splashscreen> with SingleTickerProviderSt
       } else if (finalRole == "student") {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => StudentMainPage(stEmail: finalEmail)),
+          MaterialPageRoute(
+              builder: (context) => StudentMainPage(stEmail: finalEmail)),
         );
       } else if (finalRole == "teacher") {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const Teacherdashboard(grade: "")),
+          MaterialPageRoute(
+              builder: (context) => Selectclass(teacherID: finalPassword)),
         );
       } else {
         Navigator.pushReplacement(

@@ -1,12 +1,14 @@
-import 'package:edu_mate/service/app_logger.dart';
 import 'package:flutter/material.dart';
-import 'package:edu_mate/Teacher/teacher_dashboard.dart';
-import 'package:edu_mate/service/database_methods.dart'; // Import database.dart
+import 'package:edu_mate/Teacher/TeacherDashboard.dart';
+import 'package:edu_mate/service/database_methods.dart';
+import 'package:edu_mate/Teacher/components/teacher.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 class Selectclass extends StatefulWidget {
   final String teacherID;
 
-  const Selectclass({required this.teacherID, super.key});
+  const Selectclass({required this.teacherID, Key? key}) : super(key: key);
 
   @override
   State<Selectclass> createState() => _SelectclassState();
@@ -25,7 +27,7 @@ class _SelectclassState extends State<Selectclass> {
 
   Future<void> fetchGrades() async {
     List<String> fetchedGrades =
-        await DatabaseMethods().fetchGrades(widget.teacherID);
+        await databaseMethods.fetchGrades(widget.teacherID);
     setState(() {
       grades = fetchedGrades;
     });
@@ -100,18 +102,39 @@ class _SelectclassState extends State<Selectclass> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 40, vertical: 20),
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             if (selectedGrade != null) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Teacherdashboard(
-                                    grade: selectedGrade!,
+                              DatabaseMethods databaseMethods =
+                                  DatabaseMethods();
+                              Map<String, dynamic>? teacherMap =
+                                  await databaseMethods
+                                      .fetchTeacherData(widget.teacherID);
+
+                              if (teacherMap != null) {
+                                Teacher teacher = Teacher.fromMap(teacherMap);
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Teacherdashboard(
+                                      teacherID: widget.teacherID,
+                                      teacherData: teacher,
+                                      grade: selectedGrade ?? '',
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              } else {
+                                print("Error: Teacher data not found");
+                              }
                             } else {
-                              AppLogger().w("Please select a grade before proceeding.");
+                              Fluttertoast.showToast(
+                                msg: "Please select a grade before proceeding.",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: const Color.fromARGB(255, 255, 0, 0), 
+                                textColor: Colors.white,
+                                fontSize: 15.0,
+                              );
                             }
                           },
                           child: Container(

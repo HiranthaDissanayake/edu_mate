@@ -1,6 +1,7 @@
 import 'package:edu_mate/Admin/admin_home_page.dart';
 import 'package:edu_mate/Student/student_main_page.dart';
-import 'package:edu_mate/Teacher/teacher_dashboard.dart';
+import 'package:edu_mate/Teacher/SelectClass.dart';
+import 'package:edu_mate/Teacher/TeacherDashboard.dart';
 import 'package:edu_mate/service/app_logger.dart';
 import 'package:edu_mate/service/database_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -211,7 +212,10 @@ class _LoginscreenState extends State<Loginscreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Teacherdashboard(grade: "")),
+                builder: (context) => Selectclass(
+                  teacherID: password,
+                ),
+              ),
             );
           } else if (userData == "admin") {
             Navigator.push(
