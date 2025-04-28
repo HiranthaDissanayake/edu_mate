@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:edu_mate/Admin/admin_home_page.dart';
 import 'package:edu_mate/Screens/before_login_screen.dart';
 import 'package:edu_mate/Student/student_main_page.dart';
@@ -13,11 +12,10 @@ class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
 
   @override
-  State<Splashscreen> createState() => _Splashscreen1State();
+  State<Splashscreen> createState() => _SplashscreenState();
 }
 
-class _Splashscreen1State extends State<Splashscreen>
-    with SingleTickerProviderStateMixin {
+class _SplashscreenState extends State<Splashscreen> with SingleTickerProviderStateMixin {
   String finalEmail = "";
   String finalRole = "";
   String finalPassword = "";
@@ -25,43 +23,64 @@ class _Splashscreen1State extends State<Splashscreen>
   @override
   void initState() {
     super.initState();
-    getValidationData().whenComplete(() async {
-      AppLogger()
-          .d("Email: $finalEmail, Role: $finalRole, Password: $finalPassword");
-      Timer(const Duration(seconds: 3), () async {
-        bool? valiedUser =
-            await AuthService().loginUser(finalEmail, finalPassword);
-
-        if (!mounted) return;
-
-        if (finalRole == "admin" && valiedUser) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const Adminhomepage()));
-        } else if (finalRole == "student" && valiedUser) {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => StudentMainPage(stEmail: finalEmail)));
-        } else if (finalRole == "teacher" && valiedUser) {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const Teacherdashboard(grade: "")));
-        } else {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const Beforeloginscreen()));
-        }
-      });
-    });
+    startSplashScreen();
   }
 
-  Future getValidationData() async {
-    final storage = const FlutterSecureStorage();
-    var obtainEmail = await storage.read(key: "email");
-    var obtainRole = await storage.read(key: "role");
-    var obtainPassword = await storage.read(key: "password");
+  Future<void> startSplashScreen() async {
+    await getValidationData();
+
+    AppLogger().d("Email: $finalEmail, Role: $finalRole, Password: $finalPassword");
+
+    bool validUser = false;
+
+    if (finalEmail.isNotEmpty && finalPassword.isNotEmpty && finalRole.isNotEmpty) {
+      // User already has data saved - try auto login
+      validUser = await AuthService().loginUser(finalEmail, finalPassword);
+      AppLogger().d("Attempted auto-login: $validUser");
+    } else {
+      AppLogger().d("No login data found");
+    }
+
+    // Delay splash screen for 3 seconds
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (!mounted) return;
+
+    if (validUser) {
+      if (finalRole == "admin") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Adminhomepage()),
+        );
+      } else if (finalRole == "student") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => StudentMainPage(stEmail: finalEmail)),
+        );
+      } else if (finalRole == "teacher") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Teacherdashboard(grade: "")),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Beforeloginscreen()),
+        );
+      }
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const Beforeloginscreen()),
+      );
+    }
+  }
+
+  Future<void> getValidationData() async {
+    const storage = FlutterSecureStorage();
+    final obtainEmail = await storage.read(key: "email");
+    final obtainRole = await storage.read(key: "role");
+    final obtainPassword = await storage.read(key: "password");
 
     setState(() {
       finalEmail = obtainEmail ?? "";
@@ -104,7 +123,7 @@ class _Splashscreen1State extends State<Splashscreen>
                 ],
               ),
             ),
-            const CircularProgressIndicator()
+            const CircularProgressIndicator(),
           ],
         ),
       ),

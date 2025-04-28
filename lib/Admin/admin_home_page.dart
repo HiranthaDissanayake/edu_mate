@@ -18,6 +18,8 @@ class Adminhomepage extends StatefulWidget {
 }
 
 class _AdminhomepageState extends State<Adminhomepage> {
+
+
   Stream<QuerySnapshot>? studentStream;
   Stream<QuerySnapshot>? teacherStream;
 
@@ -90,6 +92,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
 
   @override
   Widget build(BuildContext context) {
+  double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       drawer: Drawermenu(),
       body: Container(
@@ -271,6 +274,7 @@ class _AdminhomepageState extends State<Adminhomepage> {
                 ),
               ),
               // Buttons Section
+              SizedBox(height: screenHeight * 0.05),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -329,6 +333,8 @@ class _AdminhomepageState extends State<Adminhomepage> {
                 ),
               ),
               // Bottom Navigation Section
+              
+              SizedBox(height: screenHeight * 0.05),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
